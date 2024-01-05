@@ -1,0 +1,23 @@
+import io;
+
+public struct ST {
+    
+    public i8 a;
+    motheronly i16 b;
+    external i32 c;
+    internal bool d;
+
+    public fn void Log() {
+        Console.Log(a.ToString());
+    }
+
+}
+
+public fn i32 Main() {
+    Console.Log("Hello World!");
+    return 0;
+}
+
+fn i32, i32 Out(i32 a, i32 b) {
+    return a, b;
+}
