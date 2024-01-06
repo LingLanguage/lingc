@@ -1,10 +1,10 @@
 #ifndef GENERIC_H__
 #define GENERIC_H__
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include <utf8.h>
-#include <stdbool.h>
 
 #define PLogNA(x) printf("%s:%d %s", __FILE__, __LINE__, x)
 #define PLog(x, ...)                                                                                                                                           \
@@ -30,43 +30,102 @@ typedef enum BehaviourType
     BehaviourType_Struct,
 } BehaviourType;
 
-typedef enum StructBehaviourType {
-    StructBehaviourType_Unknown = 0,
-    StructBehaviourType_Something,
-    StructBehaviourType_AfterAccess,
-    StructBehaviourType_Field,
-    StructBehaviourType_Function,
-} StructBehaviourType;
+#define KW_SPACE ' '
+#define KW_NEWLINE '\n'
+#define KW_NEWLINE_R '\r'
+#define KW_TABLE '\t'
+#define KW_SEMICOLON ';'
+#define KW_LEFT_BRACKET '('
+#define KW_RIGHT_BRACKET ')'
+#define KW_LEFT_BRACE '{'
+#define KW_RIGHT_BRACE '}'
+#define KW_LEFT_SQUARE_BRACKET '['
+#define KW_RIGHT_SQUARE_BRACKET ']'
+#define KW_LEFT_ANGLE_BRACKET '<'
+#define KW_RIGHT_ANGLE_BRACKET '>'
+#define KW_COMMA ','
+#define KW_COLON ':'
+#define KW_DOT '.'
+#define KW_QUOTE '\"'
+#define KW_SINGLE_QUOTE '\''
 
-static const char KW_SPACE = ' ';
-static const char *KW_SPACE_STR = " ";
-static const char KW_NEWLINE = '\n';
-static const char KW_NEWLINE_R = '\r';
-static const char KW_TABLE = '\t';
-static const char KW_END = ';';
-static const char KW_LEFT_BRACKET = '(';
-static const char KW_RIGHT_BRACKET = ')';
-static const char KW_LEFT_BRACE = '{';
-static const char KW_RIGHT_BRACE = '}';
-static const char KW_LEFT_SQUARE_BRACKET = '[';
-static const char KW_RIGHT_SQUARE_BRACKET = ']';
-static const char KW_LEFT_ANGLE_BRACKET = '<';
-static const char KW_RIGHT_ANGLE_BRACKET = '>';
-static const char KW_COMMA = ',';
-static const char KW_COLON = ':';
-static const char KW_DOT = '.';
-static const char KW_QUOTE = '"';
-static const char KW_SINGLE_QUOTE = '\'';
-static const string KW_FUNC = "fn";
-static const string KW_STRUCT = "struct";
-static const string KW_IF = "if";
-static const string KW_ELIF = "else if";
-static const string KW_ELSE = "else";
-static const string KW_WHILE = "while";
-static const string KW_FOR = "for";
-static const string KW_BREAK = "break";
-static const string KW_CONTINUE = "continue";
-static const string KW_RETURN = "return";
+#define LT_A 'A'
+#define LT_a 'a'
+#define LT_B 'B'
+#define LT_b 'b'
+#define LT_C 'C'
+#define LT_c 'c'
+#define LT_D 'D'
+#define LT_d 'd'
+#define LT_E 'E'
+#define LT_e 'e'
+#define LT_F 'F'
+#define LT_f 'f'
+#define LT_G 'G'
+#define LT_g 'g'
+#define LT_H 'H'
+#define LT_h 'h'
+#define LT_I 'I'
+#define LT_i 'i'
+#define LT_J 'J'
+#define LT_j 'j'
+#define LT_K 'K'
+#define LT_k 'k'
+#define LT_L 'L'
+#define LT_l 'l'
+#define LT_M 'M'
+#define LT_m 'm'
+#define LT_N 'N'
+#define LT_n 'n'
+#define LT_O 'O'
+#define LT_o 'o'
+#define LT_P 'P'
+#define LT_p 'p'
+#define LT_Q 'Q'
+#define LT_q 'q'
+#define LT_R 'R'
+#define LT_r 'r'
+#define LT_S 'S'
+#define LT_s 's'
+#define LT_T 'T'
+#define LT_t 't'
+#define LT_U 'U'
+#define LT_u 'u'
+#define LT_V 'V'
+#define LT_v 'v'
+#define LT_W 'W'
+#define LT_w 'w'
+#define LT_X 'X'
+#define LT_x 'x'
+#define LT_Y 'Y'
+#define LT_y 'y'
+#define LT_Z 'Z'
+#define LT_z 'z'
+
+#define LT_0 '0'
+#define LT_1 '1'
+#define LT_2 '2'
+#define LT_3 '3'
+#define LT_4 '4'
+#define LT_5 '5'
+#define LT_6 '6'
+#define LT_7 '7'
+#define LT_8 '8'
+#define LT_9 '9'
+
+#define KW_UNDERLINE '_'
+
+#define KW_SPACE_STR " "
+#define KW_FUNC "fn"
+#define KW_STRUCT "struct"
+#define KW_IF "if"
+#define KW_ELIF "else if"
+#define KW_ELSE "else"
+#define KW_WHILE "while"
+#define KW_FOR "for"
+#define KW_BREAK "break"
+#define KW_CONTINUE "continue"
+#define KW_RETURN "return"
 
 static string KW_SYS_TYPES[] = {
     "i8", "i16", "i32", "i64", "i128", "i256", "u8", "u16", "u32", "u64", "u128", "u256", "f32", "f64", "f128", "bool", "string", "byte", "void",

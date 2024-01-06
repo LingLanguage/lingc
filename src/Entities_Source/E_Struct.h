@@ -5,6 +5,14 @@
 #include "E_Function.h"
 #include "import.h"
 
+typedef enum StructBehaviourType {
+    StructBehaviourType_Unknown = 0,
+    StructBehaviourType_Something,
+    StructBehaviourType_AfterAccess,
+    StructBehaviourType_Field,
+    StructBehaviourType_Function,
+} StructBehaviourType;
+
 typedef struct E_Struct {
     int id;
     int index;
@@ -19,6 +27,7 @@ typedef struct E_Struct {
 
 } E_Struct;
 
+void E_Struct_Free(E_Struct *self);
 void E_Struct_RecordField(E_Struct *self, int id, int index, string access, string name, string type);
 
 #endif

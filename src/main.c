@@ -49,6 +49,6 @@ int main(int argc, char **argv) {
     }
     CloseWindow();
 #endif
-    free(ctx);
+    Context_Free(ctx);
     return 0;
 }

@@ -13,4 +13,6 @@ typedef struct E_Function {
     byte params_count;
 } E_Function;
 
+void E_Function_Free(E_Function *self);
+
 #endif

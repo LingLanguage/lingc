@@ -1,4 +1,5 @@
-import stdio.h;
+import <stdio.h>;
+import "BB.ling";
 
 public struct ST {
     

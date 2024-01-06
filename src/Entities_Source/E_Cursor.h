@@ -2,15 +2,16 @@
 #define E_CURSOR_H__
 
 #include "E_Struct.h"
+#include "M_FSM_Import.h"
 #include "import.h"
 
 typedef struct E_Cursor {
 
-    int curIndex;
-    int lastIndex;
-    int line;
+    int startIndex;
+    int endIndex;
 
     BehaviourType behaviourType;
+    M_FSM_Import fsm_import;
 
     E_Struct struct_current;
     bool struct_isBegin;
@@ -29,6 +30,7 @@ typedef struct E_Cursor {
 } E_Cursor;
 
 void E_Cursor_Reset(E_Cursor *cursor);
+void E_Cursor_FSM_Import_Enter(E_Cursor *cursor);
 void E_Cursor_SlideWord(E_Cursor *cursor, const string word);
 void E_Cursor_Struct_Unknow_Enter(E_Cursor *ctx);
 void E_Cursor_Struct_Something_Enter(E_Cursor *cursor);

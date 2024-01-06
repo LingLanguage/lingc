@@ -21,6 +21,9 @@
         "stdio.h": "c",
         "numeric": "c",
         "ostream": "c",
-        "system_error": "c"
+        "system_error": "c",
+        "random": "c",
+        "d_unknown.h": "c",
+        "d_import.h": "c"
     }
 }

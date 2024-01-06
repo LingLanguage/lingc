@@ -9,6 +9,15 @@ void Field_Add(E_Struct *self, E_Field field) {
     self->fields[self->fields_count++] = field;
 }
 
+void E_Struct_Free(E_Struct *self) {
+    if (self->fields_count > 0) {
+        free(self->fields);
+    }
+    if (self->functions_count > 0) {
+        free(self->functions);
+    }
+}
+
 void E_Struct_RecordField(E_Struct *self, int id, int index, string access, string name, string type) {
     E_Field field;
     field.id = id;
