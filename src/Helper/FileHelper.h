@@ -48,7 +48,7 @@ int File_RecursiveGetFilesByExtension(const char *root, const char *extension,
     return count;
 }
 
-char *File_ReadAllText(FILE *fp) {
+long File_ReadAllText(FILE *fp, char **result) {
 
     fseek(fp, 0, SEEK_END);
     long fsize = ftell(fp);
@@ -56,7 +56,7 @@ char *File_ReadAllText(FILE *fp) {
     fseek(fp, 0, SEEK_SET);
 
     char *str = malloc(fsize + 1);
-    for (int i = 0; i < fsize + 1; i++) {
+    for (long i = 0; i < fsize + 1; i++) {
         int c = fgetc(fp);
         if (feof(fp)) {
             str[i] = '\0';
@@ -65,7 +65,9 @@ char *File_ReadAllText(FILE *fp) {
         str[i] = c;
     }
 
-    return str;
+    *result = str;
+
+    return fsize;
 }
 
 #endif

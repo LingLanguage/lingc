@@ -1,12 +1,17 @@
+#include "Business/export.h"
 #include "Generic.h"
 #include "Helper/FileHelper.h"
 #include <raylib.h>
 #include <stdio.h>
 
 int main(int argc, char **argv) {
-    char *files[100000];
-    const char *dir = GetWorkingDirectory();
-    const char *root = TextFormat("%s\\%s", dir, "tests");
+
+    Context *ctx = calloc(1, sizeof(Context));
+    Context_Init(ctx);
+
+    string files[100000];
+    const string dir = GetWorkingDirectory();
+    const string root = TextFormat("%s\\%s\\%s", dir, "tests", "src");
     PLog("root: %s\r\n", root);
     int count = File_RecursiveGetFilesByExtension(root, ".ling", 0, files);
     for (int i = 0; i < count; i++) {
@@ -18,14 +23,16 @@ int main(int argc, char **argv) {
             continue;
         }
 
-        char *str = File_ReadAllText(fp);
-        PLog("%s code: \r\n%s\r\n", files[i], str);
+        string str = NULL;
+        long size = File_ReadAllText(fp, &str);
+        // PLog("%s code: \r\n%s\r\n", files[i], str);
 
         // tokenize
+        PLog("%s SeqMove\r\n", files[i]);
+        B_Tokenize_SeqMove(ctx, str, size);
 
         fclose(fp);
         free(str);
-
     }
 
     // free
@@ -42,5 +49,6 @@ int main(int argc, char **argv) {
     }
     CloseWindow();
 #endif
+    free(ctx);
     return 0;
 }

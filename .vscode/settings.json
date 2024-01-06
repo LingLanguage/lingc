@@ -5,6 +5,22 @@
         "*.wxs": "javascript",
         "utf8.h": "c",
         "typeinfo": "cpp",
-        "dirent.h": "c"
+        "dirent.h": "c",
+        "e_staticvar.h": "c",
+        "e_function.h": "c",
+        "import.h": "c",
+        "context.h": "c",
+        "export.h": "c",
+        "generic.h": "c",
+        "string.h": "c",
+        "array": "c",
+        "string_view": "c",
+        "initializer_list": "c",
+        "b_tokenize.h": "c",
+        "raylib.h": "c",
+        "stdio.h": "c",
+        "numeric": "c",
+        "ostream": "c",
+        "system_error": "c"
     }
 }

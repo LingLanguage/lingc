@@ -1,20 +1,20 @@
-import io;
+import stdio.h;
 
 public struct ST {
     
-    public i8 a;
-    motheronly i16 b;
+    i8 a;
+    public i16 b;
     external i32 c;
     internal bool d;
 
     public fn void Log() {
-        Console.Log(a.ToString());
+        printf(a.ToString());
     }
 
 }
 
 public fn i32 Main() {
-    Console.Log("Hello World!");
+    printf("Hello World!");
     return 0;
 }
 
