@@ -33,18 +33,39 @@ int File_RecursiveGetFilesByExtension(const char *root, const char *extension,
         // extension check by .
         char *ext = strrchr(dp->d_name, '.');
         if (ext != NULL && strcmp(ext, extension) == 0) {
-            files[count] = (char *)malloc(sizeof(char) * strlen(path) + 2);
+            files[count] = (char *)malloc(strlen(path) + 1);
             strcpy(files[count], path);
+            strcat(files[count], "\0");
             count++;
         } else {
             count = File_RecursiveGetFilesByExtension(path, extension, count,
-                                                       files);
+                                                      files);
         }
     }
 
     closedir(dir);
 
     return count;
+}
+
+char *File_ReadAllText(FILE *fp) {
+
+    fseek(fp, 0, SEEK_END);
+    long fsize = ftell(fp);
+
+    fseek(fp, 0, SEEK_SET);
+
+    char *str = malloc(fsize + 1);
+    for (int i = 0; i < fsize + 1; i++) {
+        int c = fgetc(fp);
+        if (feof(fp)) {
+            str[i] = '\0';
+            break;
+        }
+        str[i] = c;
+    }
+
+    return str;
 }
 
 #endif

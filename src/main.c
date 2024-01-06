@@ -10,8 +10,22 @@ int main(int argc, char **argv) {
     PLog("root: %s\r\n", root);
     int count = File_RecursiveGetFilesByExtension(root, ".ling", 0, files);
     for (int i = 0; i < count; i++) {
-        // readfile, tokenize, parse, compile
-        printf("found: %s\n", files[i]);
+
+        // readfile
+        FILE *fp = fopen(files[i], "r");
+        if (fp == NULL) {
+            PLog("file not found: %s\n", files[i]);
+            continue;
+        }
+
+        char *str = File_ReadAllText(fp);
+        PLog("%s code: \r\n%s\r\n", files[i], str);
+
+        // tokenize
+
+        fclose(fp);
+        free(str);
+
     }
 
     // free
