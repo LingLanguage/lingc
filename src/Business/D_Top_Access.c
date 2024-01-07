@@ -11,13 +11,13 @@ void D_Top_Access_Process(E_Doc *doc, bool is_split, const string word, const st
     if (!is_split) {
         if (strcmp(word, KW_FUNC) == 0) {
             // fn
-            D_Top_Func_Enter(doc, fsm->guess.access, fsm->isStatic);
+            D_Top_Func_Enter(doc, fsm->guess.access, fsm->guess.is_static);
         } else if (strcmp(word, KW_STRUCT) == 0) {
             // struct
-            D_Top_Struct_Enter(doc, fsm->guess.access, fsm->isStatic);
+            D_Top_Struct_Enter(doc, fsm->guess.access, fsm->guess.is_static);
         } else if (strcmp(word, KW_STATIC) == 0) {
             // static
-            fsm->isStatic = true;
+            fsm->guess.is_static = true;
         } else if (String_IsAccess(word)) {
             // err: access redefined
             PLogCode(doc->curFile, doc->curLine, ERR_REDIFINED_ACCESS);

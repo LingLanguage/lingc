@@ -5,7 +5,6 @@
 
 // Access -> static var / static fn / struct / fn / field
 typedef struct M_FSM_Access {
-    bool isStatic;
     E_Guess guess;
 } M_FSM_Access;
 

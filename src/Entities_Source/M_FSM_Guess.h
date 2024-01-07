@@ -4,8 +4,7 @@
 #include "import.h"
 
 typedef struct M_FSM_Guess {
-    char access[RULE_ACCESS_NAME_LEN];
-    bool is_static;
+    E_Guess guess;
 } M_FSM_Guess;
 
 void M_FSM_Guess_Enter(M_FSM_Guess *fsm);

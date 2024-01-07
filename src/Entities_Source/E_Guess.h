@@ -6,6 +6,7 @@
 
 typedef struct E_Guess {
     char access[RULE_ACCESS_NAME_LEN];
+    bool is_static;
     char words[RULE_VAR_NAME_LEN][10];
     byte words_count;
 } E_Guess;

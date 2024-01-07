@@ -22,12 +22,12 @@ void D_Top_Guess_Process(E_Doc *doc, bool isSplit, const string word, const stri
         D_Top_Access_Enter(doc, word);
     } else if (strcmp(word, KW_FUNC) == 0) {
         // fn
-        D_Top_Func_Enter(doc, KW_ACCESS_PRIVATE, fsm->is_static);
+        D_Top_Func_Enter(doc, KW_ACCESS_PRIVATE, fsm->guess.is_static);
     } else if (strcmp(word, KW_STRUCT) == 0) {
         // struct
-        D_Top_Struct_Enter(doc, KW_ACCESS_PRIVATE, fsm->is_static);
+        D_Top_Struct_Enter(doc, KW_ACCESS_PRIVATE, fsm->guess.is_static);
     } else if (strcmp(word, KW_STATIC) == 0) {
         // static
-        fsm->is_static = true;
+        fsm->guess.is_static = true;
     }
 }
