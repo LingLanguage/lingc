@@ -46,16 +46,16 @@ void B_Tokenize_SeqMove(Context *ctx, string filename, string code, long size) {
 
         doc->endIndex = endIndex;
 
-        if (top_status == TopBT_Struct) {
+        if (top_status == TopFSMStatus_Struct) {
             D_Struct_Process(ctx, isSplit, word, code, size);
-        } else if (top_status == TopBT_Access) {
+        } else if (top_status == TopFSMStatus_Access) {
             D_Access_Process(ctx, isSplit, word, code, size);
-        } else if (top_status == TopBT_Import) {
+        } else if (top_status == TopFSMStatus_Import) {
             D_Import_Process(ctx, isSplit, word, code, size);
-        } else if (top_status == TopBT_Func) {
+        } else if (top_status == TopFSMStatus_Func) {
             D_Func_Process(ctx, isSplit, word, code, size);
-        } else if (top_status == TopBT_Unknown) {
-            D_Unknown_Process(ctx, isSplit, word, code, size);
+        } else if (top_status == TopFSMStatus_Guess) {
+            D_Guess_Process(ctx, isSplit, word, code, size);
         }
 
         if (!isSplit) {

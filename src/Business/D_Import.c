@@ -38,6 +38,6 @@ void D_Import_Process(Context *ctx, bool isSplit, const string word, const strin
         E_Doc_Import_Add(doc, import);
         PLog("import:%s\r\n", importName);
 
-        D_Unknown_Enter(ctx);
+        D_Guess_Enter(ctx);
     }
 }

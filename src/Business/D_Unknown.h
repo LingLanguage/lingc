@@ -3,7 +3,7 @@
 
 #include "import.h"
 
-void D_Unknown_Enter(Context *ctx);
-void D_Unknown_Process(Context *ctx, bool isSplit, const string word, const string code, long size);
+void D_Guess_Enter(Context *ctx);
+void D_Guess_Process(Context *ctx, bool isSplit, const string word, const string code, long size);
 
 #endif

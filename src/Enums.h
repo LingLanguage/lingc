@@ -8,17 +8,18 @@ typedef enum ImportType {
 } ImportType;
 
 typedef enum TopFSMStatus {
-    TopBT_Unknown = 0,
-    TopBT_Something,
-    TopBT_Import,
-    TopBT_Access,
-    TopBT_Func,
-    TopBT_Struct,
+    TopFSMStatus_Guess = 0,
+    TopFSMStatus_Something,
+    TopFSMStatus_Import,
+    TopFSMStatus_Access,
+    TopFSMStatus_Func,
+    TopFSMStatus_Struct,
 } TopFSMStatus;
 
 typedef enum StructPhase {
     StructPhase_Name = 0,
     StructPhase_Guess,
+    StructPhase_Access,
     StructPhase_Field,
     StructPhase_Function,
 } StructPhase;

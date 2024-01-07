@@ -1,7 +1,7 @@
 import <stdio.h>;
 import "BB.ling";
 
-public struct ST {
+struct ST {
     
     i8 a;
     public i16 b;
