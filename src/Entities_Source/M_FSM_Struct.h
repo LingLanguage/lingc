@@ -7,6 +7,13 @@
 typedef struct M_FSM_Struct {
     E_Struct st;
     StructPhase phase;
+    int nested_level;
+    char guess_access[RULE_ACCESS_NAME_LEN];
+    char guess_words[RULE_VAR_NAME_MAX][RULE_FUNCTION_RETURN_COUNT];
+    int guess_words_count;
+    M_FSM_Func fsm_func;
 } M_FSM_Struct;
+
+void M_FSM_Struct_EnterGuess(M_FSM_Struct *fsm);
 
 #endif

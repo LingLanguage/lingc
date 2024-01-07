@@ -21,7 +21,7 @@ typedef enum StructPhase {
     StructPhase_Guess,
     StructPhase_Access,
     StructPhase_Field,
-    StructPhase_Function,
+    StructPhase_Func,
 } StructPhase;
 
 typedef enum FuncPhase {

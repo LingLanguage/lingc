@@ -1,12 +1,14 @@
 #include "Business/B_Tokenize.c"
 #include "Business/D_Access.c"
-#include "Business/D_Func.c"
+#include "Business/D_Top_Func.c"
 #include "Business/D_Import.c"
 #include "Business/D_Struct.c"
 #include "Business/D_Unknown.c"
 
 #include "Entities_Source/E_Doc.c"
 #include "Entities_Source/E_Function.c"
+#include "Entities_Source/M_FSM_Func.c"
+#include "Entities_Source/M_FSM_Struct.c"
 #include "Entities_Source/E_StaticVar.c"
 #include "Entities_Source/E_Struct.c"
 

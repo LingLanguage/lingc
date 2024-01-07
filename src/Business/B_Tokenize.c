@@ -1,6 +1,6 @@
 #include "B_Tokenize.h"
 #include "D_Access.h"
-#include "D_Func.h"
+#include "D_Top_Func.h"
 #include "D_Import.h"
 #include "D_Struct.h"
 #include "D_Unknown.h"
@@ -53,7 +53,7 @@ void B_Tokenize_SeqMove(Context *ctx, string filename, string code, long size) {
         } else if (top_status == TopFSMStatus_Import) {
             D_Import_Process(ctx, isSplit, word, code, size);
         } else if (top_status == TopFSMStatus_Func) {
-            D_Func_Process(ctx, isSplit, word, code, size);
+            D_Top_Func_Process(ctx, isSplit, word, code, size);
         } else if (top_status == TopFSMStatus_Guess) {
             D_Guess_Process(ctx, isSplit, word, code, size);
         }

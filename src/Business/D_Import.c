@@ -34,7 +34,7 @@ void D_Import_Process(Context *ctx, bool isSplit, const string word, const strin
     if (split == KW_SEMICOLON && fsm->leftIndex != 0 && fsm->rightIndex != 0) {
         const string importName = TextSubtext(code, fsm->leftIndex, fsm->rightIndex - fsm->leftIndex);
 
-        E_Import import = Factory_CreateImport(ctx, importName, fsm->importType);
+        E_Import import = Factory_CreateImport(importName, fsm->importType);
         E_Doc_Import_Add(doc, import);
         PLog("import:%s\r\n", importName);
 

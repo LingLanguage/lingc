@@ -5,24 +5,24 @@ struct ST {
     
     i8 a;
     public i16 b;
-    external i32 c;
-    internal bool d;
+    i32 c;
+    bool d;
+
+    fn i8,i32 Yo(i8 a) {
+        return a, a;
+    }
 
     public fn void Log() {
         printf(a.ToString());
     }
 
-    fn i8 Yo(i8 a) {
-        return a;
-    }
-
 }
 
-public fn i32 Main() {
+public static fn i32 Main() {
     printf("Hello World!");
     return 0;
 }
 
-fn i32, i32 Out(i32 a, i32 b) {
+static fn i32, i32 Out(i32 a, i32 b) {
     return a, b;
 }

@@ -28,13 +28,6 @@ typedef struct E_Doc {
     M_FSM_Func fsm_func;
     M_FSM_Struct fsm_struct;
 
-    char access[RULE_ACCESS_NAME_LEN];
-    char typeName[RULE_STRUCT_TYPE_NAME_MAX];
-    char name[RULE_VAR_NAME_MAX];
-    char lastWords[RULE_VAR_NAME_MAX][12];
-    int lastWordsCount;
-    int topID;
-
 } E_Doc;
 
 void E_Doc_Reset(E_Doc *doc);
@@ -44,6 +37,5 @@ void E_Doc_FSM_Import_Enter(E_Doc *doc);
 void E_Doc_FSM_Access_Enter(E_Doc *doc, const string access);
 void E_Doc_FSM_Struct_Enter(E_Doc *doc, const string access, bool is_static);
 void E_Doc_FSM_Func_Enter(E_Doc *doc, const string access, bool is_static);
-void E_Doc_SlideWord(E_Doc *doc, const string word);
 
 #endif

@@ -6,14 +6,16 @@
 #include <string.h>
 #include <utf8.h>
 
-#include "Errors.h"
 #include "Enums.h"
+#include "Errors.h"
 
 #define PLogNA(x) printf("%s:%d %s", __FILE__, __LINE__, x)
 #define PLog(x, ...)                                                                                                                                           \
     printf("%s:%d ", __FILE__, __LINE__);                                                                                                                      \
     printf(x, __VA_ARGS__)
-
+#define PLogCode(file, line, err)                                                                                                                                   \
+    PLogNA("[Err]");                                                                                                                                       \
+    printf("%s %s:%d\r\n", err, file, line)
 #define string utf8_int8_t *
 #define byte unsigned char
 
@@ -130,6 +132,13 @@ static string KW_ACCESS[] = {
 static const int KW_ACCESS_COUNT = 1;
 static string KW_ACCESS_PRIVATE = "private";
 static string KW_STATIC = "static";
+static const string ValidAccess(const string access) {
+    if (strlen(access) == 0) {
+        return KW_ACCESS_PRIVATE;
+    } else {
+        return access;
+    }
+}
 
 static string KW_IMPORT = "import";
 

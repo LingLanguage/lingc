@@ -38,31 +38,11 @@ void E_Doc_FSM_Struct_Enter(E_Doc *doc, const string access, bool is_static) {
     M_FSM_Struct *fsm = &doc->fsm_struct;
     memset(fsm, 0, sizeof(M_FSM_Struct));
     fsm->st.is_static = is_static;
-    PLog("E_Doc_FSM_Struct_Enter %s\r\n", access);
-    strcpy(fsm->st.access, access);
+    strcpy(fsm->st.access, ValidAccess(access));
 }
 
 void E_Doc_FSM_Func_Enter(E_Doc *doc, const string access, bool is_static) {
     doc->top_status = TopFSMStatus_Func;
     M_FSM_Func *fsm = &doc->fsm_func;
-    memset(fsm, 0, sizeof(M_FSM_Func));
-    strcpy(fsm->function.access, access);
-    fsm->function.is_static = is_static;
-}
-
-void E_Doc_SlideWord(E_Doc *doc, const string word) {
-
-    int capacity = sizeof(doc->lastWords) / sizeof(doc->lastWords[0]);
-    if (doc->lastWordsCount < capacity) {
-        strcpy(doc->lastWords[doc->lastWordsCount], word);
-        doc->lastWordsCount++;
-        return;
-    }
-
-    int i = 0;
-    while (i < doc->lastWordsCount - 1) {
-        strcpy(doc->lastWords[i], doc->lastWords[i + 1]);
-        i++;
-    }
-    strcpy(doc->lastWords[doc->lastWordsCount - 1], word);
+    M_FSM_Func_Enter(fsm, access, is_static);
 }

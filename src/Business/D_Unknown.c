@@ -1,5 +1,5 @@
 #include "D_Unknown.h"
-#include "D_Func.h"
+#include "D_Top_Func.h"
 #include "D_Import.h"
 #include "D_Struct.h"
 
@@ -20,7 +20,7 @@ void D_Guess_Process(Context *ctx, bool isSplit, const string word, const string
     } else if (Context_IsAccess(ctx, word)) {
         D_Access_Enter(ctx, word);
     } else if (strcmp(word, KW_FUNC) == 0) {
-        D_Func_Enter(ctx, KW_ACCESS_PRIVATE, fsm->is_static);
+        D_Top_Func_Enter(ctx, KW_ACCESS_PRIVATE, fsm->is_static);
     } else if (strcmp(word, KW_STRUCT) == 0) {
         D_Struct_Enter(ctx, KW_ACCESS_PRIVATE, fsm->is_static);
     } else if (strcmp(word, KW_STATIC) == 0) {
