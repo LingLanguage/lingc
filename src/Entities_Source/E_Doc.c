@@ -1,13 +1,7 @@
 #include "E_Doc.h"
 
 void E_Doc_Reset(E_Doc *doc) {
-    doc->topBT = TopBT_Unknown;
-    doc->topID = -1;
-
-    doc->struct_isBegin = false;
-    doc->struct_nestedLevel = 0;
-
-    doc->lastWordsCount = 0;
+    memset(doc, 0, sizeof(E_Doc));
 }
 
 void E_Doc_Import_Add(E_Doc *doc, E_Import import) {
@@ -21,19 +15,31 @@ void E_Doc_Import_Add(E_Doc *doc, E_Import import) {
 
 // ==== FSM ====
 void E_Doc_FSM_Import_Enter(E_Doc *doc) {
-    doc->topBT = TopBT_Import;
+    doc->top_status = TopBT_Import;
     memset(&doc->fsm_import, 0, sizeof(M_FSM_Import));
 }
 
-void E_Doc_FSM_Access_Enter(E_Doc *doc) {
-    doc->topBT = TopBT_Access;
-    memset(&doc->fsm_access, 0, sizeof(M_FSM_Access));
+void E_Doc_FSM_Access_Enter(E_Doc *doc, const string access) {
+    doc->top_status = TopBT_Access;
+    M_FSM_Access *fsm = &doc->fsm_access;
+    memset(fsm, 0, sizeof(M_FSM_Access));
+    strcpy(fsm->access, access);
 }
 
-void E_Doc_FSM_Func_Enter(E_Doc *doc, const string access) {
-    doc->topBT = TopBT_Func;
-    memset(&doc->fsm_func, 0, sizeof(M_FSM_Func));
-    strcpy(doc->fsm_func.function.access, access);
+void E_Doc_FSM_Struct_Enter(E_Doc *doc, const string access, bool is_static) {
+    doc->top_status = TopBT_Struct;
+    M_FSM_Struct *fsm = &doc->fsm_struct;
+    memset(fsm, 0, sizeof(M_FSM_Struct));
+    fsm->st.is_static = is_static;
+    strcpy(fsm->st.access, access);
+}
+
+void E_Doc_FSM_Func_Enter(E_Doc *doc, const string access, bool is_static) {
+    doc->top_status = TopBT_Func;
+    M_FSM_Func *fsm = &doc->fsm_func;
+    memset(fsm, 0, sizeof(M_FSM_Func));
+    strcpy(fsm->function.access, access);
+    fsm->function.is_static = is_static;
 }
 
 void E_Doc_SlideWord(E_Doc *doc, const string word) {
@@ -51,24 +57,4 @@ void E_Doc_SlideWord(E_Doc *doc, const string word) {
         i++;
     }
     strcpy(doc->lastWords[doc->lastWordsCount - 1], word);
-}
-
-void E_Doc_Struct_Unknow_Enter(E_Doc *doc) {
-    doc->struct_behaviourType = StructBT_Unknown;
-}
-
-void E_Doc_Struct_Something_Enter(E_Doc *doc) {
-    doc->struct_behaviourType = StructBT_Something;
-}
-
-void E_Doc_Struct_AfterAccess_Enter(E_Doc *doc) {
-    doc->struct_behaviourType = StructBT_AfterAccess;
-}
-
-void E_Doc_Struct_Field_Enter(E_Doc *doc) {
-    doc->struct_behaviourType = StructBT_Field;
-}
-
-void E_Doc_Struct_Function_Enter(E_Doc *doc) {
-    doc->struct_behaviourType = StructBT_Function;
 }

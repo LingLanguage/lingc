@@ -2,6 +2,7 @@
 #include "Business/D_Access.c"
 #include "Business/D_Func.c"
 #include "Business/D_Import.c"
+#include "Business/D_Struct.c"
 #include "Business/D_Unknown.c"
 
 #include "Entities_Source/E_Doc.c"

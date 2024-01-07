@@ -3,7 +3,7 @@
 
 #include "import.h"
 
-void D_Access_Enter(Context* ctx);
-void D_Access_Process(Context* ctx, bool isSplit, const string word, const string code, long size);
+void D_Access_Enter(Context* ctx, const string access);
+void D_Access_Process(Context* ctx, bool is_split, const string word, const string code, long size);
 
 #endif

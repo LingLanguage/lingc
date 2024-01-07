@@ -2,6 +2,7 @@
 #include "D_Access.h"
 #include "D_Func.h"
 #include "D_Import.h"
+#include "D_Struct.h"
 #include "D_Unknown.h"
 
 void B_Tokenize_SeqMove(Context *ctx, string filename, string code, long size) {
@@ -17,17 +18,18 @@ void B_Tokenize_SeqMove(Context *ctx, string filename, string code, long size) {
 
     while (doc->endIndex < size) {
 
-        TopBT topBT = doc->topBT;
+        TopFSMStatus top_status = doc->top_status;
 
         int startIndex = doc->startIndex;
-        int endIndex = doc->endIndex;
+        int endIndex = doc->startIndex;
         char c = code[doc->startIndex];
         bool isSplit = true;
         char validVar = Context_IsLetterOrUnderline(ctx, c);
 
+        const string word;
         if (validVar != 0) {
             isSplit = false;
-            // 非分隔符, 读取到分隔符为止, 作为一个单词
+            // 非分隔符, 读取到下个分隔符为止, 作为一个单词
             for (int i = doc->startIndex + 1; i < size; i++) {
                 char tmp = code[i];
                 char validVar = Context_IsLetterOrNumberOrUnderline(ctx, tmp);
@@ -36,32 +38,31 @@ void B_Tokenize_SeqMove(Context *ctx, string filename, string code, long size) {
                     break;
                 }
             }
+            word = TextSubtext(code, startIndex, endIndex - startIndex);
         } else {
             // 分隔符, 不读取, 直接跳过
+            word = TextSubtext(code, startIndex, 1);
         }
 
-        const string word;
-        doc->startIndex = startIndex;
         doc->endIndex = endIndex;
-        if (!isSplit) {
-            word = TextSubtext(code, startIndex, endIndex - startIndex);
-            // PLog("word:%s\r\n", word);
-        } else {
-            endIndex = startIndex + 1;
-            word = TextSubtext(code, startIndex, endIndex - startIndex);
-            // PLog("split:%s\r\n", word);
-        }
-        if (topBT == TopBT_Unknown) {
-            D_Unknown_Process(ctx, isSplit, word, code, size);
-        } else if (topBT == TopBT_Access) {
+
+        if (top_status == TopBT_Struct) {
+            D_Struct_Process(ctx, isSplit, word, code, size);
+        } else if (top_status == TopBT_Access) {
             D_Access_Process(ctx, isSplit, word, code, size);
-        } else if (topBT == TopBT_Import) {
+        } else if (top_status == TopBT_Import) {
             D_Import_Process(ctx, isSplit, word, code, size);
-        } else if (topBT == TopBT_Func) {
+        } else if (top_status == TopBT_Func) {
             D_Func_Process(ctx, isSplit, word, code, size);
+        } else if (top_status == TopBT_Unknown) {
+            D_Unknown_Process(ctx, isSplit, word, code, size);
         }
-        doc->startIndex = endIndex;
-        doc->endIndex = endIndex;
+
+        if (!isSplit) {
+            doc->startIndex = endIndex;
+        } else {
+            doc->startIndex = endIndex + 1;
+        }
 
         if (c == KW_NEWLINE) {
             doc->curLine++;

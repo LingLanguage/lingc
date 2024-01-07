@@ -7,22 +7,21 @@ typedef enum ImportType {
     ImportType_ANGLE_BRACKET,
 } ImportType;
 
-typedef enum TopBT {
+typedef enum TopFSMStatus {
     TopBT_Unknown = 0,
     TopBT_Something,
     TopBT_Import,
     TopBT_Access,
     TopBT_Func,
     TopBT_Struct,
-} TopBT;
+} TopFSMStatus;
 
-typedef enum StructBT {
-    StructBT_Unknown = 0,
-    StructBT_Something,
-    StructBT_AfterAccess,
-    StructBT_Field,
-    StructBT_Function,
-} StructBT;
+typedef enum StructPhase {
+    StructPhase_Name = 0,
+    StructPhase_Guess,
+    StructPhase_Field,
+    StructPhase_Function,
+} StructPhase;
 
 typedef enum FuncPhase {
     FuncPhase_ReturnType = 0,

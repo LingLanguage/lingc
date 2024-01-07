@@ -1,17 +1,23 @@
 #ifndef E_FUNCTION_H__
 #define E_FUNCTION_H__
-#include "import.h"
 #include "M_Var.h"
+#include "import.h"
 
 typedef struct E_Function {
+
     int id;
     int index;
+
     char access[RULE_ACCESS_NAME_LEN];
+    bool is_static;
     char name[RULE_FUNCTION_NAME_LEN];
+
     char returnTypes[RULE_STRUCT_TYPE_NAME_MAX][RULE_FUNCTION_RETURN_COUNT];
     int returnTypes_count;
+
     M_Var params[RULE_FUNCTION_PARAM_COUNT];
-    // TODO: Statements
+    int params_count;
+
 } E_Function;
 
 void E_Function_Free(E_Function *self);

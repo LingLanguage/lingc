@@ -6,6 +6,7 @@
 #include "M_FSM_Access.h"
 #include "M_FSM_Func.h"
 #include "M_FSM_Import.h"
+#include "M_FSM_Struct.h"
 #include "import.h"
 
 typedef struct E_Doc {
@@ -16,20 +17,14 @@ typedef struct E_Doc {
     int startIndex;
     int endIndex;
 
-    TopBT topBT;
-
     E_Import *imports;
     int imports_count;
 
+    TopFSMStatus top_status;
     M_FSM_Import fsm_import;
     M_FSM_Access fsm_access;
     M_FSM_Func fsm_func;
-
-    E_Struct struct_current;
-    bool struct_isBegin;
-    StructBT struct_behaviourType;
-    int struct_nestedLevel;
-    int struct_lastIndex;
+    M_FSM_Struct fsm_struct;
 
     char access[RULE_ACCESS_NAME_LEN];
     char typeName[RULE_STRUCT_TYPE_NAME_MAX];
@@ -43,13 +38,9 @@ typedef struct E_Doc {
 void E_Doc_Reset(E_Doc *doc);
 void E_Doc_Import_Add(E_Doc *doc, E_Import import);
 void E_Doc_FSM_Import_Enter(E_Doc *doc);
-void E_Doc_FSM_Access_Enter(E_Doc *doc);
-void E_Doc_FSM_Func_Enter(E_Doc *doc, const string access);
+void E_Doc_FSM_Access_Enter(E_Doc *doc, const string access);
+void E_Doc_FSM_Struct_Enter(E_Doc *doc, const string access, bool is_static);
+void E_Doc_FSM_Func_Enter(E_Doc *doc, const string access, bool is_static);
 void E_Doc_SlideWord(E_Doc *doc, const string word);
-void E_Doc_Struct_Unknow_Enter(E_Doc *ctx);
-void E_Doc_Struct_Something_Enter(E_Doc *doc);
-void E_Doc_Struct_AfterAccess_Enter(E_Doc *doc);
-void E_Doc_Struct_Field_Enter(E_Doc *doc);
-void E_Doc_Struct_Function_Enter(E_Doc *doc);
 
 #endif

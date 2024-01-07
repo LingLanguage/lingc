@@ -6,9 +6,12 @@
 #include "import.h"
 
 typedef struct E_Struct {
+
     int id;
     int index;
+
     char access[RULE_ACCESS_NAME_LEN];
+    bool is_static;
     char name[RULE_STRUCT_TYPE_NAME_MAX];
 
     E_Field *fields;
