@@ -11,5 +11,6 @@
 #define RULE_STRUCT_FIELD_NAME_MAX   128
 #define RULE_ACCESS_NAME_LEN         12
 #define RULE_VAR_NAME_LEN            128
+#define RULE_OPERATOR_NAME_LEN       6
 
 #endif

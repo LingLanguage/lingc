@@ -1,5 +1,5 @@
-#ifndef E_TYPE_H__
-#define E_TYPE_H__
+#ifndef E_STRUCT_H__
+#define E_STRUCT_H__
 
 #include "E_Field.h"
 #include "E_Function.h"

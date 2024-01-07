@@ -44,6 +44,8 @@
         "d_top_access.h": "c",
         "factory.h": "c",
         "e_guess.h": "c",
-        "m_fsm_struct.h": "c"
+        "m_fsm_struct.h": "c",
+        "m_operator.h": "c",
+        "e_field.h": "c"
     }
 }

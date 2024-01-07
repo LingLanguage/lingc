@@ -31,6 +31,36 @@ typedef enum FuncPhase {
     FuncPhase_Body,
 } FuncPhase;
 
+typedef enum ExpressionType {
+    ExpressionType_None = 0,
+    ExpressionType_CallFunc,
+    ExpressionType_ConstValue,
+    ExpressionType_Variable,
+} ExpressionType;
+
+typedef enum OperatorType {
+    OperatorType_None = 0,
+    OperatorType_Calculation,   // + - * / %
+    OperatorType_Compare,       // == != > < >= <=
+    OperatorType_Binary,        // & | ^ << >> ~
+    OperatorType_Logic,         // && ||
+    OperatorType_Assign,        // = += -= *= /= %= &= |= ^= <<= >>=
+    OperatorType_Increment,     // ++ --
+    OperatorType_Pointer,       // * &
+    OperatorType_Condition,     // ? :
+    OperatorType_Sizeof,        // sizeof
+    OperatorType_Member,        // .
+    OperatorType_MemberPointer, // ->
+    OperatorType_End,           // ;
+} OperatorType;
+
+typedef enum ArgumentType {
+    ArgumentType_None = 0,
+    ArgumentType_ConstValue,
+    ArgumentType_Variable,
+    ArgumentType_Expression,
+} ArgumentType;
+
 typedef enum StatementType {
     StatementType_None = 0,
     StatementType_OnlyLeft = 1,

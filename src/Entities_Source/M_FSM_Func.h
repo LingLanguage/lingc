@@ -2,7 +2,7 @@
 #define M_FSM_FUNC_H__
 
 #include "E_Function.h"
-#include "M_Var.h"
+#include "M_Parameter.h"
 #include "import.h"
 
 typedef struct M_FSM_Func {

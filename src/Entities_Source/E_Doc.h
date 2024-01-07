@@ -1,5 +1,5 @@
-#ifndef E_CURSOR_H__
-#define E_CURSOR_H__
+#ifndef E_DOC_H__
+#define E_DOC_H__
 
 #include "E_Import.h"
 #include "E_Struct.h"

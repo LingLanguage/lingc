@@ -1,5 +1,5 @@
-#ifndef D_STRUCT_H__
-#define D_STRUCT_H__
+#ifndef D_TOP_STRUCT_H__
+#define D_TOP_STRUCT_H__
 
 #include "import.h"
 

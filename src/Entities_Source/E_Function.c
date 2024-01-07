@@ -14,7 +14,7 @@ void E_Function_AddReturnType(E_Function *self, const string type) {
 }
 
 void E_Function_AddParam(E_Function *self, const string type, const string name) {
-    M_Var *param = &self->params[self->params_count];
+    M_Parameter *param = &self->params[self->params_count];
     strcpy(param->name, name);
     strcpy(param->type, type);
     self->params_count++;
@@ -30,7 +30,7 @@ void E_Function_Log(const E_Function *self) {
     char params[RULE_STRUCT_TYPE_NAME_LEN * RULE_FUNCTION_PARAM_COUNT];
     memset(params, 0, sizeof(params));
     for (int i = 0; i < self->params_count; i++) {
-        M_Var param = self->params[i];
+        M_Parameter param = self->params[i];
         strcat(params, param.type);
         strcat(params, " ");
         strcat(params, param.name);
