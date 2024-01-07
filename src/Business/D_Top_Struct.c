@@ -1,4 +1,4 @@
-#include "D_Struct.h"
+#include "D_Top_Struct.h"
 #include "D_Top_Guess.h"
 
 void Field_End(string file, int line, M_FSM_Struct *fsm) {
@@ -14,12 +14,12 @@ void Field_End(string file, int line, M_FSM_Struct *fsm) {
     }
 }
 
-void D_Struct_Enter(Context *ctx, const string access, bool is_static) {
+void D_Top_Struct_Enter(Context *ctx, const string access, bool is_static) {
     E_Doc *doc = ctx->doc;
     E_Doc_FSM_Struct_Enter(doc, access, is_static);
 }
 
-void D_Struct_Process(Context *ctx, bool isSplit, const string word, const string code, long size) {
+void D_Top_Struct_Process(Context *ctx, bool isSplit, const string word, const string code, long size) {
     E_Doc *doc = ctx->doc;
     M_FSM_Struct *fsm = &doc->fsm_struct;
     E_Struct *st = &fsm->st;
@@ -57,7 +57,7 @@ void D_Struct_Process(Context *ctx, bool isSplit, const string word, const strin
             } else if (word[0] == KW_RIGHT_BRACE) {
                 fsm->nested_level -= 1;
                 if (fsm->nested_level == 0) {
-                    D_Guess_Enter(ctx);
+                    D_Top_Guess_Enter(ctx);
                 }
             }
         }
