@@ -21,3 +21,24 @@ void E_Struct_Free(E_Struct *self) {
 void E_Struct_RecordField(E_Struct *self, E_Field field) {
     Field_Add(self, field);
 }
+
+void E_Struct_RecordFunction(E_Struct *self, E_Function function) {
+    if (self->functions_count == 0) {
+        self->functions = (E_Function *)malloc(sizeof(E_Function) * 4);
+    } else {
+        self->functions = (E_Function *)realloc(self->functions, sizeof(E_Function) * (self->functions_count * 2));
+    }
+    self->functions[self->functions_count++] = function;
+}
+
+void E_Struct_Log(const E_Struct *self) {
+    printf("Struct: %s %s\r\n", self->access, self->name);
+    for (int i = 0; i < self->fields_count; i++) {
+        printf("\t");
+        E_Field_Log(&self->fields[i]);
+    }
+    for (int i = 0; i < self->functions_count; i++) {
+        printf("\t");
+        E_Function_Log(&self->functions[i]);
+    }
+}

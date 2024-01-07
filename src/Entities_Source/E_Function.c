@@ -20,7 +20,7 @@ void E_Function_AddParam(E_Function *self, const string type, const string name)
     self->params_count++;
 }
 
-void E_Function_Log(E_Function *self) {
+void E_Function_Log(const E_Function *self) {
     char returnTypes[RULE_STRUCT_TYPE_NAME_LEN * RULE_FUNCTION_RETURN_COUNT];
     memset(returnTypes, 0, sizeof(returnTypes));
     for (int i = 0; i < self->returnTypes_count; i++) {
@@ -30,10 +30,10 @@ void E_Function_Log(E_Function *self) {
     char params[RULE_STRUCT_TYPE_NAME_LEN * RULE_FUNCTION_PARAM_COUNT];
     memset(params, 0, sizeof(params));
     for (int i = 0; i < self->params_count; i++) {
-        M_Var *param = &self->params[i];
-        strcat(params, param->type);
+        M_Var param = self->params[i];
+        strcat(params, param.type);
         strcat(params, " ");
-        strcat(params, param->name);
+        strcat(params, param.name);
     }
-    PLog("Function: %s fn%s%s(%s) \r\n", self->access, returnTypes, self->name, params);
+    printf("Function: %s fn%s%s(%s) \r\n", self->access, returnTypes, self->name, params);
 }

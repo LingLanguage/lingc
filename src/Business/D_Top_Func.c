@@ -8,6 +8,7 @@ void D_Top_Func_Process(E_Doc *doc, bool is_split, const string word, const stri
     M_FSM_Func *fsm = &doc->fsm_func;
     M_FSM_Func_Process(fsm, doc->curFile, doc->curLine, is_split, word, code, size);
     if (fsm->is_done) {
+        E_Doc_StaticFunc_Add(doc, fsm->function);
         D_Top_Guess_Enter(doc);
     }
 }

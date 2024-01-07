@@ -86,6 +86,7 @@ void D_Top_Struct_Process(E_Doc *doc, bool isSplit, const string word, const str
         M_FSM_Func *fsm_func = &fsm->fsm_func;
         M_FSM_Func_Process(fsm_func, doc->curFile, doc->curLine, isSplit, word, code, size);
         if (fsm_func->is_done) {
+            E_Struct_RecordFunction(st, fsm_func->function);
             M_FSM_Struct_EnterGuess(fsm);
         }
     }

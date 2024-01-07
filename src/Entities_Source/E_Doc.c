@@ -58,6 +58,15 @@ void E_Doc_StaticVar_Add(E_Doc *doc, E_Field field) {
     doc->static_vars[doc->static_vars_count++] = field;
 }
 
+void E_Doc_StaticFunc_Add(E_Doc *doc, E_Function func) {
+    if (doc->static_funcs_count == 0) {
+        doc->static_funcs = (E_Function *)malloc(sizeof(E_Function) * 4);
+    } else {
+        doc->static_funcs = (E_Function *)realloc(doc->static_funcs, sizeof(E_Function) * (doc->static_funcs_count * 2));
+    }
+    doc->static_funcs[doc->static_funcs_count++] = func;
+}
+
 // ==== FSM ====
 void E_Doc_FSM_Guess_Enter(E_Doc *doc) {
     doc->top_status = TopFSMStatus_Guess;
@@ -90,4 +99,33 @@ void E_Doc_FSM_Func_Enter(E_Doc *doc, const string access, bool is_static) {
     doc->top_status = TopFSMStatus_Func;
     M_FSM_Func *fsm = &doc->fsm_func;
     M_FSM_Func_Enter(fsm, access, is_static);
+}
+
+// ==== Log ====
+void E_Doc_Log(E_Doc *doc) {
+    printf("==== Doc ====\r\n");
+    printf("file: %s, total line: %d\r\n", doc->curFile, doc->curLine);
+    // printf("imports_count: %d\r\n", doc->imports_count);
+    // printf("structs_count: %d\r\n", doc->structs_count);
+    // printf("static_funcs_count: %d\r\n", doc->static_funcs_count);
+    // printf("static_vars_count: %d\r\n", doc->static_vars_count);
+    for (int i = 0; i < doc->imports_count; i++) {
+        E_Import *import = &doc->imports[i];
+        printf("import: %s\r\n", import->name);
+    }
+    for (int i = 0; i < doc->structs_count; i++) {
+        E_Struct *st = &doc->structs[i];
+        E_Struct_Log(st);
+    }
+    for (int i = 0; i < doc->static_funcs_count; i++) {
+        E_Function *func = &doc->static_funcs[i];
+        printf("static ");
+        E_Function_Log(func);
+    }
+    for (int i = 0; i < doc->static_vars_count; i++) {
+        E_Field *var = &doc->static_vars[i];
+        printf("static ");
+        E_Field_Log(var);
+    }
+    printf("==== End ====\r\n\r\n");
 }

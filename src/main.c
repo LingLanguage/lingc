@@ -44,8 +44,15 @@ int main(int argc, char **argv) {
     for (int i = 0; i < count; i++) {
         free(files[i]);
     }
+#define DEBUG_DOC
+#ifdef DEBUG_DOC
+    for (int i = 0; i < ctx->docs_count; i++) {
+        E_Doc *doc = ctx->docs[i];
+        E_Doc_Log(doc);
+    }
+#endif
 
-#if DEBUG_DRAW
+#ifdef DEBUG_DRAW
     InitWindow(800, 600, "Hello, world!");
     while (!WindowShouldClose()) {
         BeginDrawing();

@@ -45,10 +45,12 @@ void E_Doc_Init(E_Doc *doc, const string file);
 void E_Doc_Import_Add(E_Doc *doc, E_Import import);
 void E_Doc_Struct_Add(E_Doc *doc, E_Struct st);
 void E_Doc_StaticVar_Add(E_Doc *doc, E_Field var);
+void E_Doc_StaticFunc_Add(E_Doc *doc, E_Function func);
 void E_Doc_FSM_Guess_Enter(E_Doc *doc);
 void E_Doc_FSM_Import_Enter(E_Doc *doc);
 void E_Doc_FSM_Access_Enter(E_Doc *doc, const string access);
 void E_Doc_FSM_Struct_Enter(E_Doc *doc, const string access, bool is_static);
 void E_Doc_FSM_Func_Enter(E_Doc *doc, const string access, bool is_static);
+void E_Doc_Log(E_Doc *doc);
 
 #endif

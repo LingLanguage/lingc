@@ -10,5 +10,6 @@ typedef struct E_Field {
 } E_Field;
 
 E_Field E_Field_Create(const string access, const string type, const string name);
+void E_Field_Log(const E_Field *self);
 
 #endif

@@ -7,3 +7,7 @@ E_Field E_Field_Create(const string access, const string type, const string name
     strcpy(field.access, String_ValidAccess(access));
     return field;
 }
+
+void E_Field_Log(const E_Field *self) {
+    printf("field: %s %s %s\r\n", self->access, self->type, self->name);
+}

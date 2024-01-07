@@ -25,5 +25,7 @@ typedef struct E_Struct {
 
 void E_Struct_Free(E_Struct *self);
 void E_Struct_RecordField(E_Struct *self, E_Field field);
+void E_Struct_RecordFunction(E_Struct *self, E_Function function);
+void E_Struct_Log(const E_Struct *self);
 
 #endif
