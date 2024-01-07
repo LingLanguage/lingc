@@ -3,6 +3,6 @@
 #include "import.h"
 #include <raylib.h>
 
-void B_Tokenize_SeqMove(Context *ctx, string filename, string code, long size);
+void B_Tokenize_SeqMove(E_Doc *doc, const string filename, const string code, long size);
 
 #endif

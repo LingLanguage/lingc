@@ -5,13 +5,9 @@
 #include "D_Top_Struct.h"
 #include "D_Top_Guess.h"
 
-void B_Tokenize_SeqMove(Context *ctx, string filename, string code, long size) {
+void B_Tokenize_SeqMove(E_Doc *doc, const string filename, const string code, long size) {
 
-    E_Doc *doc = ctx->doc;
-    E_Doc_Reset(doc);
-
-    doc->curLine = 1;
-    doc->curFile = filename;
+    E_Doc_Init(doc, filename);
 
     const string imported[1000];
     int imported_count = 0;
@@ -47,15 +43,15 @@ void B_Tokenize_SeqMove(Context *ctx, string filename, string code, long size) {
         doc->endIndex = endIndex;
 
         if (top_status == TopFSMStatus_Struct) {
-            D_Top_Struct_Process(ctx, isSplit, word, code, size);
+            D_Top_Struct_Process(doc, isSplit, word, code, size);
         } else if (top_status == TopFSMStatus_Access) {
-            D_Top_Access_Process(ctx, isSplit, word, code, size);
+            D_Top_Access_Process(doc, isSplit, word, code, size);
         } else if (top_status == TopFSMStatus_Import) {
-            D_Top_Import_Process(ctx, isSplit, word, code, size);
+            D_Top_Import_Process(doc, isSplit, word, code, size);
         } else if (top_status == TopFSMStatus_Func) {
-            D_Top_Func_Process(ctx, isSplit, word, code, size);
+            D_Top_Func_Process(doc, isSplit, word, code, size);
         } else if (top_status == TopFSMStatus_Guess) {
-            D_Top_Guess_Process(ctx, isSplit, word, code, size);
+            D_Top_Guess_Process(doc, isSplit, word, code, size);
         }
 
         if (!isSplit) {

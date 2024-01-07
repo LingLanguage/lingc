@@ -8,9 +8,8 @@ typedef struct M_FSM_Struct {
     E_Struct st;
     StructPhase phase;
     byte nested_level;
-    char guess_access[RULE_ACCESS_NAME_LEN];
-    char guess_words[RULE_VAR_NAME_LEN][RULE_FUNCTION_RETURN_COUNT];
-    byte guess_words_count;
+    E_Guess guess;
+
     M_FSM_Func fsm_func;
 } M_FSM_Struct;
 

@@ -1,6 +1,6 @@
 #include "Business/export.h"
-#include "Helper/FileHelper.h"
 #include "Generic/StringCommon.h"
+#include "Helper/FileHelper.h"
 #include <raylib.h>
 #include <stdio.h>
 
@@ -14,7 +14,7 @@ int main(int argc, char **argv) {
     string files[100000];
     const string dir = GetWorkingDirectory();
     const string root = TextFormat("%s\\%s\\%s", dir, "tests", "src");
-    PLog("root: %s\r\n", root);
+    // PLog("root: %s\r\n", root);
     int count = File_RecursiveGetFilesByExtension(root, ".ling", 0, files);
     for (int i = 0; i < count; i++) {
 
@@ -27,16 +27,20 @@ int main(int argc, char **argv) {
 
         string str = NULL;
         long size = File_ReadAllText(fp, &str);
-        // PLog("%s code: \r\n%s\r\n", files[i], str);
+
+        // doc
+        E_Doc *doc = calloc(1, sizeof(E_Doc));
+        Context_AddDoc(ctx, doc);
 
         // tokenize
-        B_Tokenize_SeqMove(ctx, files[i], str, size);
+        PLog("Tokenize File: %s\r\n", files[i]);
+        B_Tokenize_SeqMove(doc, files[i], str, size);
 
         fclose(fp);
         free(str);
     }
 
-    // free
+    // free string memory
     for (int i = 0; i < count; i++) {
         free(files[i]);
     }
@@ -51,5 +55,6 @@ int main(int argc, char **argv) {
     CloseWindow();
 #endif
     Context_Free(ctx);
+    PLogNA("Compile Done!\r\n");
     return 0;
 }

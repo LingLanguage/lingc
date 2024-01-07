@@ -2,14 +2,12 @@
 #include "D_Top_Guess.h"
 #include "import.h"
 
-void D_Top_Import_Enter(Context *ctx) {
-    E_Doc *doc = ctx->doc;
+void D_Top_Import_Enter(E_Doc *doc) {
     E_Doc_FSM_Import_Enter(doc);
     // PLogNA("D_Top_Import_Enter\r\n");
 }
 
-void D_Top_Import_Process(Context *ctx, bool isSplit, const string word, const string code, long size) {
-    E_Doc *doc = ctx->doc;
+void D_Top_Import_Process(E_Doc *doc, bool isSplit, const string word, const string code, long size) {
     M_FSM_Import *fsm = &doc->fsm_import;
     int len = strlen(word);
     // PLog("word:%s %d\r\n", word, len);
@@ -38,6 +36,6 @@ void D_Top_Import_Process(Context *ctx, bool isSplit, const string word, const s
         E_Doc_Import_Add(doc, import);
         PLog("import:%s\r\n", importName);
 
-        D_Top_Guess_Enter(ctx);
+        D_Top_Guess_Enter(doc);
     }
 }

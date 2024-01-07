@@ -11,6 +11,8 @@ typedef struct M_FSM_Func {
 
     E_Function function;
 
+    int nested_level;
+
     // for return type
     char words[RULE_STRUCT_TYPE_NAME_LEN][RULE_FUNCTION_RETURN_COUNT + 1];
     byte words_count;
@@ -25,5 +27,4 @@ typedef struct M_FSM_Func {
 
 void M_FSM_Func_Enter(M_FSM_Func *fsm, const string access, bool is_static);
 void M_FSM_Func_Process(M_FSM_Func *fsm, string file, int line, bool is_split, const string word, const string code, long size);
-void M_FSM_Func_EnterParams(M_FSM_Func *fsm);
 #endif

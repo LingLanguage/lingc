@@ -8,8 +8,6 @@ void M_FSM_Struct_Enter(M_FSM_Struct *fsm, const string access, bool is_static) 
 
 void M_FSM_Struct_EnterGuess(M_FSM_Struct *fsm) {
     fsm->phase = StructPhase_Guess;
-    memset(fsm->guess_access, 0, sizeof(fsm->guess_access));
-    memset(fsm->guess_words, 0, sizeof(fsm->guess_words));
-    fsm->guess_words_count = 0;
+    E_Guess_Reset(&fsm->guess);
     memset(&fsm->fsm_func, 0, sizeof(fsm->fsm_func));
 }

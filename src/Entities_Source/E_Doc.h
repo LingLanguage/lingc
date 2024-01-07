@@ -3,7 +3,6 @@
 
 #include "E_Import.h"
 #include "E_Struct.h"
-#include "E_StaticVar.h"
 #include "M_FSM_Access.h"
 #include "M_FSM_Func.h"
 #include "M_FSM_Import.h"
@@ -13,7 +12,7 @@
 
 typedef struct E_Doc {
 
-    string curFile;
+    char curFile[FILENAME_MAX * 2];
     int curLine;
 
     int startIndex;
@@ -28,7 +27,7 @@ typedef struct E_Doc {
     E_Function *static_funcs;
     byte static_funcs_count;
 
-    E_StaticVar *static_vars;
+    E_Field *static_vars;
     byte static_vars_count;
 
     // ==== Temp ====
@@ -41,8 +40,11 @@ typedef struct E_Doc {
 
 } E_Doc;
 
-void E_Doc_Reset(E_Doc *doc);
+void E_Doc_Free(E_Doc *doc);
+void E_Doc_Init(E_Doc *doc, const string file);
 void E_Doc_Import_Add(E_Doc *doc, E_Import import);
+void E_Doc_Struct_Add(E_Doc *doc, E_Struct st);
+void E_Doc_StaticVar_Add(E_Doc *doc, E_Field var);
 void E_Doc_FSM_Guess_Enter(E_Doc *doc);
 void E_Doc_FSM_Import_Enter(E_Doc *doc);
 void E_Doc_FSM_Access_Enter(E_Doc *doc, const string access);

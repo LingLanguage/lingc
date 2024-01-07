@@ -8,4 +8,6 @@ typedef struct M_FSM_Guess {
     bool is_static;
 } M_FSM_Guess;
 
+void M_FSM_Guess_Enter(M_FSM_Guess *fsm);
+
 #endif

@@ -5,10 +5,8 @@
 
 // Access -> static var / static fn / struct / fn / field
 typedef struct M_FSM_Access {
-    char access[RULE_ACCESS_NAME_LEN];
     bool isStatic;
-    char words[RULE_VAR_NAME_LEN][10];
-    byte words_count;
+    E_Guess guess;
 } M_FSM_Access;
 
 #endif

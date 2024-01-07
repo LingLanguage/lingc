@@ -3,7 +3,7 @@
 
 #include "import.h"
 
-void D_Top_Struct_Enter(Context *ctx, const string access, bool is_static);
-void D_Top_Struct_Process(Context *ctx, bool isSplit, const string word, const string code, long size);
+void D_Top_Struct_Enter(E_Doc *doc, const string access, bool is_static);
+void D_Top_Struct_Process(E_Doc *doc, bool isSplit, const string word, const string code, long size);
 
 #endif

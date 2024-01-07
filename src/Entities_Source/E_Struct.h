@@ -3,6 +3,7 @@
 
 #include "E_Field.h"
 #include "E_Function.h"
+#include "E_Guess.h"
 #include "import.h"
 
 typedef struct E_Struct {

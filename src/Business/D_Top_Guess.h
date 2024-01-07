@@ -3,7 +3,7 @@
 
 #include "import.h"
 
-void D_Top_Guess_Enter(Context *ctx);
-void D_Top_Guess_Process(Context *ctx, bool isSplit, const string word, const string code, long size);
+void D_Top_Guess_Enter(E_Doc *doc);
+void D_Top_Guess_Process(E_Doc *doc, bool isSplit, const string word, const string code, long size);
 
 #endif

@@ -8,4 +8,6 @@ typedef struct M_FSM_Import {
     ImportType importType;
 } M_FSM_Import;
 
+void M_FSM_Import_Enter(M_FSM_Import *fsm);
+
 #endif

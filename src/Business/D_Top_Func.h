@@ -3,7 +3,7 @@
 
 #include "import.h"
 
-void D_Top_Func_Enter(Context *ctx, const string access, bool is_static);
-void D_Top_Func_Process(Context *ctx, bool is_split, const string word, const string code, long size);
+void D_Top_Func_Enter(E_Doc *doc, const string access, bool is_static);
+void D_Top_Func_Process(E_Doc *doc, bool is_split, const string word, const string code, long size);
 
 #endif

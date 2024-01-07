@@ -9,4 +9,6 @@ typedef struct E_Field {
     char name[RULE_FUNCTION_NAME_LEN];
 } E_Field;
 
+E_Field E_Field_Create(const string access, const string type, const string name);
+
 #endif

@@ -2,19 +2,39 @@
 #include "D_Top_Func.h"
 #include "D_Top_Struct.h"
 
-void D_Top_Access_Enter(Context *ctx, const string access) {
-    E_Doc *doc = ctx->doc;
+void D_Top_Access_Enter(E_Doc *doc, const string access) {
     E_Doc_FSM_Access_Enter(doc, access);
 }
 
-void D_Top_Access_Process(Context *ctx, bool is_split, const string word, const string code, long size) {
-    E_Doc *doc = ctx->doc;
+void D_Top_Access_Process(E_Doc *doc, bool is_split, const string word, const string code, long size) {
     M_FSM_Access *fsm = &doc->fsm_access;
-    if (strcmp(word, KW_FUNC) == 0) {
-        D_Top_Func_Enter(ctx, fsm->access, fsm->isStatic);
-    } else if (strcmp(word, KW_STRUCT) == 0) {
-        D_Top_Struct_Enter(ctx, fsm->access, fsm->isStatic);
-    } else if (strcmp(word, KW_STATIC) == 0) {
-        fsm->isStatic = true;
+    if (!is_split) {
+        if (strcmp(word, KW_FUNC) == 0) {
+            // fn
+            D_Top_Func_Enter(doc, fsm->guess.access, fsm->isStatic);
+        } else if (strcmp(word, KW_STRUCT) == 0) {
+            // struct
+            D_Top_Struct_Enter(doc, fsm->guess.access, fsm->isStatic);
+        } else if (strcmp(word, KW_STATIC) == 0) {
+            // static
+            fsm->isStatic = true;
+        } else if (String_IsAccess(word)) {
+            // err: access redefined
+            PLogCode(doc->curFile, doc->curLine, ERR_REDIFINED_ACCESS);
+        } else {
+            // push word
+            E_Guess_PushWord(&fsm->guess, doc->curFile, doc->curLine, word);
+        }
+    } else {
+        if (word[0] == KW_SEMICOLON) {
+            // ; field end
+            E_Field field;
+            bool is_ok = E_Guess_Field(&fsm->guess, doc->curFile, doc->curLine, &field);
+            if (is_ok) {
+                E_Doc_StaticVar_Add(doc, field);
+            }
+        } else if (word[0] == KW_RIGHT_BRACE) {
+            PLogCode(doc->curFile, doc->curLine, ERR_FUNC_OR_FIELD_NOT_END);
+        }
     }
 }
