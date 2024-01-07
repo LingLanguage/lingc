@@ -12,7 +12,7 @@ typedef struct E_Function {
     bool is_static;
     char name[RULE_FUNCTION_NAME_LEN];
 
-    char returnTypes[RULE_STRUCT_TYPE_NAME_MAX][RULE_FUNCTION_RETURN_COUNT];
+    char returnTypes[RULE_STRUCT_TYPE_NAME_LEN][RULE_FUNCTION_RETURN_COUNT];
     int returnTypes_count;
 
     M_Var params[RULE_FUNCTION_PARAM_COUNT];

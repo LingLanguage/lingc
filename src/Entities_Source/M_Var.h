@@ -4,8 +4,8 @@
 #include "import.h"
 
 typedef struct M_Var {
-    char type[RULE_STRUCT_TYPE_NAME_MAX];
-    char name[RULE_VAR_NAME_MAX];
+    char type[RULE_STRUCT_TYPE_NAME_LEN];
+    char name[RULE_VAR_NAME_LEN];
 } M_Var;
 
 #endif

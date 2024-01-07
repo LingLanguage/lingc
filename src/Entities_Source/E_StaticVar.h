@@ -5,7 +5,7 @@
 typedef struct E_StaticVar {
     int id;
     int index;
-    char name[RULE_VAR_NAME_MAX];
+    char name[RULE_VAR_NAME_LEN];
 } E_StaticVar;
 
 void E_StaticVar_Free(E_StaticVar *self);

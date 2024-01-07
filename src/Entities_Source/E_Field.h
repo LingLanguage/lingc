@@ -7,7 +7,7 @@ typedef struct E_Field {
     int id;
     int index;
     char name[RULE_FUNCTION_NAME_LEN];
-    char type[RULE_STRUCT_TYPE_NAME_MAX];
+    char type[RULE_STRUCT_TYPE_NAME_LEN];
     char access[RULE_ACCESS_NAME_LEN];
 } E_Field;
 

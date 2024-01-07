@@ -12,11 +12,11 @@ typedef struct M_FSM_Func {
     E_Function function;
 
     // for return type
-    char words[RULE_STRUCT_TYPE_NAME_MAX][RULE_FUNCTION_RETURN_COUNT + 1];
+    char words[RULE_STRUCT_TYPE_NAME_LEN][RULE_FUNCTION_RETURN_COUNT + 1];
     int words_count;
 
-    char tmp_param_type[RULE_STRUCT_TYPE_NAME_MAX];
-    char tmp_param_name[RULE_VAR_NAME_MAX];
+    char tmp_param_type[RULE_STRUCT_TYPE_NAME_LEN];
+    char tmp_param_name[RULE_VAR_NAME_LEN];
     bool tmp_is_in_param_name;
 
     bool is_done;

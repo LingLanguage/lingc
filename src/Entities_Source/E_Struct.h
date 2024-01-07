@@ -12,7 +12,7 @@ typedef struct E_Struct {
 
     char access[RULE_ACCESS_NAME_LEN];
     bool is_static;
-    char name[RULE_STRUCT_TYPE_NAME_MAX];
+    char name[RULE_STRUCT_TYPE_NAME_LEN];
 
     E_Field *fields;
     int fields_count;

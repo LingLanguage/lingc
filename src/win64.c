@@ -6,6 +6,8 @@
 #include "Business/D_Top_Guess.c"
 
 #include "Entities_Source/E_Doc.c"
+#include "Entities_Source/E_Statement.c"
+#include "Entities_Source/E_Expression.c"
 #include "Entities_Source/E_Function.c"
 #include "Entities_Source/M_FSM_Func.c"
 #include "Entities_Source/M_FSM_Struct.c"
