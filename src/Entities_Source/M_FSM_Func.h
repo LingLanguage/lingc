@@ -3,6 +3,7 @@
 
 #include "E_Function.h"
 #include "M_Parameter.h"
+#include "M_FSM_Expression.h"
 #include "import.h"
 
 typedef struct M_FSM_Func {
@@ -14,6 +15,8 @@ typedef struct M_FSM_Func {
     byte nested_level;
 
     E_Guess guess;
+
+    M_FSM_Expression fsm_expression;
 
     // for return type
     char words[RULE_STRUCT_TYPE_NAME_LEN][RULE_FUNCTION_RETURN_COUNT + 1];

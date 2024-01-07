@@ -4,6 +4,8 @@ static char kw_split_symbols[256];
 static char kw_letters[256];
 static char kw_numbers[256];
 
+static char op_sets[256];
+
 static string KW_SYS_TYPES[] = {
     "i8", "i16", "i32", "i64", "i128", "i256", "u8", "u16", "u32", "u64", "u128", "u256", "f32", "f64", "f128", "bool", "string", "byte", "void",
 };
@@ -29,6 +31,8 @@ static string KW_OPERATORS[] = {
     "+", "-",  "*",  "/",  "%",  "++", "--",  "==",  "!=", ">",  "<",  ">=", "<=", "&&", "||", "!", "&", "|", "^", "~", "<<", ">>",
     "=", "+=", "-=", "*=", "/=", "%=", "<<=", ">>=", "&=", "|=", "^=", "(",  ")",  "[",  "]",  "{", "}", ".", ",", ";", ":",
 };
+
+static string OP3_EQUAL[] = {OP3_SET_EQUAL_BIN_LEFT, OP3_SET_EQUAL_BIN_RIGHT};
 
 void StringCommon_Init() {
 
@@ -117,6 +121,60 @@ void StringCommon_Init() {
     kw_numbers[(int)LT_7] = LT_7; // 55 '7'
     kw_numbers[(int)LT_8] = LT_8; // 56 '8'
     kw_numbers[(int)LT_9] = LT_9; // 57 '9'
+
+    memset(op_sets, 0, 256);
+    op_sets[(int)OP_SET_PLUS] = OP_SET_PLUS;         // +
+    op_sets[(int)OP_SET_MINUS] = OP_SET_MINUS;       // -
+    op_sets[(int)OP_SET_MULTIPLY] = OP_SET_MULTIPLY; // *
+    op_sets[(int)OP_SET_DIVIDE] = OP_SET_DIVIDE;     // /
+    op_sets[(int)OP_SET_MOD] = OP_SET_MOD;           // %
+
+    op_sets[(int)OP_SET_BIN_OR] = OP_SET_BIN_OR;   // |
+    op_sets[(int)OP_SET_BIN_AND] = OP_SET_BIN_AND; // &
+    op_sets[(int)OP_SET_BIN_XOR] = OP_SET_BIN_XOR; // ^
+    op_sets[(int)OP_SET_BIN_NOT] = OP_SET_BIN_NOT; // ~
+}
+
+int String_OP_Assign(const string file, int line, int eqIndex, const string code, char *out) {
+
+    // prev2 prev cur
+    // cur next
+    char prev = code[eqIndex - 1];
+    char prev2 = code[eqIndex - 2];
+    char next = code[eqIndex + 1];
+
+    // Err: Not Assign
+    if (next == OP_EQUAL) {
+        // ==
+        PFailed(file, line, ERR_NOT_ASSIGN);
+        return 0;
+    }
+
+    // ==== OP3 ====
+    if (prev2 == prev && prev == OP_CMP_LESS) {
+        // <<=
+        out[0] = prev;
+        out[1] = prev;
+        out[2] = OP_EQUAL;
+        return 3;
+    } else if (prev2 == prev && prev == OP_CMP_MORE) {
+        // >>=
+        out[0] = prev;
+        out[1] = prev;
+        out[2] = OP_EQUAL;
+        return 3;
+    }
+
+    // ==== OP2 Prev ====
+    if (op_sets[(int)prev] == prev) {
+        // += -= *= /= %=
+        // |= &= ^= ~=
+        out[0] = prev;
+        out[1] = OP_EQUAL;
+        return 2;
+    }
+    out[0] = OP_EQUAL;
+    return 1;
 }
 
 bool String_IsAccess(const string word) {

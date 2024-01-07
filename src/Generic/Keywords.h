@@ -84,15 +84,41 @@
 #define LT_8 '8'
 #define LT_9 '9'
 
-#define OP_CALC_MINUS    '-'
-#define OP_CALC_PLUS     '+'
-#define OP_CALC_MULTIPLY '*'
-#define OP_CALC_DIVIDE   '/'
-#define OP_CALC_MOD      '%'
+#define OP_EQUAL       '='
+#define OP_SET_MINUS    '-'
+#define OP_SET_PLUS     '+'
+#define OP_SET_MULTIPLY '*'
+#define OP_SET_DIVIDE   '/'
+#define OP_SET_MOD      '%'
+
+#define OP_SET_BIN_OR  '|'
+#define OP_SET_BIN_AND '&'
+#define OP_SET_BIN_XOR '^'
+#define OP_SET_BIN_NOT '~'
+
+#define OP2_SET_EQUAL_ADD     "+="
+#define OP2_SET_EQUAL_MINUS   "-="
+#define OP2_SET_EQUAL_MULTI   "*="
+#define OP2_SET_EQUAL_DIVIDE  "/="
+#define OP2_SET_EQUAL_MOD     "%="
+#define OP2_SET_EQUAL_BIN_OR  "|="
+#define OP2_SET_EQUAL_BIN_AND "&="
+#define OP2_SET_EQUAL_BIN_XOR "^="
+#define OP2_SET_EQUAL_BIN_NOT "~="
+
+#define OP3_SET_EQUAL_BIN_LEFT   "<<="
+#define OP3_SET_EQUAL_BIN_RIGHT   ">>="
+
+#define OP_CMP_LESS '<'
+#define OP_CMP_MORE '>'
+#define OP_CMP_NOT  '!'
+#define OP2_CMP_EQUAL_EQUAL "=="
+#define OP2_CMP_EQUAL_NOT   "!="
+#define OP2_CMP_EQUAL_LESS  "<="
+#define OP2_CMP_EQUAL_MORE  ">="
 
 #define KW_UNDERLINE   '_'
 #define KW_EQUAL       '='
-#define KW_EQUAL_EQUAL "=="
 
 #define KW_SPACE_STR " "
 #define KW_FUNC      "fn"

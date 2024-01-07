@@ -12,6 +12,7 @@ typedef struct E_Statement {
     StatementType statementType;
     E_Expression expression;
     byte belong_nested_level;
+    M_Operator operator;
 } E_Statement;
 
 E_Statement E_Statement_Create(const string type, const string name, StatementType statementType, byte belong_nested_level);

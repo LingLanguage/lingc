@@ -31,6 +31,12 @@ typedef enum FuncPhase {
     FuncPhase_Body,
 } FuncPhase;
 
+typedef enum ExpressionPhase {
+    ExpressionPhase_Statement,
+    ExpressionPhase_Operator,
+    ExpressionPhase_Expression,
+} ExpressionPhase;
+
 typedef enum ExpressionType {
     ExpressionType_None = 0,
     ExpressionType_CallFunc,
@@ -40,11 +46,11 @@ typedef enum ExpressionType {
 
 typedef enum OperatorType {
     OperatorType_None = 0,
+    OperatorType_Assign,        // = += -= *= /= %= &= |= ^= <<= >>=
     OperatorType_Calculation,   // + - * / %
     OperatorType_Compare,       // == != > < >= <=
     OperatorType_Binary,        // & | ^ << >> ~
     OperatorType_Logic,         // && ||
-    OperatorType_Assign,        // = += -= *= /= %= &= |= ^= <<= >>=
     OperatorType_Increment,     // ++ --
     OperatorType_Pointer,       // * &
     OperatorType_Condition,     // ? :

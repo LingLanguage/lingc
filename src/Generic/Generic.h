@@ -19,8 +19,9 @@
 #define PLog(x, ...)                                                                                                                                           \
     printf("%s:%d ", __FILE__, __LINE__);                                                                                                                      \
     printf(x, __VA_ARGS__)
-#define PLogCode(file, line, err)                                                                                                                              \
+#define PFailed(file, line, err)                                                                                                                               \
     PLogNA("[Err]");                                                                                                                                           \
-    printf("%s %s:%d\r\n", err, file, line)
+    printf("%s %s:%d\r\n", err, file, line);                                                                                                                   \
+    exit(EXIT_FAILURE)
 
 #endif

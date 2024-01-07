@@ -20,7 +20,7 @@ void D_Top_Access_Process(E_Doc *doc, bool is_split, const string word, const st
             fsm->guess.is_static = true;
         } else if (String_IsAccess(word)) {
             // err: access redefined
-            PLogCode(doc->curFile, doc->curLine, ERR_REDIFINED_ACCESS);
+            PFailed(doc->curFile, doc->curLine, ERR_REDIFINED_ACCESS);
         } else {
             // push word
             E_Guess_PushWord(&fsm->guess, doc->curFile, doc->curLine, word);
@@ -34,7 +34,7 @@ void D_Top_Access_Process(E_Doc *doc, bool is_split, const string word, const st
                 E_Doc_StaticVar_Add(doc, field);
             }
         } else if (word[0] == KW_RIGHT_BRACE) {
-            PLogCode(doc->curFile, doc->curLine, ERR_FUNC_OR_FIELD_NOT_END);
+            PFailed(doc->curFile, doc->curLine, ERR_FUNC_OR_FIELD_NOT_END);
         }
     }
 }

@@ -3,6 +3,7 @@
 
 #include "import.h"
 #include "E_Field.h"
+#include "E_Statement.h"
 
 typedef struct E_Guess {
     char access[RULE_ACCESS_NAME_LEN];

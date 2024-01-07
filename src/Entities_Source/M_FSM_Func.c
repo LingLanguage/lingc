@@ -15,7 +15,7 @@ void ReturnTypePhase_Process(M_FSM_Func *fsm, string file, int line, bool is_spl
     } else {
         // types
         if (fsm->words_count >= RULE_FUNCTION_RETURN_COUNT) {
-            PLogCode(file, line, ERR_FUNCTION_TOO_MANY_RETURN_TYPES);
+            PFailed(file, line, ERR_FUNCTION_TOO_MANY_RETURN_TYPES);
         } else {
             strcpy(fsm->words[fsm->words_count], word);
             fsm->words_count++;
@@ -60,18 +60,8 @@ int BodyPhase_Process(M_FSM_Func *fsm, string file, int line, bool is_split, con
             if (fsm->nested_level == 0) {
                 fsm->is_done = true;
             }
-        } else if (word[0] == KW_EQUAL) {
-            if (code[index + 1] == KW_EQUAL) {
-                // ==
-                index += 1;
-            } else {
-                // =
-                E_Statement statement;
-                bool is_ok = E_Guess_Statement(&fsm->guess, file, line, fsm->nested_level, &statement);
-                if (is_ok) {
-                    // E_Function_AddStatement(&fsm->function, statement);
-                }
-            }
+        } else {
+            index = M_FSM_Expression_Process(&fsm->fsm_expression, fsm->nested_level, file, line, is_split, word, index, code, size);
         }
     } else {
         E_Guess_PushWord(&fsm->guess, file, line, word);

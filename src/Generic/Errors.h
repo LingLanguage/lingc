@@ -8,5 +8,6 @@
 #define ERR_REDIFINED_STRUCT_NAME "Redefined struct name."
 #define ERR_TOO_MANY_WORDS "Too many words."
 #define ERR_FUNCTION_TOO_MANY_RETURN_TYPES "Function too many return types."
+#define ERR_NOT_ASSIGN "Not assign."
 
 #endif
