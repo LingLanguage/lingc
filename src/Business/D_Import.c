@@ -5,7 +5,7 @@
 void D_Import_Enter(Context *ctx) {
     E_Doc *doc = ctx->doc;
     E_Doc_FSM_Import_Enter(doc);
-    PLogNA("D_Import_Enter\r\n");
+    // PLogNA("D_Import_Enter\r\n");
 }
 
 void D_Import_Process(Context *ctx, bool isSplit, const string word, const string code, long size) {

@@ -19,9 +19,21 @@ void E_Doc_Import_Add(E_Doc *doc, E_Import import) {
     doc->imports[doc->imports_count++] = import;
 }
 
+// ==== FSM ====
 void E_Doc_FSM_Import_Enter(E_Doc *doc) {
     doc->topBT = TopBT_Import;
     memset(&doc->fsm_import, 0, sizeof(M_FSM_Import));
+}
+
+void E_Doc_FSM_Access_Enter(E_Doc *doc) {
+    doc->topBT = TopBT_Access;
+    memset(&doc->fsm_access, 0, sizeof(M_FSM_Access));
+}
+
+void E_Doc_FSM_Func_Enter(E_Doc *doc, const string access) {
+    doc->topBT = TopBT_Func;
+    memset(&doc->fsm_func, 0, sizeof(M_FSM_Func));
+    strcpy(doc->fsm_func.function.access, access);
 }
 
 void E_Doc_SlideWord(E_Doc *doc, const string word) {
@@ -39,7 +51,6 @@ void E_Doc_SlideWord(E_Doc *doc, const string word) {
         i++;
     }
     strcpy(doc->lastWords[doc->lastWordsCount - 1], word);
-
 }
 
 void E_Doc_Struct_Unknow_Enter(E_Doc *doc) {

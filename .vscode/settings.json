@@ -28,6 +28,7 @@
         "errors.h": "c",
         "m_fsm_import.h": "c",
         "e_struct.h": "c",
-        "e_import.h": "c"
+        "e_import.h": "c",
+        "m_fsm_func.h": "c"
     }
 }

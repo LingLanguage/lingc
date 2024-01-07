@@ -12,6 +12,10 @@ public struct ST {
         printf(a.ToString());
     }
 
+    fn i8 Yo(i8 a) {
+        return a;
+    }
+
 }
 
 public fn i32 Main() {

@@ -164,6 +164,15 @@ static char Context_IsLetter(Context *ctx, char c) {
     }
 }
 
+static bool Context_IsAccess(Context *ctx, const string word) {
+    for (int i = 0; i < KW_ACCESS_COUNT; i += 1) {
+        if (strcmp(word, KW_ACCESS[i]) == 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
 static char Context_IsLetterOrUnderline(Context *ctx, char c) {
     if (ctx->kw_letters[(int)c] == c || c == KW_UNDERLINE) {
         return c;

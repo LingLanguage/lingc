@@ -11,7 +11,8 @@ typedef enum TopBT {
     TopBT_Unknown = 0,
     TopBT_Something,
     TopBT_Import,
-    TopBT_AfterAccess,
+    TopBT_Access,
+    TopBT_Func,
     TopBT_Struct,
 } TopBT;
 
@@ -22,5 +23,12 @@ typedef enum StructBT {
     StructBT_Field,
     StructBT_Function,
 } StructBT;
+
+typedef enum FuncPhase {
+    FuncPhase_ReturnType = 0,
+    FuncPhase_Name,
+    FuncPhase_Params,
+    FuncPhase_Body,
+} FuncPhase;
 
 #endif

@@ -1,4 +1,6 @@
 #include "B_Tokenize.h"
+#include "D_Access.h"
+#include "D_Func.h"
 #include "D_Import.h"
 #include "D_Unknown.h"
 
@@ -51,8 +53,12 @@ void B_Tokenize_SeqMove(Context *ctx, string filename, string code, long size) {
         }
         if (topBT == TopBT_Unknown) {
             D_Unknown_Process(ctx, isSplit, word, code, size);
+        } else if (topBT == TopBT_Access) {
+            D_Access_Process(ctx, isSplit, word, code, size);
         } else if (topBT == TopBT_Import) {
             D_Import_Process(ctx, isSplit, word, code, size);
+        } else if (topBT == TopBT_Func) {
+            D_Func_Process(ctx, isSplit, word, code, size);
         }
         doc->startIndex = endIndex;
         doc->endIndex = endIndex;
