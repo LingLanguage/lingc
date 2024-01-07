@@ -28,8 +28,7 @@ int main(int argc, char **argv) {
         // PLog("%s code: \r\n%s\r\n", files[i], str);
 
         // tokenize
-        PLog("%s SeqMove\r\n", files[i]);
-        B_Tokenize_SeqMove(ctx, str, size);
+        B_Tokenize_SeqMove(ctx, files[i], str, size);
 
         fclose(fp);
         free(str);

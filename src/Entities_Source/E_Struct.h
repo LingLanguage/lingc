@@ -5,14 +5,6 @@
 #include "E_Function.h"
 #include "import.h"
 
-typedef enum StructBehaviourType {
-    StructBehaviourType_Unknown = 0,
-    StructBehaviourType_Something,
-    StructBehaviourType_AfterAccess,
-    StructBehaviourType_Field,
-    StructBehaviourType_Function,
-} StructBehaviourType;
-
 typedef struct E_Struct {
     int id;
     int index;

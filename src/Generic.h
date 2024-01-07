@@ -6,6 +6,9 @@
 #include <string.h>
 #include <utf8.h>
 
+#include "Errors.h"
+#include "Enums.h"
+
 #define PLogNA(x) printf("%s:%d %s", __FILE__, __LINE__, x)
 #define PLog(x, ...)                                                                                                                                           \
     printf("%s:%d ", __FILE__, __LINE__);                                                                                                                      \
@@ -13,22 +16,6 @@
 
 #define string utf8_int8_t *
 #define byte unsigned char
-
-typedef enum TopType
-{
-    TOPTYPE_NONE,
-    TOPTYPE_STRUCT,
-    TOPTYPE_STATIC_VARIABLE,
-    TOPTYPE_STATIC_FUNCTION,
-} TopType;
-
-typedef enum BehaviourType
-{
-    BehaviourType_Unknown = 0,
-    BehaviourType_Something,
-    BehaviourType_Import,
-    BehaviourType_Struct,
-} BehaviourType;
 
 #define KW_SPACE ' '
 #define KW_NEWLINE '\n'
@@ -156,6 +143,8 @@ static string KW_OPERATORS[] = {
 };
 
 // ==== Rule ====
+#define RULE_IMPORT_FILE_NAME_LEN 128
+#define RULE_IMPORT_FILE_COUNT 128
 #define RULE_FUNCTION_RETURN_MAX 8
 #define RULE_FUNCTION_PARAM_NAME_MAX 64
 #define RULE_FUNCTION_PARAM_MAX 32

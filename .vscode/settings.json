@@ -24,6 +24,10 @@
         "system_error": "c",
         "random": "c",
         "d_unknown.h": "c",
-        "d_import.h": "c"
+        "d_import.h": "c",
+        "errors.h": "c",
+        "m_fsm_import.h": "c",
+        "e_struct.h": "c",
+        "e_import.h": "c"
     }
 }

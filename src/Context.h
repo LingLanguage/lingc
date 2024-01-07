@@ -5,7 +5,7 @@
 
 typedef struct Context {
 
-    E_Cursor *cursor;
+    E_Doc *doc;
 
     char kw_split_symbols[256];
     char kw_letters[256];
@@ -113,7 +113,7 @@ static void Context_Init(Context *ctx) {
     ctx->kw_numbers[(int)LT_8] = LT_8; // 56 '8'
     ctx->kw_numbers[(int)LT_9] = LT_9; // 57 '9'
 
-    ctx->cursor = (E_Cursor *)calloc(1, sizeof(E_Cursor));
+    ctx->doc = (E_Doc *)calloc(1, sizeof(E_Doc));
 
     ctx->structs = (E_Struct *)calloc(10000, sizeof(E_Struct));
     ctx->structs_count = 0;
@@ -130,7 +130,7 @@ static void Context_Init(Context *ctx) {
 
 static void Context_Free(Context *ctx) {
 
-    free(ctx->cursor);
+    free(ctx->doc);
 
     for (int i = 0; i < ctx->structs_count; i++) {
         E_Struct_Free(&ctx->structs[i]);
