@@ -1,9 +1,9 @@
 #include "B_Tokenize.h"
 #include "D_Top_Access.h"
 #include "D_Top_Func.h"
+#include "D_Top_Guess.h"
 #include "D_Top_Import.h"
 #include "D_Top_Struct.h"
-#include "D_Top_Guess.h"
 
 void B_Tokenize_SeqMove(E_Doc *doc, const string filename, const string code, long size) {
 
@@ -43,13 +43,13 @@ void B_Tokenize_SeqMove(E_Doc *doc, const string filename, const string code, lo
         doc->endIndex = endIndex;
 
         if (top_status == TopFSMStatus_Struct) {
-            D_Top_Struct_Process(doc, isSplit, word, code, size);
+            endIndex = D_Top_Struct_Process(doc, isSplit, word, endIndex, code, size);
         } else if (top_status == TopFSMStatus_Access) {
             D_Top_Access_Process(doc, isSplit, word, code, size);
         } else if (top_status == TopFSMStatus_Import) {
             D_Top_Import_Process(doc, isSplit, word, code, size);
         } else if (top_status == TopFSMStatus_Func) {
-            D_Top_Func_Process(doc, isSplit, word, code, size);
+            endIndex = D_Top_Func_Process(doc, isSplit, word, endIndex, code, size);
         } else if (top_status == TopFSMStatus_Guess) {
             D_Top_Guess_Process(doc, isSplit, word, code, size);
         }

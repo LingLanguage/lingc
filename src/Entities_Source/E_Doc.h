@@ -10,6 +10,7 @@
 #include "M_FSM_Guess.h"
 #include "import.h"
 
+// 单份代码文件解析
 typedef struct E_Doc {
 
     char curFile[FILENAME_MAX * 2];

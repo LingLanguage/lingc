@@ -11,8 +11,9 @@
 #include "Keywords.h"
 #include "Rules.h"
 
-#define string utf8_int8_t *
-#define byte   unsigned char
+#define string   utf8_int8_t *
+#define byte     unsigned char
+#define NoneChar '\0'
 
 #define PLogNA(x) printf("%s:%d %s", __FILE__, __LINE__, x)
 #define PLog(x, ...)                                                                                                                                           \

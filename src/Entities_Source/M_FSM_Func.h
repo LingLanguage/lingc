@@ -11,7 +11,9 @@ typedef struct M_FSM_Func {
 
     E_Function function;
 
-    int nested_level;
+    byte nested_level;
+
+    E_Guess guess;
 
     // for return type
     char words[RULE_STRUCT_TYPE_NAME_LEN][RULE_FUNCTION_RETURN_COUNT + 1];
@@ -26,5 +28,5 @@ typedef struct M_FSM_Func {
 } M_FSM_Func;
 
 void M_FSM_Func_Enter(M_FSM_Func *fsm, const string access, bool is_static);
-void M_FSM_Func_Process(M_FSM_Func *fsm, string file, int line, bool is_split, const string word, const string code, long size);
+int M_FSM_Func_Process(M_FSM_Func *fsm, string file, int line, bool is_split, const string word, int index, const string code, long size);
 #endif

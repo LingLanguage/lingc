@@ -14,7 +14,7 @@ void D_Top_Struct_Enter(E_Doc *doc, const string access, bool is_static) {
     E_Doc_FSM_Struct_Enter(doc, access, is_static);
 }
 
-void D_Top_Struct_Process(E_Doc *doc, bool isSplit, const string word, const string code, long size) {
+int D_Top_Struct_Process(E_Doc *doc, bool isSplit, const string word, int index, const string code, long size) {
     M_FSM_Struct *fsm = &doc->fsm_struct;
     E_Struct *st = &fsm->st;
     StructPhase phase = fsm->phase;
@@ -23,7 +23,6 @@ void D_Top_Struct_Process(E_Doc *doc, bool isSplit, const string word, const str
             // {
             fsm->phase = StructPhase_Guess;
             fsm->nested_level += 1;
-            PLog("struct: %s struct %s\r\n", st->access, st->name);
         } else if (!isSplit) {
             if (strlen(st->name) <= 0) {
                 // name
@@ -84,10 +83,11 @@ void D_Top_Struct_Process(E_Doc *doc, bool isSplit, const string word, const str
         }
     } else if (phase == StructPhase_Func) {
         M_FSM_Func *fsm_func = &fsm->fsm_func;
-        M_FSM_Func_Process(fsm_func, doc->curFile, doc->curLine, isSplit, word, code, size);
+        index = M_FSM_Func_Process(fsm_func, doc->curFile, doc->curLine, isSplit, word, index, code, size);
         if (fsm_func->is_done) {
             E_Struct_RecordFunction(st, fsm_func->function);
             M_FSM_Struct_EnterGuess(fsm);
         }
     }
+    return index;
 }

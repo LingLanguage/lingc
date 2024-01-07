@@ -11,7 +11,10 @@ struct ST {
     bool d;
 
     fn i8,i32 Yo(i8 a) {
-        return a, a;
+        i32 b = 4;
+        a = 3;
+        i32 c = a + b + 5;
+        return a, a + c;
     }
 
     public fn void Log() {

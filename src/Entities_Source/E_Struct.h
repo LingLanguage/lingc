@@ -6,6 +6,7 @@
 #include "E_Guess.h"
 #include "import.h"
 
+// 结构体
 typedef struct E_Struct {
 
     int id;

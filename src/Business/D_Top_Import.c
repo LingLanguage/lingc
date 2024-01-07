@@ -34,7 +34,6 @@ void D_Top_Import_Process(E_Doc *doc, bool isSplit, const string word, const str
 
         E_Import import = Factory_CreateImport(importName, fsm->importType);
         E_Doc_Import_Add(doc, import);
-        PLog("import:%s\r\n", importName);
 
         D_Top_Guess_Enter(doc);
     }

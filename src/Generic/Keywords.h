@@ -84,8 +84,15 @@
 #define LT_8 '8'
 #define LT_9 '9'
 
-#define KW_UNDERLINE '_'
-#define KW_EQUAL     '='
+#define OP_CALC_MINUS    '-'
+#define OP_CALC_PLUS     '+'
+#define OP_CALC_MULTIPLY '*'
+#define OP_CALC_DIVIDE   '/'
+#define OP_CALC_MOD      '%'
+
+#define KW_UNDERLINE   '_'
+#define KW_EQUAL       '='
+#define KW_EQUAL_EQUAL "=="
 
 #define KW_SPACE_STR " "
 #define KW_FUNC      "fn"

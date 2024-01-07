@@ -33,7 +33,6 @@ int main(int argc, char **argv) {
         Context_AddDoc(ctx, doc);
 
         // tokenize
-        PLog("Tokenize File: %s\r\n", files[i]);
         B_Tokenize_SeqMove(doc, files[i], str, size);
 
         fclose(fp);
@@ -62,6 +61,6 @@ int main(int argc, char **argv) {
     CloseWindow();
 #endif
     Context_Free(ctx);
-    PLogNA("Compile Done!\r\n");
+    printf("Compile Done!\r\n");
     return 0;
 }

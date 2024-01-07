@@ -34,7 +34,6 @@ void ParamPhase_Process(M_FSM_Func *fsm, string file, int line, bool is_split, c
     if (is_split && word[0] == KW_RIGHT_BRACKET) {
         // )
         fsm->phase = FuncPhase_Body;
-        E_Function_Log(&fsm->function);
     } else if (!is_split) {
         // params
         if (!fsm->tmp_is_in_param_name) {
@@ -50,17 +49,34 @@ void ParamPhase_Process(M_FSM_Func *fsm, string file, int line, bool is_split, c
     }
 }
 
-void BodyPhase_Process(M_FSM_Func *fsm, string file, int line, bool is_split, const string word, const string code, long size) {
-    if (is_split && word[0] == KW_LEFT_BRACE) {
-        // if {
-        fsm->nested_level++;
-    } else if (is_split && word[0] == KW_RIGHT_BRACE) {
-        // if } and nested level is 0, then end
-        fsm->nested_level--;
-        if (fsm->nested_level == 0) {
-            fsm->is_done = true;
+int BodyPhase_Process(M_FSM_Func *fsm, string file, int line, bool is_split, const string word, int index, const string code, long size) {
+    if (is_split) {
+        if (word[0] == KW_LEFT_BRACE) {
+            // {
+            fsm->nested_level++;
+        } else if (word[0] == KW_RIGHT_BRACE) {
+            // } and nested level is 0, then end
+            fsm->nested_level--;
+            if (fsm->nested_level == 0) {
+                fsm->is_done = true;
+            }
+        } else if (word[0] == KW_EQUAL) {
+            if (code[index + 1] == KW_EQUAL) {
+                // ==
+                index += 1;
+            } else {
+                // =
+                E_Statement statement;
+                bool is_ok = E_Guess_Statement(&fsm->guess, file, line, fsm->nested_level, &statement);
+                if (is_ok) {
+                    // E_Function_AddStatement(&fsm->function, statement);
+                }
+            }
         }
+    } else {
+        E_Guess_PushWord(&fsm->guess, file, line, word);
     }
+    return index;
 }
 
 // public
@@ -70,13 +86,14 @@ void M_FSM_Func_Enter(M_FSM_Func *fsm, const string access, bool is_static) {
     fsm->function.is_static = is_static;
 }
 
-void M_FSM_Func_Process(M_FSM_Func *fsm, string file, int line, bool is_split, const string word, const string code, long size) {
+int M_FSM_Func_Process(M_FSM_Func *fsm, string file, int line, bool is_split, const string word, int index, const string code, long size) {
     FuncPhase phase = fsm->phase;
     if (phase == FuncPhase_ReturnType) {
         ReturnTypePhase_Process(fsm, file, line, is_split, word, code, size);
     } else if (phase == FuncPhase_Params) {
         ParamPhase_Process(fsm, file, line, is_split, word, code, size);
     } else if (phase == FuncPhase_Body) {
-        BodyPhase_Process(fsm, file, line, is_split, word, code, size);
+        index = BodyPhase_Process(fsm, file, line, is_split, word, index, code, size);
     }
+    return index;
 }
