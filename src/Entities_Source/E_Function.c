@@ -26,5 +26,14 @@ void E_Function_Log(E_Function *self) {
     for (int i = 0; i < self->returnTypes_count; i++) {
         strcat(returnTypes, self->returnTypes[i]);
     }
-    PLog("Function: %s fn%s%s \r\n", self->access, returnTypes, self->name);
+
+    char params[RULE_STRUCT_TYPE_NAME_MAX * RULE_FUNCTION_PARAM_COUNT];
+    memset(params, 0, sizeof(params));
+    for (int i = 0; i < self->params_count; i++) {
+        M_Var *param = &self->params[i];
+        strcat(params, param->type);
+        strcat(params, " ");
+        strcat(params, param->name);
+    }
+    PLog("Function: %s fn%s%s(%s) \r\n", self->access, returnTypes, self->name, params);
 }
