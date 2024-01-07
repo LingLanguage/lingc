@@ -1,7 +1,6 @@
 #include "Business/export.h"
-#include "Generic.h"
 #include "Helper/FileHelper.h"
-#include "StringCommon.h"
+#include "Generic/StringCommon.h"
 #include <raylib.h>
 #include <stdio.h>
 

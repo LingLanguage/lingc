@@ -36,6 +36,12 @@
         "m_fsm_access.h": "c",
         "e_statement.h": "c",
         "stringcommon.h": "c",
-        "filehelper.h": "c"
+        "filehelper.h": "c",
+        "enums.h": "c",
+        "keywords.h": "c",
+        "rules.h": "c",
+        "e_doc.h": "c",
+        "d_top_access.h": "c",
+        "factory.h": "c"
     }
 }

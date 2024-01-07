@@ -4,7 +4,7 @@ BasedOnStyle: LLVM
 Language: Cpp
 AccessModifierOffset: -4
 # AlignAfterOpenBracket: Align
-# AlignConsecutiveMacros: false
+AlignConsecutiveMacros: true
 # AlignConsecutiveAssignments: false
 # AlignConsecutiveDeclarations: false
 # AlignEscapedNewlines: Left

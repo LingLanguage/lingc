@@ -4,6 +4,32 @@ static char kw_split_symbols[256];
 static char kw_letters[256];
 static char kw_numbers[256];
 
+static string KW_SYS_TYPES[] = {
+    "i8", "i16", "i32", "i64", "i128", "i256", "u8", "u16", "u32", "u64", "u128", "u256", "f32", "f64", "f128", "bool", "string", "byte", "void",
+};
+
+static string KW_MODIFIERS[] = {
+    "const",
+    "static",
+    "inline",
+};
+
+static string KW_ACCESS[] = {
+    "public",
+};
+static const int KW_ACCESS_COUNT = 1;
+
+static string KW_CONSTVALUES[] = {
+    "true",
+    "false",
+    "null",
+};
+
+static string KW_OPERATORS[] = {
+    "+", "-",  "*",  "/",  "%",  "++", "--",  "==",  "!=", ">",  "<",  ">=", "<=", "&&", "||", "!", "&", "|", "^", "~", "<<", ">>",
+    "=", "+=", "-=", "*=", "/=", "%=", "<<=", ">>=", "&=", "|=", "^=", "(",  ")",  "[",  "]",  "{", "}", ".", ",", ";", ":",
+};
+
 void StringCommon_Init() {
 
     memset(kw_split_symbols, 0, 256);
