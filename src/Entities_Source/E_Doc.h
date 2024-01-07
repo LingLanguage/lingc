@@ -3,6 +3,7 @@
 
 #include "E_Import.h"
 #include "E_Struct.h"
+#include "E_StaticVar.h"
 #include "M_FSM_Access.h"
 #include "M_FSM_Func.h"
 #include "M_FSM_Import.h"
@@ -19,8 +20,18 @@ typedef struct E_Doc {
     int endIndex;
 
     E_Import *imports;
-    int imports_count;
+    byte imports_count;
 
+    E_Struct *structs;
+    byte structs_count;
+
+    E_Function *static_funcs;
+    byte static_funcs_count;
+
+    E_StaticVar *static_vars;
+    byte static_vars_count;
+
+    // ==== Temp ====
     TopFSMStatus top_status;
     M_FSM_Guess fsm_guess;
     M_FSM_Import fsm_import;

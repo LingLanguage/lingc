@@ -32,6 +32,8 @@
         "m_fsm_func.h": "c",
         "d_access.h": "c",
         "d_func.h": "c",
-        "d_struct.h": "c"
+        "d_struct.h": "c",
+        "m_fsm_access.h": "c",
+        "e_statement.h": "c"
     }
 }

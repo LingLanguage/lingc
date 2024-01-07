@@ -1,5 +1,6 @@
 #ifndef E_FUNCTION_H__
 #define E_FUNCTION_H__
+#include "E_Statement.h"
 #include "M_Var.h"
 #include "import.h"
 
@@ -13,10 +14,10 @@ typedef struct E_Function {
     char name[RULE_FUNCTION_NAME_LEN];
 
     char returnTypes[RULE_STRUCT_TYPE_NAME_LEN][RULE_FUNCTION_RETURN_COUNT];
-    int returnTypes_count;
+    byte returnTypes_count;
 
     M_Var params[RULE_FUNCTION_PARAM_COUNT];
-    int params_count;
+    byte params_count;
 
 } E_Function;
 

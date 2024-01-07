@@ -15,10 +15,10 @@ typedef struct E_Struct {
     char name[RULE_STRUCT_TYPE_NAME_LEN];
 
     E_Field *fields;
-    int fields_count;
+    byte fields_count;
 
     E_Function *functions;
-    int functions_count;
+    byte functions_count;
 
 } E_Struct;
 

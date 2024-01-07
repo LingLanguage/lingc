@@ -31,4 +31,11 @@ typedef enum FuncPhase {
     FuncPhase_Body,
 } FuncPhase;
 
+typedef enum StatementType {
+    StatementType_None = 0,
+    StatementType_OnlyLeft = 1,
+    StatementType_OnlyRight = 2,
+    StatementType_Both = 1 | 2,
+} StatementType;
+
 #endif

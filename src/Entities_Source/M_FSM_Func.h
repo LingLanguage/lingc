@@ -13,7 +13,7 @@ typedef struct M_FSM_Func {
 
     // for return type
     char words[RULE_STRUCT_TYPE_NAME_LEN][RULE_FUNCTION_RETURN_COUNT + 1];
-    int words_count;
+    byte words_count;
 
     char tmp_param_type[RULE_STRUCT_TYPE_NAME_LEN];
     char tmp_param_name[RULE_VAR_NAME_LEN];
