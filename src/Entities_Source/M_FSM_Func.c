@@ -2,7 +2,7 @@
 
 void M_FSM_Func_Enter(M_FSM_Func *fsm, const string access, bool is_static) {
     memset(fsm, 0, sizeof(M_FSM_Func));
-    strcpy(fsm->function.access, ValidAccess(access));
+    strcpy(fsm->function.access, String_ValidAccess(access));
     fsm->function.is_static = is_static;
 }
 

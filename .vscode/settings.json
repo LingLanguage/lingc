@@ -34,6 +34,8 @@
         "d_func.h": "c",
         "d_struct.h": "c",
         "m_fsm_access.h": "c",
-        "e_statement.h": "c"
+        "e_statement.h": "c",
+        "stringcommon.h": "c",
+        "filehelper.h": "c"
     }
 }

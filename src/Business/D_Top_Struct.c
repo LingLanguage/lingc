@@ -25,25 +25,28 @@ void D_Top_Struct_Process(Context *ctx, bool isSplit, const string word, const s
     E_Struct *st = &fsm->st;
     StructPhase phase = fsm->phase;
     if (phase == StructPhase_Name) {
-        // {
         if (isSplit && word[0] == KW_LEFT_BRACE) {
+            // {
             fsm->phase = StructPhase_Guess;
             fsm->nested_level += 1;
             PLog("struct: %s struct %s\r\n", st->access, st->name);
         } else if (!isSplit) {
-            if (strlen(st->name) > 0) {
-                PLogCode(doc->curFile, doc->curLine, ERR_REDIFINED_STRUCT_NAME);
-            } else {
+            if (strlen(st->name) <= 0) {
+                // name
                 strcpy(st->name, word);
+            } else {
+                // err: name redefined
+                PLogCode(doc->curFile, doc->curLine, ERR_REDIFINED_STRUCT_NAME);
             }
         }
     } else if (phase == StructPhase_Guess) {
         if (!isSplit) {
-            if (Context_IsAccess(ctx, word)) {
-                // set access
+            if (String_IsAccess(word)) {
+                // access: public, private...
                 strcpy(fsm->guess_access, word);
                 fsm->phase = StructPhase_Access;
             } else if (strcmp(word, KW_FUNC) == 0) {
+                // fn
                 fsm->phase = StructPhase_Func;
                 M_FSM_Func_Enter(&fsm->fsm_func, KW_ACCESS_PRIVATE, false);
             } else {
@@ -53,8 +56,10 @@ void D_Top_Struct_Process(Context *ctx, bool isSplit, const string word, const s
             }
         } else {
             if (word[0] == KW_SEMICOLON) {
+                // ; field end
                 Field_End(doc->curFile, doc->curLine, fsm);
             } else if (word[0] == KW_RIGHT_BRACE) {
+                // }
                 fsm->nested_level -= 1;
                 if (fsm->nested_level == 0) {
                     D_Top_Guess_Enter(ctx);
@@ -63,7 +68,7 @@ void D_Top_Struct_Process(Context *ctx, bool isSplit, const string word, const s
         }
     } else if (phase == StructPhase_Access) {
         if (!isSplit) {
-            if (Context_IsAccess(ctx, word)) {
+            if (String_IsAccess(word)) {
                 PLogCode(doc->curFile, doc->curLine, ERR_REDIFINED_ACCESS);
             } else if (strcmp(word, KW_FUNC) == 0) {
                 // fn
@@ -90,7 +95,7 @@ void D_Top_Struct_Process(Context *ctx, bool isSplit, const string word, const s
         M_FSM_Func *fsm_func = &fsm->fsm_func;
         M_FSM_Func_Process(fsm_func, doc->curFile, doc->curLine, isSplit, word, code, size);
         if (fsm_func->is_done) {
-            PLogNA("STRUCT FUNC DONE\r\n");
+            M_FSM_Struct_EnterGuess(fsm);
         }
     }
 }

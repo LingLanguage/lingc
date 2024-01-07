@@ -24,7 +24,7 @@ void B_Tokenize_SeqMove(Context *ctx, string filename, string code, long size) {
         int endIndex = doc->startIndex;
         char c = code[doc->startIndex];
         bool isSplit = true;
-        char validVar = Context_IsLetterOrUnderline(ctx, c);
+        char validVar = Char_IsLetterOrUnderline(c);
 
         const string word;
         if (validVar != 0) {
@@ -32,7 +32,7 @@ void B_Tokenize_SeqMove(Context *ctx, string filename, string code, long size) {
             // 非分隔符, 读取到下个分隔符为止, 作为一个单词
             for (int i = doc->startIndex + 1; i < size; i++) {
                 char tmp = code[i];
-                char validVar = Context_IsLetterOrNumberOrUnderline(ctx, tmp);
+                char validVar = Char_IsLetterOrNumberOrUnderline(tmp);
                 if (validVar == 0) {
                     endIndex = i;
                     break;

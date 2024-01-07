@@ -18,7 +18,7 @@ void D_Top_Guess_Process(Context *ctx, bool isSplit, const string word, const st
     if (strcmp(word, KW_IMPORT) == 0) {
         // import
         D_Top_Import_Enter(ctx);
-    } else if (Context_IsAccess(ctx, word)) {
+    } else if (String_IsAccess(word)) {
         // access: public, private...
         D_Top_Access_Enter(ctx, word);
     } else if (strcmp(word, KW_FUNC) == 0) {

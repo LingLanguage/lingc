@@ -1,10 +1,13 @@
 #include "Business/export.h"
 #include "Generic.h"
 #include "Helper/FileHelper.h"
+#include "StringCommon.h"
 #include <raylib.h>
 #include <stdio.h>
 
 int main(int argc, char **argv) {
+
+    StringCommon_Init();
 
     Context *ctx = calloc(1, sizeof(Context));
     Context_Init(ctx);

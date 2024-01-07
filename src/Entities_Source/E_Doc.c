@@ -38,7 +38,7 @@ void E_Doc_FSM_Struct_Enter(E_Doc *doc, const string access, bool is_static) {
     M_FSM_Struct *fsm = &doc->fsm_struct;
     memset(fsm, 0, sizeof(M_FSM_Struct));
     fsm->st.is_static = is_static;
-    strcpy(fsm->st.access, ValidAccess(access));
+    strcpy(fsm->st.access, String_ValidAccess(access));
 }
 
 void E_Doc_FSM_Func_Enter(E_Doc *doc, const string access, bool is_static) {

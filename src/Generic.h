@@ -132,13 +132,6 @@ static string KW_ACCESS[] = {
 static const int KW_ACCESS_COUNT = 1;
 static string KW_ACCESS_PRIVATE = "private";
 static string KW_STATIC = "static";
-static const string ValidAccess(const string access) {
-    if (strlen(access) == 0) {
-        return KW_ACCESS_PRIVATE;
-    } else {
-        return access;
-    }
-}
 
 static string KW_IMPORT = "import";
 

@@ -4,7 +4,7 @@ void E_Function_Free(E_Function *self) {
 }
 
 void E_Function_SetName(E_Function *self, const string access, const string name) {
-    strcpy(self->access, ValidAccess(access));
+    strcpy(self->access, String_ValidAccess(access));
     strcpy(self->name, name);
 }
 
