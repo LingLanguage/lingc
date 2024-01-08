@@ -18,5 +18,6 @@ void E_Guess_SetAccess(E_Guess *self, const string file, int line, const string 
 void E_Guess_PushWord(E_Guess *self, const string file, int line, const string word);
 bool E_Guess_Field(E_Guess *self, const string file, int line, E_Field *field);
 bool E_Guess_Statement(E_Guess *self, const string file, int line, byte nested_level, char *op, byte op_count, E_Statement *statement);
+void E_Guess_Log(const E_Guess *self);
 
 #endif

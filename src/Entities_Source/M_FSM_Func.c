@@ -50,6 +50,7 @@ void ParamPhase_Process(M_FSM_Func *fsm, string file, int line, bool is_split, c
 }
 
 int BodyPhase_Process(M_FSM_Func *fsm, string file, int line, bool is_split, const string word, int index, const string code, long size) {
+    M_FSM_Expression *fsm_expression = &fsm->fsm_expression;
     if (is_split) {
         if (word[0] == KW_LEFT_BRACE) {
             // {
@@ -61,10 +62,18 @@ int BodyPhase_Process(M_FSM_Func *fsm, string file, int line, bool is_split, con
                 fsm->is_done = true;
             }
         } else {
-            index = M_FSM_Expression_Process(&fsm->fsm_expression, fsm->nested_level, file, line, is_split, word, index, code, size);
+            index = M_FSM_Expression_Process(fsm_expression, fsm->nested_level, file, line, is_split, word, index, code, size);
+            if (fsm_expression->is_done) {
+                // expression end
+                M_FSM_Expression_Enter(fsm_expression);
+            }
         }
     } else {
-        index = M_FSM_Expression_Process(&fsm->fsm_expression, fsm->nested_level, file, line, is_split, word, index, code, size);
+        index = M_FSM_Expression_Process(fsm_expression, fsm->nested_level, file, line, is_split, word, index, code, size);
+        if (fsm_expression->is_done) {
+            // expression end
+            M_FSM_Expression_Enter(fsm_expression);
+        }
     }
     return index;
 }

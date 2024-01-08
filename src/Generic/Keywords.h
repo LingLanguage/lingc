@@ -95,6 +95,8 @@
 #define OP_SET_BIN_AND '&'
 #define OP_SET_BIN_XOR '^'
 #define OP_SET_BIN_NOT '~'
+#define OP2_SET_BIN_LEFT "<<"
+#define OP2_SET_BIN_RIGHT ">>"
 
 #define OP2_SET_EQUAL_ADD     "+="
 #define OP2_SET_EQUAL_MINUS   "-="

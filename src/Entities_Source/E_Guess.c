@@ -79,3 +79,10 @@ bool E_Guess_Statement(E_Guess *self, const string file, int line, byte nested_l
         E_Guess_Reset(self);
     }
 }
+
+void E_Guess_Log(const E_Guess *self) {
+    printf("%s %s:\r\n", self->access, self->is_static);
+    for (int i = 0; i < self->words_count; i++) {
+        printf("word:%s\r\n", self->words[i]);
+    }
+}

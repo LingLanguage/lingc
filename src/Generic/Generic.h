@@ -20,7 +20,7 @@
     printf("%s:%d ", __FILE__, __LINE__);                                                                                                                      \
     printf(x, __VA_ARGS__)
 #define PFailed(file, line, err)                                                                                                                               \
-    PLogNA("[Err]");                                                                                                                                           \
+    PLogNA("");                                                                                                                                                \
     printf("%s %s:%d\r\n", err, file, line);                                                                                                                   \
     exit(EXIT_FAILURE)
 

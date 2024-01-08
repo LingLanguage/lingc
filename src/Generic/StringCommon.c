@@ -4,7 +4,9 @@ static char kw_split_symbols[256];
 static char kw_letters[256];
 static char kw_numbers[256];
 
-static char op_sets[256];
+static char op_assigns[256];
+static char op_calcs[256];
+static char op_cmps[2][256];
 
 static string KW_SYS_TYPES[] = {
     "i8", "i16", "i32", "i64", "i128", "i256", "u8", "u16", "u32", "u64", "u128", "u256", "f32", "f64", "f128", "bool", "string", "byte", "void",
@@ -122,17 +124,29 @@ void StringCommon_Init() {
     kw_numbers[(int)LT_8] = LT_8; // 56 '8'
     kw_numbers[(int)LT_9] = LT_9; // 57 '9'
 
-    memset(op_sets, 0, 256);
-    op_sets[(int)OP_SET_PLUS] = OP_SET_PLUS;         // +
-    op_sets[(int)OP_SET_MINUS] = OP_SET_MINUS;       // -
-    op_sets[(int)OP_SET_MULTIPLY] = OP_SET_MULTIPLY; // *
-    op_sets[(int)OP_SET_DIVIDE] = OP_SET_DIVIDE;     // /
-    op_sets[(int)OP_SET_MOD] = OP_SET_MOD;           // %
+    memset(op_assigns, 0, 256);
+    op_assigns[(int)OP_SET_PLUS] = OP_SET_PLUS;         // +
+    op_assigns[(int)OP_SET_MINUS] = OP_SET_MINUS;       // -
+    op_assigns[(int)OP_SET_MULTIPLY] = OP_SET_MULTIPLY; // *
+    op_assigns[(int)OP_SET_DIVIDE] = OP_SET_DIVIDE;     // /
+    op_assigns[(int)OP_SET_MOD] = OP_SET_MOD;           // %
 
-    op_sets[(int)OP_SET_BIN_OR] = OP_SET_BIN_OR;   // |
-    op_sets[(int)OP_SET_BIN_AND] = OP_SET_BIN_AND; // &
-    op_sets[(int)OP_SET_BIN_XOR] = OP_SET_BIN_XOR; // ^
-    op_sets[(int)OP_SET_BIN_NOT] = OP_SET_BIN_NOT; // ~
+    op_assigns[(int)OP_SET_BIN_OR] = OP_SET_BIN_OR;   // |
+    op_assigns[(int)OP_SET_BIN_AND] = OP_SET_BIN_AND; // &
+    op_assigns[(int)OP_SET_BIN_XOR] = OP_SET_BIN_XOR; // ^
+    op_assigns[(int)OP_SET_BIN_NOT] = OP_SET_BIN_NOT; // ~
+
+    memset(op_calcs, 0, 256);
+    op_calcs[(int)OP_SET_PLUS] = OP_SET_PLUS;         // +
+    op_calcs[(int)OP_SET_MINUS] = OP_SET_MINUS;       // -
+    op_calcs[(int)OP_SET_MULTIPLY] = OP_SET_MULTIPLY; // *
+    op_calcs[(int)OP_SET_DIVIDE] = OP_SET_DIVIDE;     // /
+    op_calcs[(int)OP_SET_MOD] = OP_SET_MOD;           // %
+
+    op_calcs[(int)OP_SET_BIN_OR] = OP_SET_BIN_OR;   // |
+    op_calcs[(int)OP_SET_BIN_AND] = OP_SET_BIN_AND; // &
+    op_calcs[(int)OP_SET_BIN_XOR] = OP_SET_BIN_XOR; // ^
+    op_calcs[(int)OP_SET_BIN_NOT] = OP_SET_BIN_NOT; // ~
 }
 
 int String_OP_Assign(const string file, int line, int eqIndex, const string code, char *out) {
@@ -166,7 +180,7 @@ int String_OP_Assign(const string file, int line, int eqIndex, const string code
     }
 
     // ==== OP2 Prev ====
-    if (op_sets[(int)prev] == prev) {
+    if (op_assigns[(int)prev] == prev) {
         // += -= *= /= %=
         // |= &= ^= ~=
         out[0] = prev;
@@ -175,6 +189,117 @@ int String_OP_Assign(const string file, int line, int eqIndex, const string code
     }
     out[0] = OP_EQUAL;
     return 1;
+}
+
+int String_OP_Calc(const char cur, const string file, int line, int eqIndex, const string code, char *out) {
+    char next = code[eqIndex + 1];
+
+    // ==== OP2 Cmp ====
+    if (next == OP_EQUAL) {
+        if (cur == OP_CMP_LESS) {
+            // <=
+            out[0] = cur;
+            out[1] = next;
+            return 2;
+        } else if (cur == OP_CMP_MORE) {
+            // >=
+            out[0] = cur;
+            out[1] = next;
+            return 2;
+        } else if (cur == OP_CMP_NOT) {
+            // !=
+            out[0] = cur;
+            out[1] = next;
+            return 2;
+        } else if (cur == OP_EQUAL) {
+            // ==
+            out[0] = cur;
+            out[1] = next;
+            return 2;
+        } else {
+            // err
+            PFailed(file, line, ERR_UNDIFINDED_ERR);
+            return 0;
+        }
+    }
+
+    // ==== OP2 Bin ====
+    if (next == cur && cur == OP_CMP_LESS) {
+        // <<
+        out[0] = cur;
+        out[1] = next;
+        return 2;
+    } else if (next == cur && cur == OP_CMP_MORE) {
+        // >>
+        out[0] = cur;
+        out[1] = next;
+        return 2;
+    } else if (next == cur && cur == OP_SET_BIN_AND) {
+        // &&
+        out[0] = cur;
+        out[1] = next;
+        return 2;
+    } else if (next == cur && cur == OP_SET_BIN_OR) {
+        // ||
+        out[0] = cur;
+        out[1] = next;
+        return 2;
+    }
+
+    // ==== OP1 Cmp ====
+    if (cur == OP_CMP_LESS) {
+        // <
+        out[0] = cur;
+        return 1;
+    } else if (cur == OP_CMP_MORE) {
+        // >
+        out[0] = cur;
+        return 1;
+    }
+
+    // ==== OP1 Bin ====
+    if (cur == OP_SET_BIN_OR) {
+        // |
+        out[0] = cur;
+        return 1;
+    } else if (cur == OP_SET_BIN_AND) {
+        // &
+        out[0] = cur;
+        return 1;
+    } else if (cur == OP_SET_BIN_XOR) {
+        // ^
+        out[0] = cur;
+        return 1;
+    } else if (cur == OP_SET_BIN_NOT) {
+        // ~
+        out[0] = cur;
+        return 1;
+    }
+
+    // ==== OP1 Calc ====
+    if (cur == OP_SET_PLUS) {
+        // +
+        out[0] = cur;
+        return 1;
+    } else if (cur == OP_SET_MINUS) {
+        // -
+        out[0] = cur;
+        return 1;
+    } else if (cur == OP_SET_MULTIPLY) {
+        // *
+        out[0] = cur;
+        return 1;
+    } else if (cur == OP_SET_DIVIDE) {
+        // /
+        out[0] = cur;
+        return 1;
+    } else if (cur == OP_SET_MOD) {
+        // %
+        out[0] = cur;
+        return 1;
+    }
+
+    return 0;
 }
 
 bool String_IsAccess(const string word) {
