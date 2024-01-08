@@ -80,13 +80,6 @@ void E_Doc_FSM_Import_Enter(E_Doc *doc) {
     M_FSM_Import_Enter(fsm);
 }
 
-void E_Doc_FSM_Access_Enter(E_Doc *doc, const string access) {
-    doc->top_status = TopFSMStatus_Access;
-    M_FSM_Access *fsm = &doc->fsm_access;
-    memset(fsm, 0, sizeof(M_FSM_Access));
-    E_Guess_SetAccess(&fsm->guess, doc->curFile, doc->curLine, access);
-}
-
 void E_Doc_FSM_Struct_Enter(E_Doc *doc, const string access, bool is_static) {
     doc->top_status = TopFSMStatus_Struct;
     M_FSM_Struct *fsm = &doc->fsm_struct;

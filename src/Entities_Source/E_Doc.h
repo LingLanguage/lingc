@@ -3,7 +3,6 @@
 
 #include "E_Import.h"
 #include "E_Struct.h"
-#include "M_FSM_Access.h"
 #include "M_FSM_Func.h"
 #include "M_FSM_Import.h"
 #include "M_FSM_Struct.h"
@@ -35,7 +34,6 @@ typedef struct E_Doc {
     TopFSMStatus top_status;
     M_FSM_Guess fsm_guess;
     M_FSM_Import fsm_import;
-    M_FSM_Access fsm_access;
     M_FSM_Func fsm_func;
     M_FSM_Struct fsm_struct;
 
@@ -49,7 +47,6 @@ void E_Doc_StaticVar_Add(E_Doc *doc, E_Field var);
 void E_Doc_StaticFunc_Add(E_Doc *doc, E_Function func);
 void E_Doc_FSM_Guess_Enter(E_Doc *doc);
 void E_Doc_FSM_Import_Enter(E_Doc *doc);
-void E_Doc_FSM_Access_Enter(E_Doc *doc, const string access);
 void E_Doc_FSM_Struct_Enter(E_Doc *doc, const string access, bool is_static);
 void E_Doc_FSM_Func_Enter(E_Doc *doc, const string access, bool is_static);
 void E_Doc_Log(E_Doc *doc);
