@@ -14,11 +14,15 @@ typedef struct E_Statement {
     StatementType statementType;
     M_Operator operator;
     E_Expression expression;
+    char expression_origin[RULE_VAR_NAME_LEN][RULE_EXPRESSION_WORDS_COUNT];
+    int expression_origin_count;
 } E_Statement;
 
 void E_Statement_SetType(E_Statement *self, const string type);
 void E_Statement_AddName(E_Statement *self, const string name);
 void E_Statement_SetExpression(E_Statement *self, E_Expression expression);
 void E_Statement_SetOperator(E_Statement *self, M_Operator operator);
+void E_Statement_AddExpressionOrigin(E_Statement *self, const string word);
+void E_Statement_Log(const E_Statement *self);
 
 #endif

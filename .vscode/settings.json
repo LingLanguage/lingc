@@ -49,6 +49,7 @@
         "e_field.h": "c",
         "d_top_import.h": "c",
         "d_top_struct.h": "c",
-        "m_fsm_guess.h": "c"
+        "m_fsm_guess.h": "c",
+        "m_parameter.h": "c"
     }
 }

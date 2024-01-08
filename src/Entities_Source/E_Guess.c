@@ -92,7 +92,7 @@ void E_Guess_ExpressionLog(const E_Guess *self) {
     // printf("%s %s:\r\n", self->access, self->is_static);
     printf("expression:");
     for (int i = 0; i < self->words_count; i++) {
-        printf("%s", self->words[i]);
+        printf("%s ", self->words[i]);
     }
     printf("\r\n");
 }

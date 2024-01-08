@@ -1,6 +1,7 @@
 #include "E_Function.h"
 
 void E_Function_Free(E_Function *self) {
+    free(self->statements);
 }
 
 void E_Function_SetName(E_Function *self, const string access, const string name) {
@@ -20,6 +21,15 @@ void E_Function_AddParam(E_Function *self, const string type, const string name)
     self->params_count++;
 }
 
+void E_Function_AddStatement(E_Function *self, E_Statement expression) {
+    if (self->statements_count == 0) {
+        self->statements = (E_Statement *)malloc(sizeof(E_Statement));
+    } else {
+        self->statements = (E_Statement *)realloc(self->statements, sizeof(E_Statement) * (self->statements_count + 1));
+    }
+    self->statements[self->statements_count++] = expression;
+}
+
 void E_Function_Log(const E_Function *self) {
     char returnTypes[RULE_STRUCT_TYPE_NAME_LEN * RULE_FUNCTION_RETURN_COUNT];
     memset(returnTypes, 0, sizeof(returnTypes));
@@ -36,4 +46,10 @@ void E_Function_Log(const E_Function *self) {
         strcat(params, param.name);
     }
     printf("Function: %s fn%s%s(%s) \r\n", self->access, returnTypes, self->name, params);
+
+    for (int i = 0; i < self->statements_count; i++) {
+        E_Statement *statement = &self->statements[i];
+        printf("\t\t");
+        E_Statement_Log(statement);
+    }
 }

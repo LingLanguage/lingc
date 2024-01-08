@@ -65,6 +65,7 @@ int BodyPhase_Process(M_FSM_Func *fsm, string file, int line, bool is_split, con
             index = M_FSM_Expression_Process(fsm_expression, fsm->nested_level, file, line, is_split, word, index, code, size);
             if (fsm_expression->is_done) {
                 // expression end
+                E_Function_AddStatement(&fsm->function, fsm_expression->statement);
                 M_FSM_Expression_Enter(fsm_expression);
             }
         }
@@ -72,6 +73,7 @@ int BodyPhase_Process(M_FSM_Func *fsm, string file, int line, bool is_split, con
         index = M_FSM_Expression_Process(fsm_expression, fsm->nested_level, file, line, is_split, word, index, code, size);
         if (fsm_expression->is_done) {
             // expression end
+            E_Function_AddStatement(&fsm->function, fsm_expression->statement);
             M_FSM_Expression_Enter(fsm_expression);
         }
     }
