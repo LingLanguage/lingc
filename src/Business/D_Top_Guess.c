@@ -14,20 +14,41 @@ void D_Top_Guess_Process(E_Doc *doc, bool isSplit, const string word, const stri
     }
 
     M_FSM_Guess *fsm = &doc->fsm_guess;
-    if (strcmp(word, KW_IMPORT) == 0) {
-        // import
-        D_Top_Import_Enter(doc);
-    } else if (String_IsAccess(word)) {
-        // access: public, private...
-        D_Top_Access_Enter(doc, word);
-    } else if (strcmp(word, KW_FUNC) == 0) {
-        // fn
-        D_Top_Func_Enter(doc, KW_ACCESS_PRIVATE, fsm->guess.is_static);
-    } else if (strcmp(word, KW_STRUCT) == 0) {
-        // struct
-        D_Top_Struct_Enter(doc, KW_ACCESS_PRIVATE, fsm->guess.is_static);
-    } else if (strcmp(word, KW_STATIC) == 0) {
-        // static
-        fsm->guess.is_static = true;
+    E_Guess *guess = &fsm->guess;
+    if (!isSplit) {
+        if (strcmp(word, KW_IMPORT) == 0) {
+            // import
+            D_Top_Import_Enter(doc);
+        } else if (strcmp(word, KW_FUNC) == 0) {
+            // fn
+            D_Top_Func_Enter(doc, guess->access, guess->is_static);
+        } else if (strcmp(word, KW_STRUCT) == 0) {
+            // struct
+            D_Top_Struct_Enter(doc, guess->access, guess->is_static);
+        } else if (strcmp(word, KW_STATIC) == 0) {
+            // static
+            guess->is_static = true;
+        } else if (strcmp(word, KW_CONST) == 0) {
+            // const
+            guess->is_const = true;
+        } else if (String_IsAccess(word)) {
+            // access: public, private...
+            E_Guess_SetAccess(guess, doc->curFile, doc->curLine, word);
+        } else {
+            // push word
+            E_Guess_PushWord(guess, doc->curFile, doc->curLine, word);
+        }
+    } else {
+        if (word[0] == KW_SEMICOLON) {
+            // ; field end
+            E_Field field;
+            bool is_ok = E_Guess_Field(&fsm->guess, doc->curFile, doc->curLine, &field);
+            if (is_ok) {
+                E_Doc_StaticVar_Add(doc, field);
+            }
+        } else if (word[0] == KW_RIGHT_BRACE) {
+            // }
+            PFailed(doc->curFile, doc->curLine, ERR_FUNCTION_OR_FIELD_NOT_END);
+        }
     }
 }

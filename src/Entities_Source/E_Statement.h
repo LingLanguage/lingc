@@ -7,14 +7,18 @@
 // 声明
 typedef struct E_Statement {
     char type[RULE_STRUCT_TYPE_NAME_LEN];
-    char name[RULE_VAR_NAME_LEN];
+    char names[RULE_VAR_NAME_LEN][RULE_FUNCTION_RETURN_COUNT];
+    byte names_count;
     bool is_const;
-    StatementType statementType;
-    E_Expression expression;
     byte belong_nested_level;
+    StatementType statementType;
     M_Operator operator;
+    E_Expression expression;
 } E_Statement;
 
-E_Statement E_Statement_Create(const string type, const string name, StatementType statementType, byte belong_nested_level);
+void E_Statement_SetType(E_Statement *self, const string type);
+void E_Statement_AddName(E_Statement *self, const string name);
+void E_Statement_SetExpression(E_Statement *self, E_Expression expression);
+void E_Statement_SetOperator(E_Statement *self, M_Operator operator);
 
 #endif

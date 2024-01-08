@@ -1,5 +1,4 @@
 #include "B_Tokenize.h"
-#include "D_Top_Access.h"
 #include "D_Top_Func.h"
 #include "D_Top_Guess.h"
 #include "D_Top_Import.h"
@@ -20,7 +19,7 @@ void B_Tokenize_SeqMove(E_Doc *doc, const string filename, const string code, lo
         int endIndex = doc->startIndex;
         char c = code[doc->startIndex];
         bool isSplit = true;
-        char validVar = Char_IsLetterOrUnderline(c);
+        char validVar = Char_IsLetterOrNumberOrUnderline(c);
 
         const string word;
         if (validVar != 0) {
@@ -44,8 +43,6 @@ void B_Tokenize_SeqMove(E_Doc *doc, const string filename, const string code, lo
 
         if (top_status == TopFSMStatus_Struct) {
             endIndex = D_Top_Struct_Process(doc, isSplit, word, endIndex, code, size);
-        } else if (top_status == TopFSMStatus_Access) {
-            D_Top_Access_Process(doc, isSplit, word, code, size);
         } else if (top_status == TopFSMStatus_Import) {
             D_Top_Import_Process(doc, isSplit, word, code, size);
         } else if (top_status == TopFSMStatus_Func) {

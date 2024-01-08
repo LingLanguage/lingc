@@ -135,6 +135,7 @@
 #define KW_ACCESS_PRIVATE "private"
 
 #define KW_STATIC "static"
+#define KW_CONST "const"
 
 #define KW_IMPORT "import"
 

@@ -29,7 +29,7 @@ int D_Top_Struct_Process(E_Doc *doc, bool isSplit, const string word, int index,
                 strcpy(st->name, word);
             } else {
                 // err: name redefined
-                PFailed(doc->curFile, doc->curLine, ERR_REDIFINED_STRUCT_NAME);
+                PFailed(doc->curFile, doc->curLine, ERR_STRUCT_NAME_REDIFINED);
             }
         }
     } else if (phase == StructPhase_Guess) {
@@ -68,7 +68,7 @@ int D_Top_Struct_Process(E_Doc *doc, bool isSplit, const string word, int index,
                 M_FSM_Func_Enter(&fsm->fsm_func, fsm->guess.access, false);
             } else if (String_IsAccess(word)) {
                 // err: access redefined
-                PFailed(doc->curFile, doc->curLine, ERR_REDIFINED_ACCESS);
+                PFailed(doc->curFile, doc->curLine, ERR_ACCESS_REDIFINED);
             } else {
                 // push word
                 E_Guess_PushWord(&fsm->guess, doc->curFile, doc->curLine, word);
@@ -78,7 +78,7 @@ int D_Top_Struct_Process(E_Doc *doc, bool isSplit, const string word, int index,
                 // ; field end
                 FieldEnd(fsm, doc->curFile, doc->curLine, isSplit, word);
             } else if (word[0] == KW_RIGHT_BRACE) {
-                PFailed(doc->curFile, doc->curLine, ERR_FUNC_OR_FIELD_NOT_END);
+                PFailed(doc->curFile, doc->curLine, ERR_FUNCTION_OR_FIELD_NOT_END);
             }
         }
     } else if (phase == StructPhase_Func) {

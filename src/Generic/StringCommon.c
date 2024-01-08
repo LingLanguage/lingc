@@ -146,7 +146,7 @@ int String_OP_Assign(const string file, int line, int eqIndex, const string code
     // Err: Not Assign
     if (next == OP_EQUAL) {
         // ==
-        PFailed(file, line, ERR_NOT_ASSIGN);
+        PFailed(file, line, ERR_STATEMENT_NOT_ASSIGN);
         return 0;
     }
 

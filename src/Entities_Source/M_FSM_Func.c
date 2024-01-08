@@ -64,7 +64,7 @@ int BodyPhase_Process(M_FSM_Func *fsm, string file, int line, bool is_split, con
             index = M_FSM_Expression_Process(&fsm->fsm_expression, fsm->nested_level, file, line, is_split, word, index, code, size);
         }
     } else {
-        E_Guess_PushWord(&fsm->guess, file, line, word);
+        index = M_FSM_Expression_Process(&fsm->fsm_expression, fsm->nested_level, file, line, is_split, word, index, code, size);
     }
     return index;
 }

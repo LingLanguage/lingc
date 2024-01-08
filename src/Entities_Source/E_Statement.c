@@ -1,10 +1,18 @@
 #include "E_Statement.h"
 
-E_Statement E_Statement_Create(const string type, const string name, StatementType statementType, byte belong_nested_level) {
-    E_Statement self;
-    strcpy(self.type, type);
-    strcpy(self.name, name);
-    self.statementType = statementType;
-    self.belong_nested_level = belong_nested_level;
-    return self;
+void E_Statement_SetType(E_Statement *self, const string type) {
+    strcpy(self->type, type);
+}
+
+void E_Statement_AddName(E_Statement *self, const string name) {
+    strcpy(self->names[self->names_count], name);
+    self->names_count++;
+}
+
+void E_Statement_SetExpression(E_Statement *self, E_Expression expression) {
+    self->expression = expression;
+}
+
+void E_Statement_SetOperator(E_Statement *self, M_Operator operator) {
+    self->operator = operator;
 }

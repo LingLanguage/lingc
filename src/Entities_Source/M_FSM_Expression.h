@@ -16,6 +16,7 @@ typedef struct M_FSM_Expression {
     M_Operator operator;
     E_Expression expression;
     E_Guess guess;
+    bool is_done;
 } M_FSM_Expression;
 
 void M_FSM_Expression_Enter(M_FSM_Expression *fsm, const string access, bool is_static);
