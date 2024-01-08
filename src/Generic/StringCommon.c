@@ -194,6 +194,10 @@ const string String_ValidAccess(const string access) {
     }
 }
 
+char Char_IsEmptySymbol(char c) {
+    return c == KW_SPACE || c == KW_NEWLINE || c == KW_NEWLINE_R || c == KW_TABLE;
+}
+
 char Char_IsSplitSymbol(char c) {
     if (kw_split_symbols[(int)c] == c) {
         return c;

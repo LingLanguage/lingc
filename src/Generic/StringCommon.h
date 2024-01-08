@@ -7,6 +7,7 @@ void StringCommon_Init();
 const string String_ValidAccess(const string access);
 int String_OP_Assign(const string file, int line, int eqIndex, const string code, char *out);
 bool String_IsAccess(const string word);
+char Char_IsEmptySymbol(char c);
 char Char_IsSplitSymbol(char c);
 char Char_IsLetter(char c);
 char Char_IsLetterOrUnderline(char c);

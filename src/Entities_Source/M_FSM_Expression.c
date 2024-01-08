@@ -8,8 +8,8 @@ int M_FSM_Expression_Process(M_FSM_Expression *fsm, int nested_level, string fil
                              long size) {
     ExpressionPhase phase = fsm->phase;
 
-    if (is_split && word[0] == KW_SPACE) {
-        // ' '
+    if (is_split && Char_IsEmptySymbol(word[0])) {
+        // ' ' '\n' '\r' '\t'
         return index;
     }
 
