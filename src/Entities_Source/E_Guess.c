@@ -12,6 +12,14 @@ void E_Guess_SetAccess(E_Guess *self, const string file, int line, const string 
     strcpy(self->access, String_ValidAccess(access));
 }
 
+void E_Guess_SetReturn(E_Guess *self, const string file, int line, bool is_return) {
+    if (self->is_return && is_return) {
+        PFailed(file, line, ERR_FUNCTION_RETURN_REDIFINED);
+        return;
+    }
+    self->is_return = is_return;
+}
+
 void E_Guess_PushWord(E_Guess *self, const string file, int line, const string word) {
     if (self->words_count < RULE_EXPRESSION_WORDS_COUNT) {
         strcpy(self->words[self->words_count], word);
@@ -80,9 +88,11 @@ bool E_Guess_Statement(E_Guess *self, const string file, int line, byte nested_l
     }
 }
 
-void E_Guess_Log(const E_Guess *self) {
-    printf("%s %s:\r\n", self->access, self->is_static);
+void E_Guess_ExpressionLog(const E_Guess *self) {
+    // printf("%s %s:\r\n", self->access, self->is_static);
+    printf("expression:");
     for (int i = 0; i < self->words_count; i++) {
-        printf("word:%s\r\n", self->words[i]);
+        printf("%s", self->words[i]);
     }
+    printf("\r\n");
 }

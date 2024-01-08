@@ -40,25 +40,28 @@ int M_FSM_Expression_Process(M_FSM_Expression *fsm, int nested_level, string fil
         } else {
             if (strcmp(word, KW_RETURN) == 0) {
                 // return
-                PLogNA("TODO: return\r\n");
-            } else {
-                E_Guess_PushWord(&fsm->guess, file, line, word);
+                if (fsm->guess.words_count > 0) {
+                    PFailed(file, line, ERR_FUNCTION_RETURN_MUST_FIRST);
+                }
+                fsm->phase = ExpressionPhase_Expression;
             }
+            E_Guess_PushWord(&fsm->guess, file, line, word);
         }
     } else if (phase == ExpressionPhase_Expression) {
         if (is_split) {
             char op[2] = {0};
-            int op_count = String_OP_Calc(word[0], file, line, index, code, op);
+            int op_count = String_OP_CalcOrCommaOrMember(word[0], file, line, index, code, op);
             if (op_count > 0) {
                 index += op_count - 1;
                 // operator: + - * / % & | ^ << >> && || == != >= <= > <
+                // operator: , .
                 E_Guess_PushWord(&fsm->guess, file, line, op);
             } else if (word[0] == KW_SEMICOLON) {
                 // ;
                 // eg: i32 a = 1;
                 // expression end
                 PLogNA("TODO: EXpression\r\n");
-                // E_Guess_Log(&fsm->guess);
+                E_Guess_ExpressionLog(&fsm->guess);
                 fsm->is_done = true;
             } else {
                 // err: unexpected
@@ -66,7 +69,7 @@ int M_FSM_Expression_Process(M_FSM_Expression *fsm, int nested_level, string fil
                 PFailed(file, line, ERR_UNDIFINDED_ERR);
             }
         } else {
-            // PLog("push word:%s\r\n", word);
+            PLog("push word:%s\r\n", word);
             E_Guess_PushWord(&fsm->guess, file, line, word);
         }
     }

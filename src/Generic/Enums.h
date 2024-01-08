@@ -72,6 +72,7 @@ typedef enum StatementType {
     StatementType_OnlyLeft = 1,
     StatementType_OnlyRight = 2,
     StatementType_Both = 1 | 2,
+    StatementType_Return = 4,
 } StatementType;
 
 #endif

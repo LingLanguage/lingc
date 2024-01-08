@@ -14,5 +14,7 @@
 #define ERR_FIELD_COUNT "Err600 Field count must be 2."
 #define ERR_FUNCTION_OR_FIELD_NOT_END "Err700 Function or field not end."
 #define ERR_FUNCTION_TOO_MANY_RETURN_TYPES "Err701 Function too many return types."
+#define ERR_FUNCTION_RETURN_REDIFINED "Err702 Function return redifined."
+#define ERR_FUNCTION_RETURN_MUST_FIRST "Err703 Function return must first."
 
 #endif

@@ -302,6 +302,21 @@ int String_OP_Calc(const char cur, const string file, int line, int eqIndex, con
     return 0;
 }
 
+int String_OP_CalcOrCommaOrMember(const char cur, const string file, int line, int eqIndex, const string code, char *out) {
+    int count = String_OP_Calc(cur, file, line, eqIndex, code, out);
+    if (count > 0) {
+        return count;
+    }
+    if (cur == KW_COMMA) {
+        out[0] = cur;
+        return 1;
+    } else if (cur == KW_DOT) {
+        out[0] = cur;
+        return 1;
+    }
+    return 0;
+}
+
 bool String_IsAccess(const string word) {
     for (int i = 0; i < KW_ACCESS_COUNT; i += 1) {
         if (strcmp(word, KW_ACCESS[i]) == 0) {

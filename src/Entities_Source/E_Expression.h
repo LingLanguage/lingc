@@ -9,6 +9,7 @@
 // call function
 // const value: custom const, string, number, bool, null
 // variable
+// return
 typedef struct E_Expression {
 
     ExpressionType type;
