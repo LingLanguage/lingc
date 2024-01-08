@@ -15,7 +15,8 @@ int M_FSM_Expression_Process(M_FSM_Expression *fsm, int nested_level, string fil
 
     if (phase == ExpressionPhase_Statement) {
         if (is_split) {
-            if (word[0] == OP_EQUAL) {
+            char split = word[0];
+            if (split == OP_EQUAL) {
                 // =
                 // eg: a =
                 // eg: i32 a =
@@ -28,7 +29,7 @@ int M_FSM_Expression_Process(M_FSM_Expression *fsm, int nested_level, string fil
                     fsm->statement.operator= M_Operator_Create(op_assigns, OperatorType_Assign);
                     fsm->phase = ExpressionPhase_Expression;
                 }
-            } else if (word[0] == KW_SEMICOLON) {
+            } else if (split == KW_SEMICOLON) {
                 // ;
                 // eg: i32 a;
                 // statement end, no expression;
@@ -36,8 +37,15 @@ int M_FSM_Expression_Process(M_FSM_Expression *fsm, int nested_level, string fil
                 if (is_ok) {
                     fsm->is_done = true;
                 }
-            } else if (word[0] == KW_DOT) {
+            } else if (split == KW_DOT) {
                 E_Guess_PushWord(&fsm->guess, file, line, word);
+            } else if (Char_IsBracket(split) != 0) {
+                E_Guess_PushWord(&fsm->guess, file, line, word);
+            }else {
+                PLogNA("TODO: string constant\r\n");
+                // err: unexpected
+                PLog("err word:%s\r\n", word);
+                PFailed(file, line, ERR_UNDIFINDED_ERR);
             }
         } else {
             if (strcmp(word, KW_RETURN) == 0) {

@@ -9,6 +9,7 @@
 #include "Entities_Source/E_Field.c"
 #include "Entities_Source/E_Function.c"
 #include "Entities_Source/E_Guess.c"
+#include "Entities_Source/E_Import.c"
 #include "Entities_Source/E_Statement.c"
 #include "Entities_Source/E_Struct.c"
 #include "Entities_Source/M_FSM_Expression.c"

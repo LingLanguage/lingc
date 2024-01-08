@@ -30,7 +30,7 @@ void E_Function_AddStatement(E_Function *self, E_Statement expression) {
     self->statements[self->statements_count++] = expression;
 }
 
-void E_Function_Log(const E_Function *self) {
+void E_Function_Log(const E_Function *self, bool is_static) {
     char returnTypes[RULE_STRUCT_TYPE_NAME_LEN * RULE_FUNCTION_RETURN_COUNT];
     memset(returnTypes, 0, sizeof(returnTypes));
     for (int i = 0; i < self->returnTypes_count; i++) {
@@ -45,11 +45,18 @@ void E_Function_Log(const E_Function *self) {
         strcat(params, " ");
         strcat(params, param.name);
     }
+    if (is_static) {
+        printf("Static ");
+    }
     printf("Function: %s fn%s%s(%s) \r\n", self->access, returnTypes, self->name, params);
 
     for (int i = 0; i < self->statements_count; i++) {
         E_Statement *statement = &self->statements[i];
-        printf("\t\t");
+        if (is_static) {
+            printf("\t");
+        } else {
+            printf("\t\t");
+        }
         E_Statement_Log(statement);
     }
 }

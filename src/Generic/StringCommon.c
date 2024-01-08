@@ -334,6 +334,22 @@ const string String_ValidAccess(const string access) {
     }
 }
 
+char Char_IsBracket(char c) {
+    if (c == KW_LEFT_BRACKET || c == KW_RIGHT_BRACKET) {
+        return c;
+    } else {
+        return 0;
+    }
+}
+
+char Char_IsQuote(char c) {
+    if (c == KW_QUOTE || c == KW_SINGLE_QUOTE) {
+        return c;
+    } else {
+        return 0;
+    }
+}
+
 char Char_IsEmptySymbol(char c) {
     return c == KW_SPACE || c == KW_NEWLINE || c == KW_NEWLINE_R || c == KW_TABLE;
 }

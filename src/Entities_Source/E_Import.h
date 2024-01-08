@@ -8,4 +8,6 @@ typedef struct E_Import {
     ImportType importType;
 } E_Import;
 
+void E_Import_Log(const E_Import *self);
+
 #endif

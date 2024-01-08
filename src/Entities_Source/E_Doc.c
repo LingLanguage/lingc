@@ -104,7 +104,7 @@ void E_Doc_Log(E_Doc *doc) {
     // printf("static_vars_count: %d\r\n", doc->static_vars_count);
     for (int i = 0; i < doc->imports_count; i++) {
         E_Import *import = &doc->imports[i];
-        printf("import: %s\r\n", import->name);
+        E_Import_Log(import);
     }
     for (int i = 0; i < doc->structs_count; i++) {
         E_Struct *st = &doc->structs[i];
@@ -112,8 +112,7 @@ void E_Doc_Log(E_Doc *doc) {
     }
     for (int i = 0; i < doc->static_funcs_count; i++) {
         E_Function *func = &doc->static_funcs[i];
-        printf("static ");
-        E_Function_Log(func);
+        E_Function_Log(func, true);
     }
     for (int i = 0; i < doc->static_vars_count; i++) {
         E_Field *var = &doc->static_vars[i];

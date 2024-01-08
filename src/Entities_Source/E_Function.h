@@ -30,6 +30,6 @@ void E_Function_SetName(E_Function *self, const string access, const string name
 void E_Function_AddReturnType(E_Function *self, const string type);
 void E_Function_AddParam(E_Function *self, const string type, const string name);
 void E_Function_AddStatement(E_Function *self, E_Statement statement);
-void E_Function_Log(const E_Function *self);
+void E_Function_Log(const E_Function *self, bool is_static);
 
 #endif

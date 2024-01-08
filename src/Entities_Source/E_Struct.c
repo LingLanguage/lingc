@@ -39,6 +39,6 @@ void E_Struct_Log(const E_Struct *self) {
     }
     for (int i = 0; i < self->functions_count; i++) {
         printf("\t");
-        E_Function_Log(&self->functions[i]);
+        E_Function_Log(&self->functions[i], false);
     }
 }
