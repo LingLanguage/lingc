@@ -2,7 +2,7 @@
 
 void ParamsPhase_Enter(M_FSM_Func *fsm);
 
-void ReturnTypePhase_Process(M_FSM_Func *fsm, string file, int line, bool is_split, const string word, const string code, long size) {
+void ReturnTypePhase_Process(M_FSM_Func *fsm, const string file, int line, bool is_split, const string word, const string code, long size) {
     if (is_split && word[0] == KW_LEFT_BRACKET) {
         // (
         // set return type
@@ -30,7 +30,7 @@ void ParamsPhase_Enter(M_FSM_Func *fsm) {
     fsm->tmp_is_in_param_name = false;
 }
 
-void ParamPhase_Process(M_FSM_Func *fsm, string file, int line, bool is_split, const string word, const string code, long size) {
+void ParamPhase_Process(M_FSM_Func *fsm, const string file, int line, bool is_split, const string word, const string code, long size) {
     if (is_split && word[0] == KW_RIGHT_BRACKET) {
         // )
         fsm->phase = FuncPhase_Body;
@@ -49,7 +49,7 @@ void ParamPhase_Process(M_FSM_Func *fsm, string file, int line, bool is_split, c
     }
 }
 
-int BodyPhase_Process(M_FSM_Func *fsm, string file, int line, bool is_split, const string word, int index, const string code, long size) {
+int BodyPhase_Process(M_FSM_Func *fsm, const string file, int line, bool is_split, const string word, int index, const string code, long size) {
     M_FSM_Expression *fsm_expression = &fsm->fsm_expression;
     if (is_split) {
         if (word[0] == KW_LEFT_BRACE) {
@@ -81,13 +81,14 @@ int BodyPhase_Process(M_FSM_Func *fsm, string file, int line, bool is_split, con
 }
 
 // public
-void M_FSM_Func_Enter(M_FSM_Func *fsm, const string access, bool is_static) {
+void M_FSM_Func_Enter(M_FSM_Func *fsm, E_Guess *guess) {
     memset(fsm, 0, sizeof(M_FSM_Func));
-    strcpy(fsm->function.access, String_ValidAccess(access));
-    fsm->function.is_static = is_static;
+    String_CopyAccess(fsm->guess.access, guess->access);
+    fsm->guess.is_const = guess->is_const;
+    fsm->guess.is_static = guess->is_static;
 }
 
-int M_FSM_Func_Process(M_FSM_Func *fsm, string file, int line, bool is_split, const string word, int index, const string code, long size) {
+int M_FSM_Func_Process(M_FSM_Func *fsm, const string file, int line, bool is_split, const string word, int index, const string code, long size) {
     FuncPhase phase = fsm->phase;
     if (phase == FuncPhase_ReturnType) {
         ReturnTypePhase_Process(fsm, file, line, is_split, word, code, size);

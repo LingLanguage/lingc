@@ -3,6 +3,7 @@
 
 #include "E_Doc.h"
 #include "E_Function.h"
+#include "E_Guess.h"
 #include "E_Struct.h"
 
 #endif

@@ -1,15 +1,11 @@
 #include "D_Top_Func.h"
 
-void D_Top_Func_Enter(E_Doc *doc, const string access, bool is_static) {
-    E_Doc_FSM_Func_Enter(doc, access, is_static);
+void D_Top_Func_Enter(M_FSM_Func *fsm, E_Guess *guess) {
+    M_FSM_Func_Enter(fsm, guess);
+    PLogNA("enter top func\r\n");
 }
 
-int D_Top_Func_Process(E_Doc *doc, bool is_split, const string word, int index, const string code, long size) {
-    M_FSM_Func *fsm = &doc->fsm_func;
-    index = M_FSM_Func_Process(fsm, doc->curFile, doc->curLine, is_split, word, index, code, size);
-    if (fsm->is_done) {
-        E_Doc_StaticFunc_Add(doc, fsm->function);
-        D_Top_Guess_Enter(doc);
-    }
+int D_Top_Func_Process(M_FSM_Func *fsm, const string file, int line, bool is_split, const string word, int index, const string code, long size) {
+    index = M_FSM_Func_Process(fsm, file, line, is_split, word, index, code, size);
     return index;
 }

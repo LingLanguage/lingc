@@ -3,7 +3,7 @@
 
 #include "import.h"
 
-void D_Top_Struct_Enter(E_Doc *doc, const string access, bool is_static);
-int D_Top_Struct_Process(E_Doc *doc, bool isSplit, const string word, int index, const string code, long size);
+void D_Top_Struct_Enter(E_Doc *doc, E_Guess *guess);
+int D_Top_Struct_Process(M_FSM_Struct *fsm, const string file, int line, bool isSplit, const string word, int index, const string code, long size);
 
 #endif

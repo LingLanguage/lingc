@@ -12,6 +12,7 @@
 #include "Entities_Source/E_Import.c"
 #include "Entities_Source/E_Statement.c"
 #include "Entities_Source/E_Struct.c"
+#include "Entities_Source/M_FSM_ConstString.c"
 #include "Entities_Source/M_FSM_Expression.c"
 #include "Entities_Source/M_FSM_Func.c"
 #include "Entities_Source/M_FSM_Guess.c"

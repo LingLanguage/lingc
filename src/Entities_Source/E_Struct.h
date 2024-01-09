@@ -3,7 +3,6 @@
 
 #include "E_Field.h"
 #include "E_Function.h"
-#include "E_Guess.h"
 #include "import.h"
 
 // 结构体
@@ -13,7 +12,6 @@ typedef struct E_Struct {
     int index;
 
     char access[RULE_ACCESS_NAME_LEN];
-    bool is_static;
     char name[RULE_STRUCT_TYPE_NAME_LEN];
 
     E_Field *fields;

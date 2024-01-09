@@ -1,0 +1,27 @@
+Tokenize
+√ import
+    √ <>
+    √ ""
+- statement
+    - assign
+    - if
+    - for
+    - while
+    - do / while
+    - return
+- expression
+    - ()
+    - ""
+- static func
+    √ access
+    - expression
+- static var
+    √ access
+- struct
+    √ access
+    √ name
+    √ field
+        √ access
+    - function
+        √ access
+        - expression

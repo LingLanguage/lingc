@@ -12,12 +12,12 @@ void E_Guess_SetAccess(E_Guess *self, const string file, int line, const string 
     strcpy(self->access, String_ValidAccess(access));
 }
 
-void E_Guess_SetReturn(E_Guess *self, const string file, int line, bool is_return) {
-    if (self->is_return && is_return) {
-        PFailed(file, line, ERR_FUNCTION_RETURN_REDIFINED);
+void E_Guess_SetConst(E_Guess *self, const string file, int line, bool is_const) {
+    if (self->is_const && is_const) {
+        PFailed(file, line, ERR_CONST_REDIFINED);
         return;
     }
-    self->is_return = is_return;
+    self->is_const = is_const;
 }
 
 void E_Guess_PushWord(E_Guess *self, const string file, int line, const string word) {
@@ -29,7 +29,41 @@ void E_Guess_PushWord(E_Guess *self, const string file, int line, const string w
     }
 }
 
-bool E_Guess_Field(E_Guess *self, const string file, int line, E_Field *field) {
+// ==== Guess ====
+bool E_Guess_GuessStructName(E_Guess *self, const string file, int line, const string name, E_Struct *st) {
+    bool is_ok = true;
+    if (self->words_count == 0) {
+        PFailed(file, line, ERR_STRUCT_NAME_NOT_FOUND);
+        is_ok = false;
+    } else if (self->words_count == 1) {
+        if (self->is_const) {
+            PFailed(file, line, ERR_STRUCT_CANNOT_BE_CONST);
+            is_ok = false;
+        } else {
+            // name
+            if (strlen(st->name) <= 0) {
+                strcpy(st->name, self->words[0]);
+            } else {
+                PFailed(file, line, ERR_STRUCT_NAME_REDIFINED);
+                is_ok = false;
+            }
+        }
+    } else {
+        for (int i = 0; i < self->words_count; i++) {
+            printf("%s\r\n", self->words[i]);
+        }
+        PFailed(file, line, ERR_STRUCT_NAME_TOO_MANY_WORDS);
+        is_ok = false;
+    }
+
+    if (is_ok) {
+        String_CopyAccess(st->access, self->access);
+        E_Guess_Reset(self);
+    }
+    return is_ok;
+}
+
+bool E_Guess_GuessField(E_Guess *self, const string file, int line, E_Field *field) {
     bool is_ok = true;
     if (self->words_count == 2) {
         *field = E_Field_Create(self->access, self->words[0], self->words[1]);
@@ -42,9 +76,10 @@ bool E_Guess_Field(E_Guess *self, const string file, int line, E_Field *field) {
     if (is_ok) {
         E_Guess_Reset(self);
     }
+    return is_ok;
 }
 
-bool E_Guess_Statement(E_Guess *self, const string file, int line, byte nested_level, char *op, byte op_count, E_Statement *statement) {
+bool E_Guess_GuessStatement(E_Guess *self, const string file, int line, byte nested_level, char *op, byte op_count, E_Statement *statement) {
     bool is_ok = true;
     if (self->words_count == 0) {
         if (self->is_const) {
@@ -86,6 +121,7 @@ bool E_Guess_Statement(E_Guess *self, const string file, int line, byte nested_l
     if (is_ok) {
         E_Guess_Reset(self);
     }
+    return is_ok;
 }
 
 void E_Guess_ExpressionLog(const E_Guess *self) {

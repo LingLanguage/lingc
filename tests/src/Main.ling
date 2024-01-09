@@ -1,8 +1,6 @@
 import <stdio.h>;
 import "BB.ling";
 
-public static int myVar = 3;
-
 struct ST {
     
     i8 a;

@@ -4,6 +4,7 @@
 #include "E_Expression.h"
 #include "E_Guess.h"
 #include "E_Statement.h"
+#include "M_FSM_ConstString.h"
 #include "M_Operator.h"
 #include "import.h"
 
@@ -15,11 +16,12 @@ typedef struct M_FSM_Expression {
     E_Statement statement;
     M_Operator operator;
     E_Expression expression;
+    M_FSM_ConstString fsm_string;
     E_Guess guess;
     bool is_done;
 } M_FSM_Expression;
 
 void M_FSM_Expression_Enter(M_FSM_Expression *fsm);
-int M_FSM_Expression_Process(M_FSM_Expression *fsm, int nested_level, string file, int line, bool is_split, const string word, int index, const string code,
-                             long size);
+int M_FSM_Expression_Process(M_FSM_Expression *fsm, int nested_level, const string file, int line, bool is_split, const string word, int index,
+                             const string code, long size);
 #endif

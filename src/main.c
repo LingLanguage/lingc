@@ -29,6 +29,7 @@ int main(int argc, char **argv) {
         long size = File_ReadAllText(fp, &str);
 
         // doc
+        PLog("compile file: %s\r\n", files[i]);
         E_Doc *doc = calloc(1, sizeof(E_Doc));
         Context_AddDoc(ctx, doc);
 

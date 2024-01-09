@@ -6,6 +6,8 @@ typedef struct M_FSM_Import {
     int leftIndex;
     int rightIndex;
     ImportType importType;
+    bool is_done;
+    E_Import import;
 } M_FSM_Import;
 
 void M_FSM_Import_Enter(M_FSM_Import *fsm);

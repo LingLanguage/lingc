@@ -3,7 +3,7 @@
 
 #include "import.h"
 
-void D_Top_Import_Enter(E_Doc *doc);
-void D_Top_Import_Process(E_Doc *doc, bool isSplit, const string word, const string code, long size);
+void D_Top_Import_Enter(M_FSM_Import *fsm);
+int D_Top_Import_Process(M_FSM_Import *fsm, const string file, int line, bool is_split, const string word, int index, const string code, long size);
 
 #endif

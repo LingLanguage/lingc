@@ -11,8 +11,10 @@ typedef struct M_FSM_Struct {
     E_Guess guess;
 
     M_FSM_Func fsm_func;
+    bool is_done;
 } M_FSM_Struct;
 
 void M_FSM_Struct_EnterGuess(M_FSM_Struct *fsm);
+void M_FSM_Struct_EnterFunc(M_FSM_Struct *fsm, E_Guess *guess);
 
 #endif

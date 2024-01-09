@@ -317,6 +317,52 @@ int String_OP_CalcOrCommaOrMember(const char cur, const string file, int line, i
     return 0;
 }
 
+inline const string String_SubString(const string word, int start_index, int end_index) {
+    return TextSubtext(word, start_index, end_index);
+}
+
+const string String_CutBetweenSameChars(int start_index, const string code, long size, char same_area) {
+    int left_index = -1;
+    int right_index = -1;
+    for (int i = start_index; i < size; i++) {
+        char c = code[i];
+        if (c == same_area) {
+            if (left_index == -1) {
+                left_index = i;
+            } else {
+                right_index = i;
+                break;
+            }
+        }
+    }
+    if (left_index == -1 || right_index == -1) {
+        return NULL;
+    }
+    return String_SubString(code, left_index + 1, right_index - left_index - 1);
+}
+
+const string String_CutBetweenDifferentChars(int start_index, const string word, long size, char left, char right) {
+    int left_index = -1;
+    int right_index = -1;
+    for (int i = start_index; i < size; i++) {
+        char c = word[i];
+        if (c == left) {
+            left_index = i;
+        } else if (c == right) {
+            right_index = i;
+            break;
+        }
+    }
+    if (left_index == -1 || right_index == -1) {
+        return NULL;
+    }
+    return String_SubString(word, left_index + 1, right_index - left_index - 1);
+}
+
+void String_CopyAccess(char *dest, const string access) {
+    strcpy(dest, String_ValidAccess(access));
+}
+
 bool String_IsAccess(const string word) {
     for (int i = 0; i < KW_ACCESS_COUNT; i += 1) {
         if (strcmp(word, KW_ACCESS[i]) == 0) {

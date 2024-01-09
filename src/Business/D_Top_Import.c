@@ -2,39 +2,45 @@
 #include "D_Top_Guess.h"
 #include "import.h"
 
-void D_Top_Import_Enter(E_Doc *doc) {
-    E_Doc_FSM_Import_Enter(doc);
-    // PLogNA("D_Top_Import_Enter\r\n");
+void D_Top_Import_Enter(M_FSM_Import *fsm) {
+    memset(fsm, 0, sizeof(M_FSM_Import));
+    PLogNA("enter top import\r\n");
 }
 
-void D_Top_Import_Process(E_Doc *doc, bool isSplit, const string word, const string code, long size) {
-    M_FSM_Import *fsm = &doc->fsm_import;
-    int len = strlen(word);
-    // PLog("word:%s %d\r\n", word, len);
-    char split = word[len - 1];
+int D_Top_Import_Process(M_FSM_Import *fsm, const string file, int line, bool is_split, const string word, int index, const string code, long size) {
 
-    // ""
-    if (split == KW_QUOTE && fsm->leftIndex == 0 && fsm->importType == ImportType_None) {
-        fsm->leftIndex = doc->endIndex + 1;
-        fsm->importType = ImportType_Quote;
-    } else if (split == KW_QUOTE && fsm->rightIndex == 0 && fsm->importType == ImportType_Quote) {
-        fsm->rightIndex = doc->endIndex;
+    if (is_split && Char_IsEmptySymbol(word[0])) {
+        return index;
     }
 
-    // <>
-    if (split == KW_LEFT_ANGLE_BRACKET && fsm->leftIndex == 0 && fsm->importType == ImportType_None) {
-        fsm->leftIndex = doc->endIndex + 1;
-        fsm->importType = ImportType_ANGLE_BRACKET;
-    } else if (split == KW_RIGHT_ANGLE_BRACKET && fsm->rightIndex == 0 && fsm->importType == ImportType_ANGLE_BRACKET) {
-        fsm->rightIndex = doc->endIndex;
+    char split = word[0];
+    const string value;
+    ImportType type;
+    if (split == KW_QUOTE) {
+        // "
+        value = String_CutBetweenSameChars(index, code, size, KW_QUOTE);
+        if (value == NULL) {
+            printf("err word:%s\r\n", word);
+            PFailed(file, line, ERR_UNDIFINDED_ERR);
+        } else {
+            type = ImportType_Quote;
+        }
+    } else if (split == KW_LEFT_ANGLE_BRACKET) {
+        // <
+        value = String_CutBetweenDifferentChars(index, code, size, KW_LEFT_ANGLE_BRACKET, KW_RIGHT_ANGLE_BRACKET);
+        if (value == NULL) {
+            PFailed(file, line, ERR_UNDIFINDED_ERR);
+        } else {
+            type = ImportType_ANGLE_BRACKET;
+        }
+    } else if (split == KW_SEMICOLON) {
+        // ;
+        fsm->is_done = true;
     }
 
-    if (split == KW_SEMICOLON && fsm->leftIndex != 0 && fsm->rightIndex != 0) {
-        const string importName = TextSubtext(code, fsm->leftIndex, fsm->rightIndex - fsm->leftIndex);
-
-        E_Import import = Factory_CreateImport(importName, fsm->importType);
-        E_Doc_Import_Add(doc, import);
-
-        D_Top_Guess_Enter(doc);
+    if (value != NULL) {
+        fsm->import = Factory_CreateImport(value, type);
+        fsm->is_done = true;
     }
+    return index;
 }

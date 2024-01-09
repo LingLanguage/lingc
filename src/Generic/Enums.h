@@ -19,7 +19,6 @@ typedef enum TopFSMStatus {
 typedef enum StructPhase {
     StructPhase_Name = 0,
     StructPhase_Guess,
-    StructPhase_Access,
     StructPhase_Field,
     StructPhase_Func,
 } StructPhase;
@@ -32,9 +31,10 @@ typedef enum FuncPhase {
 } FuncPhase;
 
 typedef enum ExpressionPhase {
-    ExpressionPhase_Statement,
-    ExpressionPhase_Operator,
-    ExpressionPhase_Expression,
+    ExpressionPhase_Guess,
+    ExpressionPhase_Statement_Assign,
+    ExpressionPhase_Statement_If,
+    ExpressionPhase_Statement_Return,
 } ExpressionPhase;
 
 typedef enum ExpressionType {
@@ -69,10 +69,13 @@ typedef enum ArgumentType {
 
 typedef enum StatementType {
     StatementType_None = 0,
-    StatementType_OnlyLeft = 1,
-    StatementType_OnlyRight = 2,
-    StatementType_Both = 1 | 2,
-    StatementType_Return = 4,
+    StatementType_OnlyLeft,
+    StatementType_OnlyRight,
+    StatementType_LeftRight,
+    StatementType_If,
+    StatementType_While,
+    StatementType_For,
+    StatementType_Return,
 } StatementType;
 
 #endif

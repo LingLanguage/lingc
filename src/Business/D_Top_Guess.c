@@ -5,6 +5,7 @@
 
 void D_Top_Guess_Enter(E_Doc *doc) {
     E_Doc_FSM_Guess_Enter(doc);
+    PLogNA("enter top guess\r\n");
 }
 
 void D_Top_Guess_Process(E_Doc *doc, bool isSplit, const string word, const string code, long size) {
@@ -18,13 +19,18 @@ void D_Top_Guess_Process(E_Doc *doc, bool isSplit, const string word, const stri
     if (!isSplit) {
         if (strcmp(word, KW_IMPORT) == 0) {
             // import
-            D_Top_Import_Enter(doc);
+            doc->top_status = TopFSMStatus_Import;
+            M_FSM_Import *fsm_import = &doc->fsm_import;
+            D_Top_Import_Enter(fsm_import);
         } else if (strcmp(word, KW_FUNC) == 0) {
             // fn
-            D_Top_Func_Enter(doc, guess->access, guess->is_static);
+            doc->top_status = TopFSMStatus_Func;
+            M_FSM_Func *fsm_func = &doc->fsm_func;
+            D_Top_Func_Enter(fsm_func, guess);
         } else if (strcmp(word, KW_STRUCT) == 0) {
             // struct
-            D_Top_Struct_Enter(doc, guess->access, guess->is_static);
+            doc->top_status = TopFSMStatus_Struct;
+            D_Top_Struct_Enter(doc, guess);
         } else if (strcmp(word, KW_STATIC) == 0) {
             // static
             guess->is_static = true;
@@ -42,9 +48,11 @@ void D_Top_Guess_Process(E_Doc *doc, bool isSplit, const string word, const stri
         if (word[0] == KW_SEMICOLON) {
             // ; field end
             E_Field field;
-            bool is_ok = E_Guess_Field(&fsm->guess, doc->curFile, doc->curLine, &field);
+            bool is_ok = E_Guess_GuessField(&fsm->guess, doc->curFile, doc->curLine, &field);
             if (is_ok) {
                 E_Doc_StaticVar_Add(doc, field);
+            } else {
+                PLogNA("TODO: guess field failed\r\n");
             }
         } else if (word[0] == KW_RIGHT_BRACE) {
             // }

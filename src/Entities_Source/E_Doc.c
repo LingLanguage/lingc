@@ -80,18 +80,13 @@ void E_Doc_FSM_Import_Enter(E_Doc *doc) {
     M_FSM_Import_Enter(fsm);
 }
 
-void E_Doc_FSM_Struct_Enter(E_Doc *doc, const string access, bool is_static) {
+void E_Doc_FSM_Struct_Enter(E_Doc *doc, E_Guess *guess) {
     doc->top_status = TopFSMStatus_Struct;
     M_FSM_Struct *fsm = &doc->fsm_struct;
     memset(fsm, 0, sizeof(M_FSM_Struct));
-    fsm->st.is_static = is_static;
-    strcpy(fsm->st.access, String_ValidAccess(access));
-}
-
-void E_Doc_FSM_Func_Enter(E_Doc *doc, const string access, bool is_static) {
-    doc->top_status = TopFSMStatus_Func;
-    M_FSM_Func *fsm = &doc->fsm_func;
-    M_FSM_Func_Enter(fsm, access, is_static);
+    String_CopyAccess(fsm->guess.access, guess->access);
+    fsm->guess.is_const = guess->is_const;
+    fsm->guess.is_static = guess->is_static;
 }
 
 // ==== Log ====
