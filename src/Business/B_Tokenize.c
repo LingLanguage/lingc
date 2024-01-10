@@ -1,5 +1,5 @@
 #include "B_Tokenize.h"
-#include "D_Top_Func.h"
+#include "D_DFA_Func.h"
 #include "D_NFA_Top.h"
 #include "D_Top_Import.h"
 #include "D_Top_Struct.h"
@@ -58,7 +58,7 @@ void B_Tokenize_SeqMove(E_Doc *doc, const string filename, const string code, lo
             }
         } else if (top_status == TopFSMStatus_Func) {
             M_FSM_Func *fsm_func = &doc->fsm_func;
-            endIndex = D_Top_Func_Process(fsm_func, filename, line, isSplit, word, endIndex, code, size);
+            endIndex = D_DFA_Func_Process(fsm_func, filename, line, isSplit, word, endIndex, code, size);
             if (fsm_func->is_done) {
                 E_Doc_StaticFunc_Add(doc, fsm_func->function);
                 D_NFA_Top_Enter(doc);
