@@ -1,6 +1,6 @@
 #include "D_NFA_Top.h"
 #include "D_DFA_Func.h"
-#include "D_Top_Import.h"
+#include "D_DFA_Import.h"
 #include "D_Top_Struct.h"
 
 void D_NFA_Top_Enter(E_Doc *doc) {
@@ -21,7 +21,7 @@ void D_NFA_Top_Process(E_Doc *doc, bool isSplit, const string word, const string
             // import
             doc->top_status = TopFSMStatus_Import;
             M_FSM_Import *fsm_import = &doc->fsm_import;
-            D_Top_Import_Enter(fsm_import);
+            D_DFA_Import_Enter(fsm_import);
         } else if (strcmp(word, KW_FUNC) == 0) {
             // fn
             doc->top_status = TopFSMStatus_Func;
