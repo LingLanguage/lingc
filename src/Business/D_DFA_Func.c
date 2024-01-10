@@ -6,8 +6,8 @@ void D_DFA_Func_Enter(M_DFA_Func *dfa_func, E_Guess *guess);
 void NamePhase_Process(M_DFA_Func *dfa_func, const string code, const string word, M_Cursor *cursor);
 void ParamPhase_Enter(M_DFA_Func *dfa_func);
 void ParamPhase_Process(M_DFA_Func *dfa_func, const string code, const string word, M_Cursor *cursor);
-void BodyPhase_Enter(M_DFA_Func *dfa_func);
-void BodyPhase_Process(M_DFA_Func *dfa_func, const string code, const string word, M_Cursor *cursor);
+void BlockPhase_Enter(M_DFA_Func *dfa_func);
+void BlockPhase_Process(M_DFA_Func *dfa_func, const string code, const string word, M_Cursor *cursor);
 
 void NamePhase_Process(M_DFA_Func *dfa_func, const string code, const string word, M_Cursor *cursor) {
     if (cursor->is_split) {
@@ -40,7 +40,7 @@ void ParamPhase_Process(M_DFA_Func *dfa_func, const string code, const string wo
         char split = word[0];
         if (split == KW_RIGHT_BRACKET) {
             // )
-            BodyPhase_Enter(dfa_func);
+            BlockPhase_Enter(dfa_func);
             ++cursor->index;
         } else if (split == KW_COMMA) {
             // ,
@@ -64,42 +64,15 @@ void ParamPhase_Process(M_DFA_Func *dfa_func, const string code, const string wo
     }
 }
 
-void BodyPhase_Enter(M_DFA_Func *dfa_func) {
-    dfa_func->phase = FuncPhase_Body;
+void BlockPhase_Enter(M_DFA_Func *dfa_func) {
+    dfa_func->phase = FuncPhase_Block;
+    D_DFA_Block_Enter(&dfa_func->dfa_block);
 }
 
-void BodyPhase_Process(M_DFA_Func *dfa_func, const string code, const string word, M_Cursor *cursor) {
-    if (cursor->is_split) {
-        char split = word[0];
-        if (split == KW_LEFT_BRACE) {
-            // {
-            ++dfa_func->nested_level;
-            ++cursor->index;
-        } else if (split == KW_RIGHT_BRACE) {
-            // } and nested level is 0, then end
-            --dfa_func->nested_level;
-            ++cursor->index;
-            if (dfa_func->nested_level == 0) {
-                dfa_func->is_done = true;
-            }
-        } else if (split == KW_EQUAL) {
-            // =
-            ++cursor->index;
-            printf("TODO assign stm\r\n");
-        } else if (split == KW_SEMICOLON) {
-            // ;
-            ++cursor->index;
-            printf("TODO field end\r\n");
-        } else {
-            Util_Cursor_DealEmpty(cursor, code, word);
-        }
-    } else {
-        if (strcmp(word, KW_RETURN) == 0) {
-            // return
-            printf("TODO return stm\r\n");
-        } else {
-            E_Guess_PushWord(&dfa_func->guess, cursor->file, cursor->line, word);
-        }
+void BlockPhase_Process(M_DFA_Func *dfa_func, const string code, const string word, M_Cursor *cursor) {
+    D_DFA_Block_Process(&dfa_func->dfa_block, code, word, cursor);
+    if (dfa_func->dfa_block.is_done) {
+        dfa_func->is_done = true;
     }
 }
 
@@ -119,7 +92,7 @@ void D_DFA_Func_Process(M_DFA_Func *dfa_func, const string code, const string wo
         NamePhase_Process(dfa_func, code, word, cursor);
     } else if (phase == FuncPhase_Params) {
         ParamPhase_Process(dfa_func, code, word, cursor);
-    } else if (phase == FuncPhase_Body) {
-        BodyPhase_Process(dfa_func, code, word, cursor);
+    } else if (phase == FuncPhase_Block) {
+        BlockPhase_Process(dfa_func, code, word, cursor);
     }
 }

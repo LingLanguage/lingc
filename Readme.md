@@ -8,7 +8,7 @@ C with o.f()
 utf8.h - https://github.com/sheredom/utf8.h  
 raylib - https://github.com/raysan5/raylib
 
-#### FA
+#### FSM
 ```
 NFA Top  
     =       -> DFA assign stm  

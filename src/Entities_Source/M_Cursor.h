@@ -5,7 +5,6 @@
 
 typedef struct M_Cursor {
     char file[FILENAME_MAX];
-    char word[RULE_VAR_NAME_LEN];
     bool is_split;
     int line;
     int index;

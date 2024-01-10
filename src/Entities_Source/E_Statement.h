@@ -26,6 +26,8 @@ typedef struct E_Statement {
 
 } E_Statement;
 
+E_Statement E_Statement_CreateReturn();
+void E_Statement_Free(E_Statement *self);
 void E_Statement_Log(const E_Statement *self);
 
 #endif

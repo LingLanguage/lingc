@@ -16,6 +16,21 @@ typedef enum NFA_Top_Status {
     NFA_Top_Status_Struct,
 } NFA_Top_Status;
 
+typedef enum DFA_Block_Status {
+    DFA_Block_Status_Guess = 0,
+    DFA_Block_Status_Statement,
+} DFA_Block_Status;
+
+typedef enum NFA_Statement_Status {
+    NFA_Statement_Status_Guess = 0,
+    NFA_Statement_Status_Return,
+} NFA_Statement_Status;
+
+typedef enum NFA_Expressiont_Status {
+    NFA_Expressiont_Status_Guess = 0,
+    NFA_Expressiont_Status_Recursion,
+} NFA_Expressiont_Status;
+
 typedef enum StructPhase {
     StructPhase_Name = 0,
     StructPhase_Guess,
@@ -26,7 +41,7 @@ typedef enum StructPhase {
 typedef enum FuncPhase {
     FuncPhase_Name = 0,
     FuncPhase_Params,
-    FuncPhase_Body,
+    FuncPhase_Block,
 } FuncPhase;
 
 typedef enum ExpressionPhase {
