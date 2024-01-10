@@ -2,6 +2,7 @@
 #include "D_DFA_Func.h"
 #include "D_DFA_Import.h"
 #include "D_DFA_Struct.h"
+#include "Util_Cursor.h"
 
 void D_NFA_Top_Free(M_NFA_Top *nfa_top) {
     M_NFA_Top_Free(nfa_top);
@@ -12,16 +13,13 @@ void D_NFA_Top_Enter(M_NFA_Top *nfa_top) {
     E_Guess_Init(&nfa_top->guess);
 }
 
-void D_NFA_Top_Process(M_NFA_Top *nfa_top, const string file, int line, bool is_split, const string word, const string code, long size) {
+void D_NFA_Top_Process(M_NFA_Top *nfa_top, const string code, const string word, M_Cursor *cursor) {
 
-    if (is_split) {
-        if (Char_IsEmptySymbol(word[0])) {
-            return;
-        }
-    }
+    // import <stdio.h>;
+    // import "raylib.h";
 
     E_Guess *guess = &nfa_top->guess;
-    if (!is_split) {
+    if (!cursor->is_split) {
         if (strcmp(word, KW_IMPORT) == 0) {
             // import
             nfa_top->status = NFA_Top_Status_Import;
@@ -45,17 +43,26 @@ void D_NFA_Top_Process(M_NFA_Top *nfa_top, const string file, int line, bool is_
             guess->is_const = true;
         } else if (String_IsAccess(word)) {
             // access: public, private...
-            E_Guess_SetAccess(guess, file, line, word);
+            E_Guess_SetAccess(guess, cursor->file, cursor->line, word);
         } else {
             // push word
-            E_Guess_PushWord(guess, file, line, word);
+            E_Guess_PushWord(guess, cursor->file, cursor->line, word);
         }
     } else {
-        if (word[0] == KW_SEMICOLON) {
+        char split = word[0];
+        if (split == KW_EQUAL) {
+            // = assign stm
+            ++cursor->index;
+            PLogNA("TODO assign stm\r\n");
+        } else if (split == KW_SEMICOLON) {
             // ; field end
-        } else if (word[0] == KW_RIGHT_BRACE) {
+            ++cursor->index;
+            PLogNA("TODO field end\r\n");
+        } else if (split == KW_RIGHT_BRACE) {
             // }
-            PFailed(file, line, ERR_FUNCTION_OR_FIELD_NOT_END);
+            PFailed(cursor->file, cursor->line, ERR_FUNCTION_OR_FIELD_NOT_END);
+        } else {
+            Util_Cursor_DealEmpty(cursor, code, word);
         }
     }
 }

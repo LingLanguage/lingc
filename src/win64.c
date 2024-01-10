@@ -3,6 +3,7 @@
 #include "Business/D_DFA_Import.c"
 #include "Business/D_DFA_Struct.c"
 #include "Business/D_NFA_Top.c"
+#include "Business/Util_Cursor.c"
 
 #include "Entities_Source/E_Doc.c"
 #include "Entities_Source/E_Expression.c"
@@ -12,6 +13,7 @@
 #include "Entities_Source/E_Import.c"
 #include "Entities_Source/E_Statement.c"
 #include "Entities_Source/E_Struct.c"
+#include "Entities_Source/M_Cursor.c"
 #include "Entities_Source/M_DFA_ConstString.c"
 #include "Entities_Source/M_DFA_Func.c"
 #include "Entities_Source/M_DFA_Import.c"
@@ -22,7 +24,7 @@
 
 #include "Helper/FileHelper.c"
 
-#include "Context.c"
 #include "Compiler.c"
+#include "Context.c"
 #include "Factory.c"
 #include "Generic/StringCommon.c"

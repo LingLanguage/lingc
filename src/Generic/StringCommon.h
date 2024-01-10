@@ -15,7 +15,7 @@ int String_CutBetweenDifferentChars(int start_index, const string word, long siz
 bool String_IsAccess(const string word);
 char Char_IsBracket(char c);
 char Char_IsQuote(char c);
-char Char_IsEmptySymbol(char c);
+char Char_IsEmptySymbolButNewLine(char c);
 char Char_IsSplitSymbol(char c);
 char Char_IsLetter(char c);
 char Char_IsLetterOrUnderline(char c);

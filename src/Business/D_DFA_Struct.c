@@ -19,7 +19,7 @@ int Phase_Name_Process(M_DFA_Struct *dfa_struct, const string file, int line, bo
             dfa_struct->nested_level += 1;
             dfa_struct->is_done = true;
         } else {
-            if (Char_IsEmptySymbol(split)) {
+            if (Char_IsEmptySymbolButNewLine(split)) {
                 // ' ' '\t' '\n' '\r'
                 return index;
             }

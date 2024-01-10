@@ -5,6 +5,6 @@
 
 void D_NFA_Top_Free(M_NFA_Top *nfa_top);
 void D_NFA_Top_Enter(M_NFA_Top *nfa_top);
-void D_NFA_Top_Process(M_NFA_Top *nfa_top, const string file, int line, bool is_split, const string word, const string code, long size);
+void D_NFA_Top_Process(M_NFA_Top *nfa_top, const string code, const string word, M_Cursor *cursor);
 
 #endif

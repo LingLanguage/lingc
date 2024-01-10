@@ -5,6 +5,7 @@
 #include "E_Function.h"
 #include "E_Guess.h"
 #include "E_Struct.h"
+#include "M_Cursor.h"
 #include "M_DFA_Func.h"
 #include "M_DFA_Import.h"
 #include "M_DFA_Struct.h"

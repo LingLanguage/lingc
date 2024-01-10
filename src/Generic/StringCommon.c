@@ -390,8 +390,8 @@ char Char_IsQuote(char c) {
     }
 }
 
-char Char_IsEmptySymbol(char c) {
-    return c == KW_SPACE || c == KW_NEWLINE || c == KW_NEWLINE_R || c == KW_TABLE;
+char Char_IsEmptySymbolButNewLine(char c) {
+    return c == KW_SPACE || c == KW_TABLE;
 }
 
 char Char_IsSplitSymbol(char c) {
