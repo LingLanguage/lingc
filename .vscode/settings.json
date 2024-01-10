@@ -57,6 +57,7 @@
         "d_dfa_struct.h": "c",
         "m_dfa_struct.h": "c",
         "compiler.h": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "type_traits": "c"
     }
 }

@@ -10,8 +10,8 @@ int String_OP_Assign(const string file, int line, int eqIndex, const string code
 int String_OP_Calc(const char cur, const string file, int line, int eqIndex, const string code, char *out);
 int String_OP_CalcOrCommaOrMember(const char cur, const string file, int line, int eqIndex, const string code, char *out);
 const string String_SubString(const string word, int start_index, int end_index);
-const string String_CutBetweenSameChars(int start_index, const string word, long size, char same_area);
-const string String_CutBetweenDifferentChars(int start_index, const string word, long size, char left, char right);
+int String_CutBetweenSameChars(int start_index, const string word, long size, char same_area);
+int String_CutBetweenDifferentChars(int start_index, const string word, long size, char left, char right);
 bool String_IsAccess(const string word);
 char Char_IsBracket(char c);
 char Char_IsQuote(char c);

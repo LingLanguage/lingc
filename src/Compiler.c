@@ -21,12 +21,14 @@ void Compile(const char *root) {
         long size = File_ReadAllText(fp, &str);
 
         // doc
-        PLog("compile file: %s\r\n", files[i]);
+        PLog("file begin: %s\r\n", files[i]);
         E_Doc *doc = calloc(1, sizeof(E_Doc));
         Context_AddDoc(ctx, doc);
 
         // tokenize
         B_Tokenize_SeqMove(doc, files[i], str, size);
+
+        PLog("file done: %s\r\n", files[i]);
 
         fclose(fp);
         free(str);

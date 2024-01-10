@@ -15,4 +15,7 @@ typedef struct M_NFA_Top {
     E_Guess guess;
 } M_NFA_Top;
 
+void M_NFA_Top_Init(M_NFA_Top *nfa_top);
+void M_NFA_Top_Free(M_NFA_Top *nfa_top);
+
 #endif

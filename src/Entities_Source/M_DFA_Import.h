@@ -2,12 +2,9 @@
 #define M_DFA_IMPORT_H__
 
 typedef struct M_DFA_Import {
-    bool isEntering;
-    int leftIndex;
-    int rightIndex;
-    ImportType importType;
-    bool is_done;
     E_Import import;
+    bool is_recorded;
+    bool is_done;
 } M_DFA_Import;
 
 void M_DFA_Import_Init(M_DFA_Import *fsm);

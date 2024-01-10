@@ -15,4 +15,7 @@ typedef struct M_DFA_Struct {
     bool is_done;
 } M_DFA_Struct;
 
+void M_DFA_Struct_Init(M_DFA_Struct *dfa_struct);
+void M_DFA_Struct_Free(M_DFA_Struct *dfa_struct);
+
 #endif

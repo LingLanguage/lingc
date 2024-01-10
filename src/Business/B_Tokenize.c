@@ -9,6 +9,7 @@ void B_Tokenize_SeqMove(E_Doc *doc, const string filename, const string code, lo
     E_Doc_Init(doc, filename);
 
     M_NFA_Top *nfa_top = calloc(1, sizeof(M_NFA_Top));
+    M_NFA_Top_Init(nfa_top);
     int index = 0;
 
     while (index < size) {
@@ -48,19 +49,19 @@ void B_Tokenize_SeqMove(E_Doc *doc, const string filename, const string code, lo
                 D_NFA_Top_Enter(nfa_top);
             }
         } else if (top_status == NFA_Top_Status_Struct) {
-            M_DFA_Struct *dfa_struct = nfa_top->dfa_struct;
-            end_index = D_DFA_Struct_Process(dfa_struct, filename, line, isSplit, word, end_index, code, size);
-            if (dfa_struct->is_done) {
-                E_Doc_Struct_Add(doc, dfa_struct->st);
-                D_NFA_Top_Enter(nfa_top);
-            }
+            // M_DFA_Struct *dfa_struct = nfa_top->dfa_struct;
+            // end_index = D_DFA_Struct_Process(dfa_struct, filename, line, isSplit, word, end_index, code, size);
+            // if (dfa_struct->is_done) {
+            //     E_Doc_Struct_Add(doc, dfa_struct->st);
+            //     D_NFA_Top_Enter(nfa_top);
+            // }
         } else if (top_status == NFA_Top_Status_Func) {
-            M_DFA_Func *fsm_func = nfa_top->dfa_func;
-            end_index = D_DFA_Func_Process(fsm_func, filename, line, isSplit, word, end_index, code, size);
-            if (fsm_func->is_done) {
-                E_Doc_StaticFunc_Add(doc, fsm_func->function);
-                D_NFA_Top_Enter(nfa_top);
-            }
+            // M_DFA_Func *fsm_func = nfa_top->dfa_func;
+            // end_index = D_DFA_Func_Process(fsm_func, filename, line, isSplit, word, end_index, code, size);
+            // if (fsm_func->is_done) {
+            //     E_Doc_StaticFunc_Add(doc, fsm_func->function);
+            //     D_NFA_Top_Enter(nfa_top);
+            // }
         } else if (top_status == NFA_Top_Status_Guess) {
             D_NFA_Top_Process(nfa_top, filename, line, isSplit, word, code, size);
         }

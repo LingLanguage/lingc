@@ -1,4 +1,4 @@
 @echo off
 call build.bat
-.\bin\lingc.exe
+lingc.exe -i samples\import
 @echo on

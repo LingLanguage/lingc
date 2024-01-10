@@ -7,25 +7,37 @@ void E_Doc_Init(E_Doc *doc, const string file) {
 
 void E_Doc_Free(E_Doc *doc) {
 
+    // - Import
     for (int i = 0; i < doc->imports_count; i++) {
         // E_Import_Free(&doc->imports[i]);
     }
-    free(doc->imports);
+    if (doc->imports_count > 0) {
+        free(doc->imports);
+    }
 
+    // - Struct
     for (int i = 0; i < doc->structs_count; i++) {
         E_Struct_Free(&doc->structs[i]);
     }
-    free(doc->structs);
+    if (doc->structs_count > 0) {
+        free(doc->structs);
+    }
 
+    // - StaticFunc
     for (int i = 0; i < doc->static_funcs_count; i++) {
         E_Function_Free(&doc->static_funcs[i]);
     }
-    free(doc->static_funcs);
+    if (doc->static_funcs_count > 0) {
+        free(doc->static_funcs);
+    }
 
+    // - StaticVar
     for (int i = 0; i < doc->static_vars_count; i++) {
         // E_Field_Free(&doc->static_vars[i]);
     }
-    free(doc->static_vars);
+    if (doc->static_vars_count > 0) {
+        free(doc->static_vars);
+    }
 
     free(doc);
 }

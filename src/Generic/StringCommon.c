@@ -321,7 +321,7 @@ inline const string String_SubString(const string word, int start_index, int end
     return TextSubtext(word, start_index, end_index);
 }
 
-const string String_CutBetweenSameChars(int start_index, const string code, long size, char same_area) {
+int String_CutBetweenSameChars(int start_index, const string code, long size, char same_area) {
     int left_index = -1;
     int right_index = -1;
     for (int i = start_index; i < size; i++) {
@@ -335,13 +335,10 @@ const string String_CutBetweenSameChars(int start_index, const string code, long
             }
         }
     }
-    if (left_index == -1 || right_index == -1) {
-        return NULL;
-    }
-    return String_SubString(code, left_index + 1, right_index - left_index - 1);
+    return right_index;
 }
 
-const string String_CutBetweenDifferentChars(int start_index, const string word, long size, char left, char right) {
+int String_CutBetweenDifferentChars(int start_index, const string word, long size, char left, char right) {
     int left_index = -1;
     int right_index = -1;
     for (int i = start_index; i < size; i++) {
@@ -353,10 +350,7 @@ const string String_CutBetweenDifferentChars(int start_index, const string word,
             break;
         }
     }
-    if (left_index == -1 || right_index == -1) {
-        return NULL;
-    }
-    return String_SubString(word, left_index + 1, right_index - left_index - 1);
+    return right_index;
 }
 
 void String_CopyAccess(char *dest, const string access) {
