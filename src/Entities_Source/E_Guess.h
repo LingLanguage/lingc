@@ -23,7 +23,6 @@ void E_Guess_PushWord(E_Guess *self, const string file, int line, const string w
 bool E_Guess_GuessStructName(E_Guess *self, const string file, int line, const string name, E_Struct *st);
 bool E_Guess_GuessField(E_Guess *self, const string file, int line, E_Field *field);
 bool E_Guess_GuessFuctionName(E_Guess *self, const string file, int line, E_Function *func);
-bool E_Guess_GuessStatement(E_Guess *self, const string file, int line, byte nested_level, char *op, byte op_count, E_Statement *statement);
 void E_Guess_ExpressionLog(const E_Guess *self);
 
 #endif

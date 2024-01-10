@@ -5,6 +5,7 @@
 #include "Business/D_NFA_Top.c"
 #include "Business/Util_Cursor.c"
 
+#include "Entities_Source/E_Block.c"
 #include "Entities_Source/E_Doc.c"
 #include "Entities_Source/E_Expression.c"
 #include "Entities_Source/E_Field.c"

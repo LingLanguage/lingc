@@ -120,51 +120,6 @@ bool E_Guess_GuessFuctionName(E_Guess *self, const string file, int line, E_Func
     return is_ok;
 }
 
-bool E_Guess_GuessStatement(E_Guess *self, const string file, int line, byte nested_level, char *op, byte op_count, E_Statement *statement) {
-    bool is_ok = true;
-    if (self->words_count == 0) {
-        if (self->is_const) {
-            PFailed(file, line, ERR_CONST_NOT_VAR);
-            is_ok = false;
-        } else {
-            PFailed(file, line, ERR_STATEMENT_NOT_VAR);
-            is_ok = false;
-        }
-    }
-
-    statement->is_const = self->is_const;
-    statement->belong_nested_level = nested_level;
-    if (self->words_count == 1) {
-        if (op_count == 0) {
-            // name;
-            // err
-            PFailed(file, line, ERR_VAR_NO_TYPE);
-            is_ok = false;
-        } else {
-            // name = value;
-            E_Statement_AddName(statement, self->words[0]);
-        }
-    } else if (self->words_count >= 2) {
-        // type name = value;
-        // type name1, name2 = value;
-        E_Statement_SetType(statement, self->words[0]);
-        for (int i = 1; i < self->words_count; i++) {
-            E_Statement_AddName(statement, self->words[i]);
-        }
-    } else if (self->words_count > RULE_FUNCTION_RETURN_COUNT) {
-        PFailed(file, line, ERR_VAR_TOO_MANY_WORDS);
-        is_ok = false;
-    } else {
-        PFailed(file, line, ERR_UNDIFINDED_ERR);
-        is_ok = false;
-    }
-
-    if (is_ok) {
-        E_Guess_Init(self);
-    }
-    return is_ok;
-}
-
 void E_Guess_ExpressionLog(const E_Guess *self) {
     // printf("%s %s:\r\n", self->access, self->is_static);
     printf("expression:");

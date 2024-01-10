@@ -37,10 +37,21 @@ typedef enum ExpressionPhase {
 } ExpressionPhase;
 
 typedef enum ExpressionType {
+    // order by priority
+    // 10(Assign) means highest priority
     ExpressionType_None = 0,
-    ExpressionType_CallFunc,
-    ExpressionType_ConstValue,
-    ExpressionType_Variable,
+    ExpressionType_Assign = 10,          // = += -= *= /= %= &= |= ^= ~= <<= >>=
+    ExpressionType_Bracket = 20,         // ()
+    ExpressionType_Pointer = 30,         // * &
+    ExpressionType_Pre_Increment = 40,   // ++x --x
+    ExpressionType_Calculation_Mul = 50, // * / %
+    ExpressionType_Calculation_Add = 60, // + -
+    ExpressionType_Binary_Move = 70,     // << >>
+    ExpressionType_Compare = 80,         // == != > < >= <=
+    ExpressionType_Binary_And = 90,      // & ^ |
+    ExpressionType_Logic = 100,          // && ||
+    ExpressionType_Condition = 110,      // ? :
+    ExpressionType_Post_Increment = 120, // x++ x--
 } ExpressionType;
 
 typedef enum OperatorType {
@@ -68,13 +79,16 @@ typedef enum ArgumentType {
 
 typedef enum StatementType {
     StatementType_None = 0,
-    StatementType_OnlyLeft,
-    StatementType_OnlyRight,
-    StatementType_LeftRight,
-    StatementType_If,
-    StatementType_While,
-    StatementType_For,
-    StatementType_Return,
+    StatementType_OnlyLeft,       // `i32 a;`
+    StatementType_OnlyExpression, // `FunctionA();`
+    StatementType_LeftRight,      // `i32 a = 1;` or `b.value = 1;`
+    StatementType_If,             // `if (a == 1) {}`
+    StatementType_ElseIf,         // `else if (a == 1) {}`
+    StatementType_Else,           // `else {}`
+    StatementType_Do,             // `do {} while (a == 1);`
+    StatementType_While,          // `while (a == 1) {}`
+    StatementType_For,            // `for (i32 i = 0; i < 10; i++) {}`
+    StatementType_Return,         // `return 1;`
 } StatementType;
 
 #endif

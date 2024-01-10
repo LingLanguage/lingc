@@ -14,19 +14,6 @@ typedef struct E_Expression {
 
     ExpressionType type;
 
-    M_Operator operator_before;
-    M_Operator operator_after;
-
-    // for call function
-    char call_func_name[RULE_FUNCTION_NAME_LEN];
-    char call_func_args[RULE_FUNCTION_PARAM_COUNT];
-
-    // for const value
-    char const_value[RULE_VAR_NAME_LEN];
-
-    // for variable
-    char var_name[RULE_VAR_NAME_LEN];
-
 } E_Expression;
 
 #endif
