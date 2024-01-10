@@ -52,6 +52,7 @@
         "m_fsm_guess.h": "c",
         "m_parameter.h": "c",
         "e_expression.h": "c",
-        "m_fsm_conststring.h": "c"
+        "m_fsm_conststring.h": "c",
+        "D_NFA_Top.h": "c"
     }
 }

@@ -1,6 +1,6 @@
 #include "B_Tokenize.h"
 #include "D_Top_Func.h"
-#include "D_Top_Guess.h"
+#include "D_NFA_Top.h"
 #include "D_Top_Import.h"
 #include "D_Top_Struct.h"
 
@@ -47,24 +47,24 @@ void B_Tokenize_SeqMove(E_Doc *doc, const string filename, const string code, lo
             endIndex = D_Top_Struct_Process(fsm_struct, filename, line, isSplit, word, endIndex, code, size);
             if (doc->fsm_struct.is_done) {
                 E_Doc_Struct_Add(doc, fsm_struct->st);
-                D_Top_Guess_Enter(doc);
+                D_NFA_Top_Enter(doc);
             }
         } else if (top_status == TopFSMStatus_Import) {
             M_FSM_Import *fsm_import = &doc->fsm_import;
             endIndex = D_Top_Import_Process(fsm_import, filename, line, isSplit, word, endIndex, code, size);
             if (fsm_import->is_done) {
                 E_Doc_Import_Add(doc, fsm_import->import);
-                D_Top_Guess_Enter(doc);
+                D_NFA_Top_Enter(doc);
             }
         } else if (top_status == TopFSMStatus_Func) {
             M_FSM_Func *fsm_func = &doc->fsm_func;
             endIndex = D_Top_Func_Process(fsm_func, filename, line, isSplit, word, endIndex, code, size);
             if (fsm_func->is_done) {
                 E_Doc_StaticFunc_Add(doc, fsm_func->function);
-                D_Top_Guess_Enter(doc);
+                D_NFA_Top_Enter(doc);
             }
         } else if (top_status == TopFSMStatus_Guess) {
-            D_Top_Guess_Process(doc, isSplit, word, code, size);
+            D_NFA_Top_Process(doc, isSplit, word, code, size);
         }
 
         if (!isSplit) {

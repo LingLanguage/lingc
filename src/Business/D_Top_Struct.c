@@ -1,5 +1,5 @@
 #include "D_Top_Struct.h"
-#include "D_Top_Guess.h"
+#include "D_NFA_Top.h"
 
 int Phase_Name_Process(M_FSM_Struct *fsm, const string file, int line, bool isSplit, const string word, int index, const string code, long size) {
     if (isSplit) {

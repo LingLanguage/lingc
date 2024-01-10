@@ -1,14 +1,14 @@
-#include "D_Top_Guess.h"
+#include "D_NFA_Top.h"
 #include "D_Top_Func.h"
 #include "D_Top_Import.h"
 #include "D_Top_Struct.h"
 
-void D_Top_Guess_Enter(E_Doc *doc) {
+void D_NFA_Top_Enter(E_Doc *doc) {
     E_Doc_FSM_Guess_Enter(doc);
     PLogNA("enter top guess\r\n");
 }
 
-void D_Top_Guess_Process(E_Doc *doc, bool isSplit, const string word, const string code, long size) {
+void D_NFA_Top_Process(E_Doc *doc, bool isSplit, const string word, const string code, long size) {
 
     if (isSplit) {
         return;
