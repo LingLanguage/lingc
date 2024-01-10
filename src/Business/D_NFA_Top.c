@@ -3,34 +3,40 @@
 #include "D_DFA_Import.h"
 #include "D_DFA_Struct.h"
 
-void D_NFA_Top_Enter(E_Doc *doc) {
-    E_Doc_FSM_Guess_Enter(doc);
-    PLogNA("enter top guess\r\n");
+void D_NFA_Top_Free(M_NFA_Top *nfa_top) {
+    D_DFA_Func_Free(nfa_top->dfa_func);
+    D_DFA_Import_Free(nfa_top->dfa_import);
+    D_DFA_Struct_Free(nfa_top->dfa_struct);
+    free(nfa_top);
 }
 
-void D_NFA_Top_Process(E_Doc *doc, bool isSplit, const string word, const string code, long size) {
+void D_NFA_Top_Enter(M_NFA_Top *nfa_top) {
+    E_Guess_Init(&nfa_top->guess);
+}
 
-    if (isSplit) {
+void D_NFA_Top_Process(M_NFA_Top *nfa_top, const string file, int line, bool is_split, const string word, const string code, long size) {
+
+    if (is_split) {
         return;
     }
 
-    M_FSM_Guess *fsm = &doc->fsm_guess;
-    E_Guess *guess = &fsm->guess;
-    if (!isSplit) {
+    E_Guess *guess = &nfa_top->guess;
+    if (!is_split) {
         if (strcmp(word, KW_IMPORT) == 0) {
             // import
-            doc->top_status = TopFSMStatus_Import;
-            M_FSM_Import *fsm_import = &doc->fsm_import;
-            D_DFA_Import_Enter(fsm_import);
+            nfa_top->status = NFA_Top_Status_Import;
+            M_DFA_Import *dfa_import = nfa_top->dfa_import;
+            D_DFA_Import_Enter(dfa_import);
         } else if (strcmp(word, KW_FUNC) == 0) {
             // fn
-            doc->top_status = TopFSMStatus_Func;
-            M_FSM_Func *fsm_func = &doc->fsm_func;
-            D_DFA_Func_Enter(fsm_func, guess);
+            nfa_top->status = NFA_Top_Status_Func;
+            M_DFA_Func *dfa_func = nfa_top->dfa_func;
+            D_DFA_Func_Enter(dfa_func, guess);
         } else if (strcmp(word, KW_STRUCT) == 0) {
             // struct
-            doc->top_status = TopFSMStatus_Struct;
-            D_DFA_Struct_Enter(doc, guess);
+            nfa_top->status = NFA_Top_Status_Struct;
+            M_DFA_Struct *dfa_struct = nfa_top->dfa_struct;
+            D_DFA_Struct_Enter(dfa_struct, file, line, guess);
         } else if (strcmp(word, KW_STATIC) == 0) {
             // static
             guess->is_static = true;
@@ -39,24 +45,17 @@ void D_NFA_Top_Process(E_Doc *doc, bool isSplit, const string word, const string
             guess->is_const = true;
         } else if (String_IsAccess(word)) {
             // access: public, private...
-            E_Guess_SetAccess(guess, doc->curFile, doc->curLine, word);
+            E_Guess_SetAccess(guess, file, line, word);
         } else {
             // push word
-            E_Guess_PushWord(guess, doc->curFile, doc->curLine, word);
+            E_Guess_PushWord(guess, file, line, word);
         }
     } else {
         if (word[0] == KW_SEMICOLON) {
             // ; field end
-            E_Field field;
-            bool is_ok = E_Guess_GuessField(&fsm->guess, doc->curFile, doc->curLine, &field);
-            if (is_ok) {
-                E_Doc_StaticVar_Add(doc, field);
-            } else {
-                PLogNA("TODO: guess field failed\r\n");
-            }
         } else if (word[0] == KW_RIGHT_BRACE) {
             // }
-            PFailed(doc->curFile, doc->curLine, ERR_FUNCTION_OR_FIELD_NOT_END);
+            PFailed(file, line, ERR_FUNCTION_OR_FIELD_NOT_END);
         }
     }
 }

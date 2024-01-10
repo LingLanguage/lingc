@@ -7,14 +7,14 @@ typedef enum ImportType {
     ImportType_ANGLE_BRACKET,
 } ImportType;
 
-typedef enum TopFSMStatus {
-    TopFSMStatus_Guess = 0,
-    TopFSMStatus_Something,
-    TopFSMStatus_Import,
-    TopFSMStatus_Access,
-    TopFSMStatus_Func,
-    TopFSMStatus_Struct,
-} TopFSMStatus;
+typedef enum NFA_Top_Status {
+    NFA_Top_Status_Guess = 0,
+    NFA_Top_Status_Something,
+    NFA_Top_Status_Import,
+    NFA_Top_Status_Access,
+    NFA_Top_Status_Func,
+    NFA_Top_Status_Struct,
+} NFA_Top_Status;
 
 typedef enum StructPhase {
     StructPhase_Name = 0,

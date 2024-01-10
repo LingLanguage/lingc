@@ -3,11 +3,10 @@
 
 #include "E_Function.h"
 #include "E_Guess.h"
-#include "M_FSM_Expression.h"
 #include "M_Parameter.h"
 #include "import.h"
 
-typedef struct M_FSM_Func {
+typedef struct M_DFA_Func {
 
     FuncPhase phase;
 
@@ -16,8 +15,6 @@ typedef struct M_FSM_Func {
     byte nested_level;
 
     E_Guess guess;
-
-    M_FSM_Expression fsm_expression;
 
     // for return type
     char words[RULE_STRUCT_TYPE_NAME_LEN][RULE_FUNCTION_RETURN_COUNT + 1];
@@ -29,8 +26,9 @@ typedef struct M_FSM_Func {
 
     bool is_done;
 
-} M_FSM_Func;
+} M_DFA_Func;
 
-void M_FSM_Func_Enter(M_FSM_Func *fsm, E_Guess *guess);
-int M_FSM_Func_Process(M_FSM_Func *fsm, const string file, int line, bool is_split, const string word, int index, const string code, long size);
+void M_DFA_Func_Free(M_DFA_Func *fsm);
+void M_DFA_Func_Enter(M_DFA_Func *fsm, E_Guess *guess);
+int M_DFA_Func_Process(M_DFA_Func *fsm, const string file, int line, bool is_split, const string word, int index, const string code, long size);
 #endif

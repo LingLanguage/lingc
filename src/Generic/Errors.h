@@ -3,6 +3,7 @@
 
 #define ERR_UNDIFINDED_ERR "Err0 Undifinded error."
 #define ERR_ACCESS_REDIFINED "Err100 Access redefined."
+#define ERR_STATIC_REDIFINED "Err101 Static redifined."
 #define ERR_STATEMENT_NOT_ASSIGN "Err200 Statement not assign."
 #define ERR_STATEMENT_NOT_VAR "Err201 Statement not var."
 #define ERR_VAR_CANNOT_START_WITH_NUMBER "Err300 Variable cannot start with a number."

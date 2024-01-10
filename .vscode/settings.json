@@ -53,6 +53,10 @@
         "m_parameter.h": "c",
         "e_expression.h": "c",
         "m_fsm_conststring.h": "c",
-        "D_NFA_Top.h": "c"
+        "D_NFA_Top.h": "c",
+        "d_dfa_struct.h": "c",
+        "m_dfa_struct.h": "c",
+        "compiler.h": "c",
+        "stdbool.h": "c"
     }
 }

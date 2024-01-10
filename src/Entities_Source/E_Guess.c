@@ -1,6 +1,6 @@
 #include "E_Guess.h"
 
-void E_Guess_Reset(E_Guess *self) {
+void E_Guess_Init(E_Guess *self) {
     memset(self, 0, sizeof(E_Guess));
 }
 
@@ -18,6 +18,14 @@ void E_Guess_SetConst(E_Guess *self, const string file, int line, bool is_const)
         return;
     }
     self->is_const = is_const;
+}
+
+void E_Guess_SetStatic(E_Guess *self, const string file, int line, bool is_static) {
+    if (self->is_static && is_static) {
+        PFailed(file, line, ERR_STATIC_REDIFINED);
+        return;
+    }
+    self->is_static = is_static;
 }
 
 void E_Guess_PushWord(E_Guess *self, const string file, int line, const string word) {
@@ -58,7 +66,7 @@ bool E_Guess_GuessStructName(E_Guess *self, const string file, int line, const s
 
     if (is_ok) {
         String_CopyAccess(st->access, self->access);
-        E_Guess_Reset(self);
+        E_Guess_Init(self);
     }
     return is_ok;
 }
@@ -74,7 +82,7 @@ bool E_Guess_GuessField(E_Guess *self, const string file, int line, E_Field *fie
     }
 
     if (is_ok) {
-        E_Guess_Reset(self);
+        E_Guess_Init(self);
     }
     return is_ok;
 }
@@ -119,7 +127,7 @@ bool E_Guess_GuessStatement(E_Guess *self, const string file, int line, byte nes
     }
 
     if (is_ok) {
-        E_Guess_Reset(self);
+        E_Guess_Init(self);
     }
     return is_ok;
 }

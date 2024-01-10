@@ -1,8 +1,13 @@
-#include "M_FSM_Func.h"
+#include "M_DFA_Func.h"
 
-void ParamsPhase_Enter(M_FSM_Func *fsm);
+void M_DFA_Func_Free(M_DFA_Func *fsm) {
+    E_Function_Free(&fsm->function);
+    free(fsm);
+}
 
-void ReturnTypePhase_Process(M_FSM_Func *fsm, const string file, int line, bool is_split, const string word, const string code, long size) {
+void ParamsPhase_Enter(M_DFA_Func *fsm);
+
+void ReturnTypePhase_Process(M_DFA_Func *fsm, const string file, int line, bool is_split, const string word, const string code, long size) {
     if (is_split && word[0] == KW_LEFT_BRACKET) {
         // (
         // set return type
@@ -23,14 +28,14 @@ void ReturnTypePhase_Process(M_FSM_Func *fsm, const string file, int line, bool 
     }
 }
 
-void ParamsPhase_Enter(M_FSM_Func *fsm) {
+void ParamsPhase_Enter(M_DFA_Func *fsm) {
     fsm->phase = FuncPhase_Params;
     memset(fsm->tmp_param_type, 0, sizeof(fsm->tmp_param_type));
     memset(fsm->tmp_param_name, 0, sizeof(fsm->tmp_param_name));
     fsm->tmp_is_in_param_name = false;
 }
 
-void ParamPhase_Process(M_FSM_Func *fsm, const string file, int line, bool is_split, const string word, const string code, long size) {
+void ParamPhase_Process(M_DFA_Func *fsm, const string file, int line, bool is_split, const string word, const string code, long size) {
     if (is_split && word[0] == KW_RIGHT_BRACKET) {
         // )
         fsm->phase = FuncPhase_Body;
@@ -49,8 +54,7 @@ void ParamPhase_Process(M_FSM_Func *fsm, const string file, int line, bool is_sp
     }
 }
 
-int BodyPhase_Process(M_FSM_Func *fsm, const string file, int line, bool is_split, const string word, int index, const string code, long size) {
-    M_FSM_Expression *fsm_expression = &fsm->fsm_expression;
+int BodyPhase_Process(M_DFA_Func *fsm, const string file, int line, bool is_split, const string word, int index, const string code, long size) {
     if (is_split) {
         if (word[0] == KW_LEFT_BRACE) {
             // {
@@ -62,33 +66,21 @@ int BodyPhase_Process(M_FSM_Func *fsm, const string file, int line, bool is_spli
                 fsm->is_done = true;
             }
         } else {
-            index = M_FSM_Expression_Process(fsm_expression, fsm->nested_level, file, line, is_split, word, index, code, size);
-            if (fsm_expression->is_done) {
-                // expression end
-                E_Function_AddStatement(&fsm->function, fsm_expression->statement);
-                M_FSM_Expression_Enter(fsm_expression);
-            }
         }
     } else {
-        index = M_FSM_Expression_Process(fsm_expression, fsm->nested_level, file, line, is_split, word, index, code, size);
-        if (fsm_expression->is_done) {
-            // expression end
-            E_Function_AddStatement(&fsm->function, fsm_expression->statement);
-            M_FSM_Expression_Enter(fsm_expression);
-        }
     }
     return index;
 }
 
 // public
-void M_FSM_Func_Enter(M_FSM_Func *fsm, E_Guess *guess) {
-    memset(fsm, 0, sizeof(M_FSM_Func));
+void M_DFA_Func_Enter(M_DFA_Func *fsm, E_Guess *guess) {
+    memset(fsm, 0, sizeof(M_DFA_Func));
     String_CopyAccess(fsm->guess.access, guess->access);
     fsm->guess.is_const = guess->is_const;
     fsm->guess.is_static = guess->is_static;
 }
 
-int M_FSM_Func_Process(M_FSM_Func *fsm, const string file, int line, bool is_split, const string word, int index, const string code, long size) {
+int M_DFA_Func_Process(M_DFA_Func *fsm, const string file, int line, bool is_split, const string word, int index, const string code, long size) {
     FuncPhase phase = fsm->phase;
     if (phase == FuncPhase_ReturnType) {
         ReturnTypePhase_Process(fsm, file, line, is_split, word, code, size);

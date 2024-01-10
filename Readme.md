@@ -4,10 +4,11 @@ raylib - https://github.com/raysan5/raylib
 
 #### FA
 NFA Top  
+    =       -> DFA assign stm  
+    ;       -> DFA field  
     import  -> DFA import  
     fn      -> DFA function  
     struct  -> DFA struct  
-    ;       -> DFA field  
     public  -> valid  
     const   -> valid  
     static  -> valid  
@@ -19,14 +20,18 @@ DFA field
     =       -> DFA Assign exp  
     ;       -> END  
 DFA function  
-            -> NFA Statements  
-    }       -> END  
-NFA Statements  
+            -> NFA Block  
+    BlockEnd-> END  
+NFA Block  
+            -> NFA Statement  
+            -> NFA Block  
+NFA Statement  
+    =       -> DFA assign stm  
     ;       -> DFA declare stm  
     if      -> DFA if stm  
+    do      -> DFA while stm  
     while   -> DFA while stm  
     for     -> DFA for stm  
-    =       -> DFA assign stm  
     return  -> DFA return stm  
 DFA exp  
     "       -> DFA Const String  

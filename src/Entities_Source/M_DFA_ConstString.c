@@ -1,9 +1,9 @@
-#include "M_FSM_ConstString.h"
+#include "M_DFA_ConstString.h"
 
-int M_FSM_ConstString_Process(M_FSM_ConstString *fsm, int nested_level, const string file, int line, bool is_split, const string word, int index, const string code,
+int M_DFA_ConstString_Process(M_DFA_ConstString *fsm, int nested_level, const string file, int line, bool is_split, const string word, int index, const string code,
                               long size) {
 
-    memset(fsm, 0, sizeof(M_FSM_ConstString));
+    memset(fsm, 0, sizeof(M_DFA_ConstString));
     // from "
     fsm->start_index = index;
     fsm->end_index = index;

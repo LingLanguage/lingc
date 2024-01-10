@@ -2,12 +2,16 @@
 #include "D_NFA_Top.h"
 #include "import.h"
 
-void D_DFA_Import_Enter(M_FSM_Import *fsm) {
-    memset(fsm, 0, sizeof(M_FSM_Import));
+void D_DFA_Import_Free(M_DFA_Import *fsm) {
+    PLogNA("free top import\r\n");
+}
+
+void D_DFA_Import_Enter(M_DFA_Import *fsm) {
+    memset(fsm, 0, sizeof(M_DFA_Import));
     PLogNA("enter top import\r\n");
 }
 
-int D_DFA_Import_Process(M_FSM_Import *fsm, const string file, int line, bool is_split, const string word, int index, const string code, long size) {
+int D_DFA_Import_Process(M_DFA_Import *fsm, const string file, int line, bool is_split, const string word, int index, const string code, long size) {
 
     if (is_split && Char_IsEmptySymbol(word[0])) {
         return index;

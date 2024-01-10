@@ -9,6 +9,4 @@ typedef struct M_Operator {
     char name[RULE_OPERATOR_NAME_LEN];
 } M_Operator;
 
-M_Operator M_Operator_Create(const string name, OperatorType type);
-
 #endif

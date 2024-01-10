@@ -14,9 +14,10 @@ typedef struct E_Guess {
     byte words_count;
 } E_Guess;
 
-void E_Guess_Reset(E_Guess *self);
+void E_Guess_Init(E_Guess *self);
 void E_Guess_SetAccess(E_Guess *self, const string file, int line, const string access);
 void E_Guess_SetConst(E_Guess *self, const string file, int line, bool is_const);
+void E_Guess_SetStatic(E_Guess *self, const string file, int line, bool is_static);
 void E_Guess_PushWord(E_Guess *self, const string file, int line, const string word);
 bool E_Guess_GuessStructName(E_Guess *self, const string file, int line, const string name, E_Struct *st);
 bool E_Guess_GuessField(E_Guess *self, const string file, int line, E_Field *field);

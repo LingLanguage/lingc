@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <utf8.h>
+#include <raylib.h>
 
 #include "Enums.h"
 #include "Errors.h"

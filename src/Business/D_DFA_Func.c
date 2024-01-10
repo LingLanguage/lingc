@@ -1,11 +1,14 @@
 #include "D_DFA_Func.h"
 
-void D_DFA_Func_Enter(M_FSM_Func *fsm, E_Guess *guess) {
-    M_FSM_Func_Enter(fsm, guess);
+void D_DFA_Func_Free(M_DFA_Func *dfa_func) {
+    PLogNA("free top func\r\n");
+}
+
+void D_DFA_Func_Enter(M_DFA_Func *dfa_func, E_Guess *guess) {
+    M_DFA_Func_Enter(dfa_func, guess);
     PLogNA("enter top func\r\n");
 }
 
-int D_DFA_Func_Process(M_FSM_Func *fsm, const string file, int line, bool is_split, const string word, int index, const string code, long size) {
-    index = M_FSM_Func_Process(fsm, file, line, is_split, word, index, code, size);
+int D_DFA_Func_Process(M_DFA_Func *dfa_func, const string file, int line, bool is_split, const string word, int index, const string code, long size) {
     return index;
 }

@@ -1,5 +1,10 @@
 #include "E_Doc.h"
 
+void E_Doc_Init(E_Doc *doc, const string file) {
+    strcpy(doc->file, file);
+    doc->line = 1;
+}
+
 void E_Doc_Free(E_Doc *doc) {
 
     for (int i = 0; i < doc->imports_count; i++) {
@@ -23,12 +28,6 @@ void E_Doc_Free(E_Doc *doc) {
     free(doc->static_vars);
 
     free(doc);
-}
-
-void E_Doc_Init(E_Doc *doc, const string file) {
-    memset(doc, 0, sizeof(E_Doc));
-    strcpy(doc->curFile, file);
-    doc->curLine = 1;
 }
 
 void E_Doc_Import_Add(E_Doc *doc, E_Import import) {
@@ -67,32 +66,10 @@ void E_Doc_StaticFunc_Add(E_Doc *doc, E_Function func) {
     doc->static_funcs[doc->static_funcs_count++] = func;
 }
 
-// ==== FSM ====
-void E_Doc_FSM_Guess_Enter(E_Doc *doc) {
-    doc->top_status = TopFSMStatus_Guess;
-    M_FSM_Guess *fsm = &doc->fsm_guess;
-    M_FSM_Guess_Enter(fsm);
-}
-
-void E_Doc_FSM_Import_Enter(E_Doc *doc) {
-    doc->top_status = TopFSMStatus_Import;
-    M_FSM_Import *fsm = &doc->fsm_import;
-    M_FSM_Import_Enter(fsm);
-}
-
-void E_Doc_FSM_Struct_Enter(E_Doc *doc, E_Guess *guess) {
-    doc->top_status = TopFSMStatus_Struct;
-    M_FSM_Struct *fsm = &doc->fsm_struct;
-    memset(fsm, 0, sizeof(M_FSM_Struct));
-    String_CopyAccess(fsm->guess.access, guess->access);
-    fsm->guess.is_const = guess->is_const;
-    fsm->guess.is_static = guess->is_static;
-}
-
 // ==== Log ====
 void E_Doc_Log(E_Doc *doc) {
     printf("==== Doc ====\r\n");
-    printf("file: %s, total line: %d\r\n", doc->curFile, doc->curLine);
+    printf("file: %s, total line: %d\r\n", doc->file, doc->line);
     // printf("imports_count: %d\r\n", doc->imports_count);
     // printf("structs_count: %d\r\n", doc->structs_count);
     // printf("static_funcs_count: %d\r\n", doc->static_funcs_count);
