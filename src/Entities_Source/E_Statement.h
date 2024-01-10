@@ -11,8 +11,9 @@ typedef struct E_Statement {
 
     // assignment
     bool assign_is_const;
-    char assign_words[RULE_VAR_NAME_LEN][RULE_FUNCTION_RETURN_COUNT];
-    byte assign_words_count;
+    char **assign_words;
+    int assign_words_capacity;
+    int assign_words_count;
 
     // = / if / while / for / return
     E_Expression *bracket_expressions;

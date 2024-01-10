@@ -2,6 +2,8 @@
 #include "Business/D_DFA_Func.c"
 #include "Business/D_DFA_Import.c"
 #include "Business/D_DFA_Struct.c"
+#include "Business/D_NFA_Expression.c"
+#include "Business/D_NFA_Statement.c"
 #include "Business/D_NFA_Top.c"
 #include "Business/Util_Cursor.c"
 
@@ -20,6 +22,7 @@
 #include "Entities_Source/M_DFA_Import.c"
 #include "Entities_Source/M_DFA_Struct.c"
 #include "Entities_Source/M_NFA_Block.c"
+#include "Entities_Source/M_NFA_Expression.c"
 #include "Entities_Source/M_NFA_Top.c"
 #include "Entities_Source/M_Operator.c"
 
