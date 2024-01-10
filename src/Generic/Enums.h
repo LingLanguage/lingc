@@ -38,20 +38,23 @@ typedef enum ExpressionPhase {
 
 typedef enum ExpressionType {
     // order by priority
-    // 10(Assign) means highest priority
+    // 20(Bracket) means highest priority
     ExpressionType_None = 0,
-    ExpressionType_Assign = 10,          // = += -= *= /= %= &= |= ^= ~= <<= >>=
-    ExpressionType_Bracket = 20,         // ()
-    ExpressionType_Pointer = 30,         // * &
-    ExpressionType_Pre_Increment = 40,   // ++x --x
-    ExpressionType_Calculation_Mul = 50, // * / %
-    ExpressionType_Calculation_Add = 60, // + -
-    ExpressionType_Binary_Move = 70,     // << >>
-    ExpressionType_Compare = 80,         // == != > < >= <=
-    ExpressionType_Binary_And = 90,      // & ^ |
-    ExpressionType_Logic = 100,          // && ||
-    ExpressionType_Condition = 110,      // ? :
-    ExpressionType_Post_Increment = 120, // x++ x--
+    ExpressionType_Bracket = 500,          // ()
+    ExpressionType_Member = 600,           // . ->
+    ExpressionType_Pre_Increment = 700,    // ++x --x
+    ExpressionType_Square_Bracket = 800,   // []
+    ExpressionType_Pointer = 900,          // * &
+    ExpressionType_Calculation_Mul = 1000, // * / %
+    ExpressionType_Calculation_Add = 1100, // + -
+    ExpressionType_Binary_Move = 1200,     // << >>
+    ExpressionType_Compare = 1300,         // == != > < >= <=
+    ExpressionType_Binary_And = 1400,      // & ^ |
+    ExpressionType_Logic = 1500,           // && ||
+    ExpressionType_Condition = 1600,       // ? :
+    ExpressionType_Assign = 1700,          // = += -= *= /= %= &= |= ^= ~= <<= >>=
+    ExpressionType_Post_Increment = 1800,  // x++ x--
+    ExpressionType_Empty = 1900,           // ; eg: for(;;)
 } ExpressionType;
 
 typedef enum OperatorType {

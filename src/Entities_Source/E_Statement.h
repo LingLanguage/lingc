@@ -14,16 +14,17 @@ typedef struct E_Statement {
     char assign_words[RULE_VAR_NAME_LEN][RULE_FUNCTION_RETURN_COUNT];
     byte assign_words_count;
 
-    // if / while / for
-    E_Expression expression;
+    // = / if / while / for / return
+    E_Expression *bracket_expressions;
+    int bracket_expressions_count;
+
+    // if / do / while / for
+    // {}
+    E_Expression *block_expressions;
+    int block_expressions_count;
 
 } E_Statement;
 
-void E_Statement_SetType(E_Statement *self, const string type);
-void E_Statement_AddName(E_Statement *self, const string name);
-void E_Statement_SetExpression(E_Statement *self, E_Expression expression);
-void E_Statement_SetOperator(E_Statement *self, M_Operator operator);
-void E_Statement_AddExpressionOrigin(E_Statement *self, const string word);
 void E_Statement_Log(const E_Statement *self);
 
 #endif

@@ -6,14 +6,19 @@
 #include "import.h"
 
 // 表达式
-// call function
-// const value: custom const, string, number, bool, null
-// variable
-// return
 typedef struct E_Expression {
 
     ExpressionType type;
+    int priority;
+
+    char **words;
+    int words_capacity;
+    int words_count;
 
 } E_Expression;
+
+void E_Expression_Init(E_Expression *self, ExpressionType type, int priority);
+void E_Expression_Free(E_Expression *self);
+void E_Expression_AddWord(E_Expression *self, const string word);
 
 #endif
