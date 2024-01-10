@@ -8,7 +8,7 @@ void D_DFA_Import_Free(M_DFA_Import *fsm) {
 
 void D_DFA_Import_Enter(M_DFA_Import *fsm) {
     memset(fsm, 0, sizeof(M_DFA_Import));
-    PLogNA("enter top import\r\n");
+    PLogNA("Enter DFA Import\r\n");
 }
 
 void D_DFA_Import_Process(M_DFA_Import *fsm, const string code, const string word, M_Cursor *cursor) {

@@ -73,7 +73,7 @@ int BodyPhase_Process(M_DFA_Func *fsm, const string file, int line, bool is_spli
 }
 
 // public
-void M_DFA_Func_Enter(M_DFA_Func *fsm, E_Guess *guess) {
+void M_DFA_Func_Init(M_DFA_Func *fsm, E_Guess *guess) {
     memset(fsm, 0, sizeof(M_DFA_Func));
     String_CopyAccess(fsm->guess.access, guess->access);
     fsm->guess.is_const = guess->is_const;

@@ -1,8 +1,15 @@
+### LingLang
+C with o.f()  
+- No inherit
+- No complicated syntax
+- For spartan-programmers
+
 #### Dependancies
 utf8.h - https://github.com/sheredom/utf8.h  
 raylib - https://github.com/raysan5/raylib
 
 #### FA
+```
 NFA Top  
     =       -> DFA assign stm  
     ;       -> DFA field  
@@ -42,3 +49,4 @@ DFA struct
     ;       -> DFA declare stm  
     fn      -> DFA function  
     }       -> END  
+```

@@ -2,12 +2,12 @@
 #include "D_NFA_Top.h"
 
 void D_DFA_Struct_Free(M_DFA_Struct *dfa_struct) {
-    PLogNA("free top struct\r\n");
 }
 
 void Guess_Enter(M_DFA_Struct *dfa_struct) {
     dfa_struct->phase = StructPhase_Guess;
     E_Guess_Init(&dfa_struct->guess);
+    PLogNA("Enter DFA Struct\r\n");
 }
 
 int Phase_Name_Process(M_DFA_Struct *dfa_struct, const string file, int line, bool isSplit, const string word, int index, const string code, long size) {

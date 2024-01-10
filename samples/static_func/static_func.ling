@@ -1,0 +1,12 @@
+public static fn Main() {
+
+}
+
+public static i8 Ret1(i8 a) {
+    return a;
+}
+
+public static i8, i32 Ret2(i8 a, i32 b) {
+    i32 c = a + b;
+    return a, c;
+}

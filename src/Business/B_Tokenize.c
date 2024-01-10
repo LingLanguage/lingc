@@ -66,12 +66,12 @@ void B_Tokenize_SeqMove(E_Doc *doc, const string filename, const string code, lo
             //     D_NFA_Top_Enter(nfa_top);
             // }
         } else if (top_status == NFA_Top_Status_Func) {
-            // M_DFA_Func *fsm_func = nfa_top->dfa_func;
-            // end_index = D_DFA_Func_Process(fsm_func, filename, line, isSplit, word, end_index, code, size);
-            // if (fsm_func->is_done) {
-            //     E_Doc_StaticFunc_Add(doc, fsm_func->function);
-            //     D_NFA_Top_Enter(nfa_top);
-            // }
+            M_DFA_Func *dfa_func = nfa_top->dfa_func;
+            D_DFA_Func_Process(dfa_func, code, word, &cursor);
+            if (dfa_func->is_done) {
+                E_Doc_StaticFunc_Add(doc, dfa_func->function);
+                D_NFA_Top_Enter(nfa_top);
+            }
         }
 
         if (c == KW_NEWLINE) {
