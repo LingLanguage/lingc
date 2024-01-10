@@ -1,4 +1,4 @@
-#include "D_Top_Struct.h"
+#include "D_DFA_Struct.h"
 #include "D_NFA_Top.h"
 
 int Phase_Name_Process(M_FSM_Struct *fsm, const string file, int line, bool isSplit, const string word, int index, const string code, long size) {
@@ -26,12 +26,12 @@ int Phase_Name_Process(M_FSM_Struct *fsm, const string file, int line, bool isSp
     return index;
 }
 
-void D_Top_Struct_Enter(E_Doc *doc, E_Guess *guess) {
+void D_DFA_Struct_Enter(E_Doc *doc, E_Guess *guess) {
     E_Doc_FSM_Struct_Enter(doc, guess);
     PLogNA("enter top struct\r\n");
 }
 
-int D_Top_Struct_Process(M_FSM_Struct *fsm, const string file, int line, bool isSplit, const string word, int index, const string code, long size) {
+int D_DFA_Struct_Process(M_FSM_Struct *fsm, const string file, int line, bool isSplit, const string word, int index, const string code, long size) {
     E_Struct *st = &fsm->st;
     StructPhase phase = fsm->phase;
     if (phase == StructPhase_Name) {

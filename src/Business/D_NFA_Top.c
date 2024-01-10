@@ -1,7 +1,7 @@
 #include "D_NFA_Top.h"
 #include "D_DFA_Func.h"
 #include "D_DFA_Import.h"
-#include "D_Top_Struct.h"
+#include "D_DFA_Struct.h"
 
 void D_NFA_Top_Enter(E_Doc *doc) {
     E_Doc_FSM_Guess_Enter(doc);
@@ -30,7 +30,7 @@ void D_NFA_Top_Process(E_Doc *doc, bool isSplit, const string word, const string
         } else if (strcmp(word, KW_STRUCT) == 0) {
             // struct
             doc->top_status = TopFSMStatus_Struct;
-            D_Top_Struct_Enter(doc, guess);
+            D_DFA_Struct_Enter(doc, guess);
         } else if (strcmp(word, KW_STATIC) == 0) {
             // static
             guess->is_static = true;

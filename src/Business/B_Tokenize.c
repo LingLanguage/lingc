@@ -2,7 +2,7 @@
 #include "D_DFA_Func.h"
 #include "D_NFA_Top.h"
 #include "D_DFA_Import.h"
-#include "D_Top_Struct.h"
+#include "D_DFA_Struct.h"
 
 void B_Tokenize_SeqMove(E_Doc *doc, const string filename, const string code, long size) {
 
@@ -44,7 +44,7 @@ void B_Tokenize_SeqMove(E_Doc *doc, const string filename, const string code, lo
 
         if (top_status == TopFSMStatus_Struct) {
             M_FSM_Struct *fsm_struct = &doc->fsm_struct;
-            endIndex = D_Top_Struct_Process(fsm_struct, filename, line, isSplit, word, endIndex, code, size);
+            endIndex = D_DFA_Struct_Process(fsm_struct, filename, line, isSplit, word, endIndex, code, size);
             if (doc->fsm_struct.is_done) {
                 E_Doc_Struct_Add(doc, fsm_struct->st);
                 D_NFA_Top_Enter(doc);
