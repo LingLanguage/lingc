@@ -59,6 +59,7 @@
         "compiler.h": "c",
         "stdbool.h": "c",
         "type_traits": "c",
-        "util_cursor.h": "c"
+        "util_cursor.h": "c",
+        "d_dfa_func.h": "c"
     }
 }

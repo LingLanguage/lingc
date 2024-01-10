@@ -24,8 +24,7 @@ typedef enum StructPhase {
 } StructPhase;
 
 typedef enum FuncPhase {
-    FuncPhase_ReturnType = 0,
-    FuncPhase_Name,
+    FuncPhase_Name = 0,
     FuncPhase_Params,
     FuncPhase_Body,
 } FuncPhase;

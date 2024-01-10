@@ -19,7 +19,11 @@
 #define ERR_FIELD_COUNT "Err600 Field count must be 2."
 #define ERR_FUNCTION_OR_FIELD_NOT_END "Err700 Function or field not end."
 #define ERR_FUNCTION_TOO_MANY_RETURN_TYPES "Err701 Function too many return types."
-#define ERR_FUNCTION_RETURN_REDIFINED "Err702 Function return redifined."
-#define ERR_FUNCTION_RETURN_MUST_FIRST "Err703 Function return must first."
+#define ERR_FUNCTION_TOO_FEW_RETURN_TYPES "Err702 Function too few return types."
+#define ERR_FUNCTION_RETURN_REDIFINED "Err703 Function return redifined."
+#define ERR_FUNCTION_RETURN_MUST_FIRST "Err704 Function return must first."
+#define ERR_FUNCTION_NAME_NOT_FOUND "Err705 Function name not found."
+#define ERR_FUNCTION_RETURN_NOT_FOUND "Err706 Function return not found."
+#define ERR_FUNCTION_CANT_BE_CONST "Err707 Function cannot be const."
 
 #endif

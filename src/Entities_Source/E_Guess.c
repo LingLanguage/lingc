@@ -87,6 +87,39 @@ bool E_Guess_GuessField(E_Guess *self, const string file, int line, E_Field *fie
     return is_ok;
 }
 
+bool E_Guess_GuessFuctionName(E_Guess *self, const string file, int line, E_Function *func) {
+    bool is_ok = true;
+    if (self->is_const) {
+        PFailed(file, line, ERR_FUNCTION_CANT_BE_CONST);
+        is_ok = false;
+    }
+    if (self->words_count >= 2) {
+        if (self->words_count <= RULE_FUNCTION_RETURN_COUNT) {
+            // ok
+            // last word is name
+            strcpy(func->name, self->words[self->words_count - 1]);
+            // other words are return type
+            for (int i = 0; i < self->words_count - 1; i++) {
+                E_Function_AddReturnType(func, self->words[i]);
+            }
+        } else {
+            PFailed(file, line, ERR_FUNCTION_TOO_MANY_RETURN_TYPES);
+        }
+    } else if (self->words_count == 1) {
+        PFailed(file, line, ERR_FUNCTION_TOO_FEW_RETURN_TYPES);
+        is_ok = false;
+    } else if (self->words_count == 0) {
+        PFailed(file, line, ERR_FUNCTION_NAME_NOT_FOUND);
+        is_ok = false;
+    }
+
+    if (is_ok) {
+        String_CopyAccess(func->access, self->access);
+        E_Guess_Init(self);
+    }
+    return is_ok;
+}
+
 bool E_Guess_GuessStatement(E_Guess *self, const string file, int line, byte nested_level, char *op, byte op_count, E_Statement *statement) {
     bool is_ok = true;
     if (self->words_count == 0) {
