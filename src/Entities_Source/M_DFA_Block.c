@@ -3,3 +3,11 @@
 void M_DFA_Block_Init(M_DFA_Block *dfa_block) {
     memset(dfa_block, 0, sizeof(M_DFA_Block));
 }
+
+void M_DFA_Block_Free(M_DFA_Block *dfa_block) {
+    M_DFA_Block *child = dfa_block->dfa_child_block;
+    if (child != NULL) {
+        M_DFA_Block_Free(child);
+        free(child);
+    }
+}

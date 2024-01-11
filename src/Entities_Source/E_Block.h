@@ -6,13 +6,17 @@
 typedef struct E_Block {
 
     E_Statement *statements;
+    int statements_capacity;
     int statements_count;
 
     void *child_blocks;
+    int child_blocks_capacity;
     int child_blocks_count;
 
 } E_Block;
 
 void E_Block_Free(E_Block *self);
+void E_Block_AddBlock(E_Block *self, E_Block block);
+void E_Block_AddStatement(E_Block *self, E_Statement statement);
 
 #endif

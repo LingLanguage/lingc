@@ -19,6 +19,7 @@ typedef enum NFA_Top_Status {
 typedef enum DFA_Block_Status {
     DFA_Block_Status_Guess = 0,
     DFA_Block_Status_Statement,
+    DFA_Block_Status_ChildBlock,
 } DFA_Block_Status;
 
 typedef enum NFA_Statement_Status {
