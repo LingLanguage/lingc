@@ -31,7 +31,7 @@ void D_DFA_Func_NamePhase_Process(FAM_Func *dfa_func, const string code, const s
 }
 
 void D_DFA_Func_ParamPhase_Enter(FAM_Func *dfa_func) {
-    dfa_func->phase = FuncPhase_Params;
+    dfa_func->phase = Func_FA_Params;
     dfa_func->tmp_is_in_param_name = false;
 }
 
@@ -65,7 +65,7 @@ void D_DFA_Func_ParamPhase_Process(FAM_Func *dfa_func, const string code, const 
 }
 
 void D_DFA_Func_BlockPhase_Enter(FAM_Func *dfa_func) {
-    dfa_func->phase = FuncPhase_Block;
+    dfa_func->phase = Func_FA_Block;
     D_DFA_Block_Enter(&dfa_func->dfa_block);
 }
 
@@ -87,12 +87,12 @@ void D_DFA_Func_Enter(FAM_Func *dfa_func, E_Guess *guess) {
 }
 
 void D_DFA_Func_Process(FAM_Func *dfa_func, const string code, const string word, M_Cursor *cursor) {
-    FuncPhase phase = dfa_func->phase;
-    if (phase == FuncPhase_Name) {
+    Func_FA phase = dfa_func->phase;
+    if (phase == Func_FA_Name) {
         D_DFA_Func_NamePhase_Process(dfa_func, code, word, cursor);
-    } else if (phase == FuncPhase_Params) {
+    } else if (phase == Func_FA_Params) {
         D_DFA_Func_ParamPhase_Process(dfa_func, code, word, cursor);
-    } else if (phase == FuncPhase_Block) {
+    } else if (phase == Func_FA_Block) {
         D_DFA_Func_BlockPhase_Process(dfa_func, code, word, cursor);
     }
 }

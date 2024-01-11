@@ -18,19 +18,19 @@ void D_DFA_Block_Enter(FAM_Block *dfa_block) {
 }
 
 void D_DFA_Block_Process(FAM_Block *dfa_block, const string code, const string word, M_Cursor *cursor) {
-    DFA_Block_Status status = dfa_block->status;
-    if (status == DFA_Block_Status_Guess) {
+    Block_FA status = dfa_block->status;
+    if (status == Block_FA_Guess) {
         D_DFA_Block_Guess_Process(dfa_block, code, word, cursor);
-    } else if (status == DFA_Block_Status_Statement) {
+    } else if (status == Block_FA_Statement) {
         D_DFA_Block_Statement_Process(dfa_block, code, word, cursor);
-    } else if (status == DFA_Block_Status_ChildBlock) {
+    } else if (status == Block_FA_ChildBlock) {
         D_DFA_Block_ChildBlock_Process(dfa_block, code, word, cursor);
     }
 }
 
 // Phase: Guess
 void D_DFA_Block_Guess_Enter(FAM_Block *dfa_block) {
-    dfa_block->status = DFA_Block_Status_Guess;
+    dfa_block->status = Block_FA_Guess;
 }
 
 void D_DFA_Block_Guess_Process(FAM_Block *dfa_block, const string code, const string word, M_Cursor *cursor) {
@@ -86,7 +86,7 @@ void D_DFA_Block_Guess_Process(FAM_Block *dfa_block, const string code, const st
 
 // Phase: Statement
 void D_DFA_Block_Statement_Enter(FAM_Block *dfa_block) {
-    dfa_block->status = DFA_Block_Status_Statement;
+    dfa_block->status = Block_FA_Statement;
 }
 
 void D_DFA_Block_Statement_Process(FAM_Block *dfa_block, const string code, const string word, M_Cursor *cursor) {
@@ -101,7 +101,7 @@ void D_DFA_Block_Statement_Process(FAM_Block *dfa_block, const string code, cons
 // Phase: ChildBlock
 void D_DFA_Block_ChildBlock_Enter(FAM_Block *dfa_block, const string code, const string word, M_Cursor *cursor) {
     dfa_block->last_status = dfa_block->status;
-    dfa_block->status = DFA_Block_Status_ChildBlock;
+    dfa_block->status = Block_FA_ChildBlock;
     FAM_Block *dfa_child_block = malloc(sizeof(FAM_Block));
     dfa_block->dfa_child_block = dfa_child_block;
     D_DFA_Block_Enter(dfa_child_block);
@@ -113,9 +113,9 @@ void D_DFA_Block_ChildBlock_Process(FAM_Block *dfa_block, const string code, con
     if (dfa_child_block->is_done) {
         E_Block_AddBlock(&dfa_block->block, dfa_child_block->block);
         FAM_Block_Free(dfa_child_block);
-        if (dfa_block->last_status == DFA_Block_Status_Guess) {
+        if (dfa_block->last_status == Block_FA_Guess) {
             D_DFA_Block_Guess_Enter(dfa_block);
-        } else if (dfa_block->last_status == DFA_Block_Status_Statement) {
+        } else if (dfa_block->last_status == Block_FA_Statement) {
             D_DFA_Block_Statement_Enter(dfa_block);
         }
     }

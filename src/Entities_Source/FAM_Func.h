@@ -9,7 +9,7 @@
 
 typedef struct FAM_Func {
 
-    FuncPhase phase;
+    Func_FA phase;
 
     FAM_Block dfa_block;
 

@@ -40,7 +40,7 @@ void D_EXP_Bracket_ProcessBracket(M_EXP *nfa_exp, const string code, const strin
 }
 
 void D_EXP_Bracket_Process(M_EXP *nfa_exp, const string code, const string word, M_Cursor *cursor) {
-    NFA_Expression_Status status = nfa_exp->status;
+    EXP_FA status = nfa_exp->status;
     if (status == NFA_EXPression_Status_Bracket) {
         D_EXP_Bracket_ProcessBracket(nfa_exp, code, word, cursor);
     }

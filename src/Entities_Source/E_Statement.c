@@ -7,6 +7,12 @@ E_Statement E_Statement_CreateReturn() {
     return self;
 }
 
+E_Statement E_Statement_CreateAssign() {
+    E_Statement self = {0};
+    self.statementType = StatementType_Assign;
+    return self;
+}
+
 void E_Statement_Free(E_Statement *self) {
 
     if (self->assign_words_count > 0) {

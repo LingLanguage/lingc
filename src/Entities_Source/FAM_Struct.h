@@ -7,7 +7,7 @@
 
 typedef struct FAM_Struct {
     E_Struct st;
-    StructPhase phase;
+    Struct_FA phase;
     byte nested_level;
     E_Guess guess;
 

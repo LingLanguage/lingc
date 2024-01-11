@@ -19,7 +19,7 @@ void B_Tokenize_SeqMove(E_Doc *doc, const string filename, const string code, lo
 
     while (cursor.index < size) {
 
-        NFA_Top_Status top_status = nfa_top->status;
+        Top_FA top_status = nfa_top->status;
         int line = doc->line;
 
         int start_index = cursor.index;
@@ -49,23 +49,23 @@ void B_Tokenize_SeqMove(E_Doc *doc, const string filename, const string code, lo
 
         cursor.index = end_index;
 
-        if (top_status == NFA_Top_Status_Guess) {
+        if (top_status == Top_FA_Guess) {
             D_NFA_Top_Process(nfa_top, code, word, &cursor);
-        } else if (top_status == NFA_Top_Status_Import) {
+        } else if (top_status == Top_FA_Import) {
             FAM_Import *dfa_import = nfa_top->dfa_import;
             D_DFA_Import_Process(dfa_import, code, word, &cursor);
             if (dfa_import->is_done) {
                 E_Doc_Import_Add(doc, dfa_import->import);
                 D_NFA_Top_Enter(nfa_top);
             }
-        } else if (top_status == NFA_Top_Status_Struct) {
+        } else if (top_status == Top_FA_Struct) {
             // FAM_Struct *dfa_struct = nfa_top->dfa_struct;
             // end_index = D_DFA_Struct_Process(dfa_struct, filename, line, isSplit, word, end_index, code, size);
             // if (dfa_struct->is_done) {
             //     E_Doc_Struct_Add(doc, dfa_struct->st);
             //     D_NFA_Top_Enter(nfa_top);
             // }
-        } else if (top_status == NFA_Top_Status_Func) {
+        } else if (top_status == Top_FA_Func) {
             FAM_Func *dfa_func = nfa_top->dfa_func;
             D_DFA_Func_Process(dfa_func, code, word, &cursor);
             if (dfa_func->is_done) {

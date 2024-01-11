@@ -5,7 +5,7 @@ void D_DFA_Struct_Free(FAM_Struct *dfa_struct) {
 }
 
 void Guess_Enter(FAM_Struct *dfa_struct) {
-    dfa_struct->phase = StructPhase_Guess;
+    dfa_struct->phase = Struct_FA_Guess;
     E_Guess_Init(&dfa_struct->guess);
     PLogNA("Enter DFA Struct\r\n");
 }
@@ -15,7 +15,7 @@ int Phase_Name_Process(FAM_Struct *dfa_struct, const string file, int line, bool
         char split = word[0];
         if (split == KW_LEFT_BRACE) {
             // {
-            dfa_struct->phase = StructPhase_Guess;
+            dfa_struct->phase = Struct_FA_Guess;
             dfa_struct->nested_level += 1;
             dfa_struct->is_done = true;
         } else {
@@ -40,16 +40,16 @@ void D_DFA_Struct_Enter(FAM_Struct *dfa_struct, const string file, int line, E_G
     E_Guess_SetAccess(&dfa_struct->guess, file, line, guess->access);
     E_Guess_SetConst(&dfa_struct->guess, file, line, guess->is_const);
     E_Guess_SetStatic(&dfa_struct->guess, file, line, guess->is_static);
-    dfa_struct->phase = StructPhase_Name;
+    dfa_struct->phase = Struct_FA_Name;
 }
 
 int D_DFA_Struct_Process(FAM_Struct *dfa_struct, const string file, int line, bool isSplit, const string word, int index, const string code, long size) {
     E_Struct *st = &dfa_struct->st;
-    StructPhase phase = dfa_struct->phase;
-    if (phase == StructPhase_Name) {
+    Struct_FA phase = dfa_struct->phase;
+    if (phase == Struct_FA_Name) {
         index = Phase_Name_Process(dfa_struct, file, line, isSplit, word, index, code, size);
-    } else if (phase == StructPhase_Guess) {
-    } else if (phase == StructPhase_Func) {
+    } else if (phase == Struct_FA_Guess) {
+    } else if (phase == Struct_FA_Func) {
     }
     return index;
 }

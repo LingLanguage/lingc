@@ -5,6 +5,7 @@
 #include "Business_Tokenize/D_DFA_Struct.c"
 #include "Business_Tokenize/D_EXP_Bracket.c"
 #include "Business_Tokenize/D_STMT_Return.c"
+#include "Business_Tokenize/D_STMT_Assign.c"
 #include "Business_Tokenize/D_NFA_Top.c"
 #include "Business_Tokenize/Util_Cursor.c"
 

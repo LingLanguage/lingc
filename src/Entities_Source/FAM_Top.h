@@ -8,7 +8,7 @@
 #include "import.h"
 
 typedef struct FAM_Top {
-    NFA_Top_Status status;
+    Top_FA status;
     FAM_Struct *dfa_struct;
     FAM_Import *dfa_import;
     FAM_Func *dfa_func;

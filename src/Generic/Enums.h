@@ -7,51 +7,45 @@ typedef enum ImportType {
     ImportType_ANGLE_BRACKET,
 } ImportType;
 
-typedef enum NFA_Top_Status {
-    NFA_Top_Status_Guess = 0,
-    NFA_Top_Status_Something,
-    NFA_Top_Status_Import,
-    NFA_Top_Status_Access,
-    NFA_Top_Status_Func,
-    NFA_Top_Status_Struct,
-} NFA_Top_Status;
+typedef enum Top_FA {
+    Top_FA_Guess = 0,
+    Top_FA_Something,
+    Top_FA_Import,
+    Top_FA_Access,
+    Top_FA_Func,
+    Top_FA_Struct,
+} Top_FA;
 
-typedef enum DFA_Block_Status {
-    DFA_Block_Status_Guess = 0,
-    DFA_Block_Status_Statement,
-    DFA_Block_Status_ChildBlock,
-} DFA_Block_Status;
+typedef enum Block_FA {
+    Block_FA_Guess = 0,
+    Block_FA_Statement,
+    Block_FA_ChildBlock,
+} Block_FA;
 
-typedef enum NFA_Statement_Status {
-    NFA_Statement_Status_Guess = 0,
-    NFA_Statement_Status_Return,
-} NFA_Statement_Status;
+typedef enum STMT_FA {
+    STMT_FA_Guess = 0,
+    STMT_FA_Return,
+    STMT_FA_Assign,
+} STMT_FA;
 
-typedef enum NFA_Expression_Status {
-    NFA_Expression_Status_Guess = 0,
+typedef enum EXP_FA {
+    EXP_FA_Guess = 0,
     NFA_EXPression_Status_Bracket,
-    NFA_Expression_Status_Recursion,
-} NFA_Expression_Status;
+    EXP_FA_Recursion,
+} EXP_FA;
 
-typedef enum StructPhase {
-    StructPhase_Name = 0,
-    StructPhase_Guess,
-    StructPhase_Field,
-    StructPhase_Func,
-} StructPhase;
+typedef enum Struct_FA {
+    Struct_FA_Name = 0,
+    Struct_FA_Guess,
+    Struct_FA_Field,
+    Struct_FA_Func,
+} Struct_FA;
 
-typedef enum FuncPhase {
-    FuncPhase_Name = 0,
-    FuncPhase_Params,
-    FuncPhase_Block,
-} FuncPhase;
-
-typedef enum ExpressionPhase {
-    ExpressionPhase_Guess,
-    ExpressionPhase_Statement_Assign,
-    ExpressionPhase_Statement_If,
-    ExpressionPhase_Statement_Return,
-} ExpressionPhase;
+typedef enum Func_FA {
+    Func_FA_Name = 0,
+    Func_FA_Params,
+    Func_FA_Block,
+} Func_FA;
 
 typedef enum ExpressionType {
     // order by priority
@@ -90,18 +84,11 @@ typedef enum OperatorType {
     OperatorType_End,           // ;
 } OperatorType;
 
-typedef enum ArgumentType {
-    ArgumentType_None = 0,
-    ArgumentType_ConstValue,
-    ArgumentType_Variable,
-    ArgumentType_Expression,
-} ArgumentType;
-
 typedef enum StatementType {
     StatementType_None = 0,
     StatementType_OnlyLeft,       // `i32 a;`
     StatementType_OnlyExpression, // `FunctionA();`
-    StatementType_LeftRight,      // `i32 a = 1;` or `b.value = 1;`
+    StatementType_Assign,         // `i32 a = 1;` or `b.value = 1;`
     StatementType_If,             // `if (a == 1) {}`
     StatementType_ElseIf,         // `else if (a == 1) {}`
     StatementType_Else,           // `else {}`

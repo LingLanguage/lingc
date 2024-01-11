@@ -6,8 +6,8 @@
 #include "import.h"
 
 typedef struct FAM_Block {
-    DFA_Block_Status status;
-    DFA_Block_Status last_status;
+    Block_FA status;
+    Block_FA last_status;
     FAM_STMT nfa_stmt;
     void *dfa_child_block;
     E_Block block;

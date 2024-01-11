@@ -1,7 +1,7 @@
 #include "FAM_Top.h"
 
 void FAM_Top_Init(FAM_Top *nfa_top) {
-    nfa_top->status = NFA_Top_Status_Guess;
+    nfa_top->status = Top_FA_Guess;
     nfa_top->dfa_struct = calloc(1, sizeof(FAM_Struct));
     nfa_top->dfa_import = calloc(1, sizeof(FAM_Import));
     nfa_top->dfa_func = calloc(1, sizeof(FAM_Func));

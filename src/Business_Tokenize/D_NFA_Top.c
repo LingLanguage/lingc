@@ -9,7 +9,7 @@ void D_NFA_Top_Free(FAM_Top *nfa_top) {
 }
 
 void D_NFA_Top_Enter(FAM_Top *nfa_top) {
-    nfa_top->status = NFA_Top_Status_Guess;
+    nfa_top->status = Top_FA_Guess;
     E_Guess_Init(&nfa_top->guess);
     PLogNA("Enter NFA Top\r\n");
 }
@@ -23,17 +23,17 @@ void D_NFA_Top_Process(FAM_Top *nfa_top, const string code, const string word, M
     if (!cursor->is_split) {
         if (strcmp(word, KW_IMPORT) == 0) {
             // import
-            nfa_top->status = NFA_Top_Status_Import;
+            nfa_top->status = Top_FA_Import;
             FAM_Import *dfa_import = nfa_top->dfa_import;
             D_DFA_Import_Enter(dfa_import);
         } else if (strcmp(word, KW_FUNC) == 0) {
             // fn
-            nfa_top->status = NFA_Top_Status_Func;
+            nfa_top->status = Top_FA_Func;
             FAM_Func *dfa_func = nfa_top->dfa_func;
             D_DFA_Func_Enter(dfa_func, guess);
         } else if (strcmp(word, KW_STRUCT) == 0) {
             // struct
-            // nfa_top->status = NFA_Top_Status_Struct;
+            // nfa_top->status = Top_FA_Struct;
             // FAM_Struct *dfa_struct = nfa_top->dfa_struct;
             // D_DFA_Struct_Enter(dfa_struct, file, line, guess);
         } else if (strcmp(word, KW_STATIC) == 0) {

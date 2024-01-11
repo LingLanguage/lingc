@@ -68,6 +68,7 @@
         "m_dfa_import.h": "c",
         "m_dfa_func.h": "c",
         "m_dfa_block.h": "c",
-        "d_dfa_block.h": "c"
+        "d_dfa_block.h": "c",
+        "m_exp.h": "c"
     }
 }

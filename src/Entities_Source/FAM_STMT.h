@@ -6,7 +6,7 @@
 #include "import.h"
 
 typedef struct FAM_STMT {
-    NFA_Statement_Status status;
+    STMT_FA status;
     M_EXP nfa_exp;
     E_Statement statement;
     bool is_done;
