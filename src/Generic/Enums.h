@@ -27,10 +27,11 @@ typedef enum NFA_Statement_Status {
     NFA_Statement_Status_Return,
 } NFA_Statement_Status;
 
-typedef enum NFA_Expressiont_Status {
-    NFA_Expressiont_Status_Guess = 0,
-    NFA_Expressiont_Status_Recursion,
-} NFA_Expressiont_Status;
+typedef enum NFA_Expression_Status {
+    NFA_Expression_Status_Guess = 0,
+    NFA_EXPression_Status_Bracket,
+    NFA_Expression_Status_Recursion,
+} NFA_Expression_Status;
 
 typedef enum StructPhase {
     StructPhase_Name = 0,

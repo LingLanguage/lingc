@@ -14,7 +14,7 @@ Tokenize
     - ""
 - static func
     √ access
-    - expression
+    - block
 - static var
     √ access
 - struct
@@ -24,4 +24,6 @@ Tokenize
         √ access
     - function
         √ access
-        - expression
+        - block
+            - exp
+                - exp

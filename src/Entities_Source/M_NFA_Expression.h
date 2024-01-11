@@ -5,7 +5,7 @@
 #include "import.h"
 
 typedef struct M_NFA_Expression {
-    NFA_Expressiont_Status status;
+    NFA_Expression_Status status;
     E_Expression expression;
     bool is_done;
 } M_NFA_Expression;

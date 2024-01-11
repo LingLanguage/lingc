@@ -3,7 +3,7 @@
 
 #include "import.h"
 
-void D_NFA_Expression_Enter(M_NFA_Expression *nfa_exp);
+void D_NFA_Expression_EnterBracket(M_NFA_Expression *nfa_exp);
 void D_NFA_Expression_Process(M_NFA_Expression *nfa_exp, const string code, const string word, M_Cursor *cursor);
 
 #endif

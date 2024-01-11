@@ -1,15 +1,20 @@
 #ifndef E_BLOCK_H__
 #define E_BLOCK_H__
 
-#include "E_Statement.h"
+#include "import.h"
 
+typedef struct E_Statement E_Statement;
+typedef struct E_Block E_Block;
+typedef struct E_Statement E_Statement;
+
+// 代码块
 typedef struct E_Block {
 
     E_Statement *statements;
     int statements_capacity;
     int statements_count;
 
-    void *child_blocks;
+    E_Block *child_blocks;
     int child_blocks_capacity;
     int child_blocks_count;
 
