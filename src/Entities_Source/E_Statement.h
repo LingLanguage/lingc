@@ -24,7 +24,7 @@ typedef struct E_Statement {
 
     // if / do / while / for
     // {}
-    void *blocks;
+    E_Block *blocks;
     int blocks_capacity;
     int blocks_count;
 

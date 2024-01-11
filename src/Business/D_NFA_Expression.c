@@ -8,6 +8,7 @@ void D_NFA_Expression_EnterBracket(M_NFA_Expression *nfa_exp) {
     // already know: (
     memset(nfa_exp, 0, sizeof(M_NFA_Expression));
     nfa_exp->expression.type = ExpressionType_Bracket; // ()
+    nfa_exp->status = NFA_EXPression_Status_Bracket;
 }
 
 void D_NFA_Expression_ProcessBracket(M_NFA_Expression *nfa_exp, const string code, const string word, M_Cursor *cursor) {
@@ -18,11 +19,16 @@ void D_NFA_Expression_ProcessBracket(M_NFA_Expression *nfa_exp, const string cod
             // )
             nfa_exp->is_done = true;
             ++cursor->index;
+        } else if (split == KW_COMMA) {
+            // ,
+            ++cursor->index;
+        } else {
+            Util_Cursor_DealEmptySplit(cursor, code, word);
         }
     } else {
-
+        E_Expression *expression = &nfa_exp->expression;
+        E_Expression_AddWord(expression, word);
     }
-    E_Expression *expression = &nfa_exp->expression;
 }
 
 void D_NFA_Expression_Process(M_NFA_Expression *nfa_exp, const string code, const string word, M_Cursor *cursor) {

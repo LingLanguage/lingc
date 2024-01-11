@@ -63,7 +63,7 @@ void D_NFA_Top_Process(M_NFA_Top *nfa_top, const string code, const string word,
             // }
             PFailed(cursor->file, cursor->line, ERR_FUNCTION_OR_FIELD_NOT_END);
         } else {
-            Util_Cursor_DealEmpty(cursor, code, word);
+            Util_Cursor_DealEmptySplit(cursor, code, word);
         }
     }
 }

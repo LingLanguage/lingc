@@ -1,6 +1,6 @@
 #include "Util_Cursor.h"
 
-void Util_Cursor_DealEmpty(M_Cursor *cursor, const string code, const string word) {
+void Util_Cursor_DealEmptySplit(M_Cursor *cursor, const string code, const string word) {
     if (!cursor->is_split) {
         PFailed(cursor->file, cursor->line, ERR_UNDIFINDED_ERR);
         return;

@@ -1,5 +1,5 @@
 #include "D_DFA_Block.h"
-#include "D_NFA_Statement.h"
+#include "D_NFA_STMT_Return.h"
 #include "Util_Cursor.h"
 
 void D_DFA_Block_Enter(M_DFA_Block *dfa_block);
@@ -66,13 +66,13 @@ void D_DFA_Block_Guess_Process(M_DFA_Block *dfa_block, const string code, const 
             PLogNA("TODO: DFA Block Process: ,\r\n");
             ++cursor->index;
         } else {
-            Util_Cursor_DealEmpty(cursor, code, word);
+            Util_Cursor_DealEmptySplit(cursor, code, word);
         }
     } else {
         if (strcmp(word, KW_RETURN) == 0) {
             // return
             D_DFA_Block_Statement_Enter(dfa_block);
-            D_NFA_Statement_EnterReturnSTMT(&dfa_block->nfa_stmt);
+            D_NFA_STMT_Return_Enter(&dfa_block->nfa_stmt);
         } else if (strcmp(word, KW_IF) == 0) {
             // if
         } else if (strcmp(word, KW_WHILE) == 0) {
@@ -90,10 +90,11 @@ void D_DFA_Block_Statement_Enter(M_DFA_Block *dfa_block) {
 }
 
 void D_DFA_Block_Statement_Process(M_DFA_Block *dfa_block, const string code, const string word, M_Cursor *cursor) {
-    D_NFA_Statement_Process(&dfa_block->nfa_stmt, code, word, cursor);
+    D_NFA_STMT_Return_Process(&dfa_block->nfa_stmt, code, word, cursor);
     if (dfa_block->nfa_stmt.is_done) {
         E_Block_AddStatement(&dfa_block->block, dfa_block->nfa_stmt.statement);
         D_DFA_Block_Guess_Enter(dfa_block);
+        PLogNA("STMT DONE\r\n");
     }
 }
 

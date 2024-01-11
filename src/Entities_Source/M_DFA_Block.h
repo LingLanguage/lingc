@@ -2,13 +2,13 @@
 #define M_DFA_BLOCK_H__
 
 #include "E_Block.h"
-#include "M_NFA_Statement.h"
+#include "M_NFA_STMT_Return.h"
 #include "import.h"
 
 typedef struct M_DFA_Block {
     DFA_Block_Status status;
     DFA_Block_Status last_status;
-    M_NFA_Statement nfa_stmt;
+    M_NFA_STMT_Return nfa_stmt;
     void *dfa_child_block;
     E_Block block;
     bool is_done;

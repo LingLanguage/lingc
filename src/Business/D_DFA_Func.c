@@ -23,7 +23,7 @@ void D_DFA_Func_NamePhase_Process(M_DFA_Func *dfa_func, const string code, const
             // do nothing
             ++cursor->index;
         } else {
-            Util_Cursor_DealEmpty(cursor, code, word);
+            Util_Cursor_DealEmptySplit(cursor, code, word);
         }
     } else {
         E_Guess_PushWord(&dfa_func->guess, cursor->file, cursor->line, word);
@@ -47,7 +47,7 @@ void D_DFA_Func_ParamPhase_Process(M_DFA_Func *dfa_func, const string code, cons
             // do nothing
             ++cursor->index;
         } else {
-            Util_Cursor_DealEmpty(cursor, code, word);
+            Util_Cursor_DealEmptySplit(cursor, code, word);
         }
     } else {
         // params

@@ -42,7 +42,7 @@ void D_DFA_Import_Process(M_DFA_Import *fsm, const string code, const string wor
             ++cursor->index;
             fsm->is_done = true;
         } else {
-            Util_Cursor_DealEmpty(cursor, code, word);
+            Util_Cursor_DealEmptySplit(cursor, code, word);
         }
     } else {
         PFailed(cursor->file, cursor->line, ERR_UNDIFINDED_ERR);

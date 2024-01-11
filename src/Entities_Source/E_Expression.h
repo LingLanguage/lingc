@@ -1,8 +1,6 @@
 #ifndef E_EXPRESSION_H__
 #define E_EXPRESSION_H__
 
-#include "M_Operator.h"
-#include "M_Parameter.h"
 #include "import.h"
 
 typedef struct E_Expression E_Expression;

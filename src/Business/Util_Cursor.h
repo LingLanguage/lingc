@@ -3,6 +3,6 @@
 
 #include "import.h"
 
-void Util_Cursor_DealEmpty(M_Cursor *cursor, const string code, const string word);
+void Util_Cursor_DealEmptySplit(M_Cursor *cursor, const string code, const string word);
 
 #endif
