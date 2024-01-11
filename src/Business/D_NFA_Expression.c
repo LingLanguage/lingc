@@ -17,11 +17,19 @@ void D_NFA_Expression_ProcessBracket(M_NFA_Expression *nfa_exp, const string cod
         char split = word[0];
         if (split == KW_RIGHT_BRACKET) {
             // )
+            // end bracket
             nfa_exp->is_done = true;
             ++cursor->index;
         } else if (split == KW_COMMA) {
             // ,
             ++cursor->index;
+        } else if (split == KW_SEMICOLON) {
+            // ;
+            // also end bracket
+            // DONT ++cursor->index;
+            // DONT ++cursor->index;
+            // DONT ++cursor->index;
+            nfa_exp->is_done = true;
         } else {
             Util_Cursor_DealEmptySplit(cursor, code, word);
         }
