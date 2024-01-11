@@ -3,10 +3,10 @@
 
 #include "E_Import.h"
 #include "E_Struct.h"
-#include "M_DFA_Func.h"
-#include "M_NFA_Top.h"
-#include "M_DFA_Import.h"
-#include "M_DFA_Struct.h"
+#include "FAM_Func.h"
+#include "FAM_Top.h"
+#include "FAM_Import.h"
+#include "FAM_Struct.h"
 #include "import.h"
 
 // 单份代码文件解析

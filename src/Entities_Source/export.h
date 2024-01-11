@@ -7,11 +7,11 @@
 #include "E_Struct.h"
 #include "Entities.h"
 #include "M_Cursor.h"
-#include "M_DFA_Block.h"
-#include "M_DFA_Func.h"
-#include "M_DFA_Import.h"
-#include "M_DFA_Struct.h"
-#include "M_NFA_Expression.h"
-#include "M_NFA_STMT_Return.h"
+#include "FAM_Block.h"
+#include "FAM_Func.h"
+#include "FAM_Import.h"
+#include "FAM_Struct.h"
+#include "M_EXP.h"
+#include "FAM_STMT.h"
 
 #endif
