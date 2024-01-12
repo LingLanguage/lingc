@@ -12,7 +12,6 @@ typedef struct FAM_Top {
     FAM_Struct *dfa_struct;
     FAM_Import *dfa_import;
     FAM_Func *dfa_func;
-    E_Guess guess;
 } FAM_Top;
 
 void FAM_Top_Init(FAM_Top *nfa_top);

@@ -3,13 +3,13 @@
 
 E_Statement E_Statement_CreateReturn() {
     E_Statement self = {0};
-    self.statementType = StatementType_Return;
+    self.type = StatementType_Return;
     return self;
 }
 
 E_Statement E_Statement_CreateAssign() {
     E_Statement self = {0};
-    self.statementType = StatementType_Assign;
+    self.type = StatementType_Assign;
     return self;
 }
 
@@ -37,6 +37,18 @@ void E_Statement_Free(E_Statement *self) {
         free(self->blocks);
     }
 
+}
+
+void E_Statement_AddAssignLeftWord(E_Statement *self, char *word) {
+    if (self->assign_words_count == 0) {
+        self->assign_words_capacity = 2;
+        self->assign_words = malloc(sizeof(char *));
+    } else if (self->assign_words_count == self->assign_words_capacity) {
+        self->assign_words_capacity *= 2;
+        self->assign_words = realloc(self->assign_words, sizeof(char *) * self->assign_words_capacity);
+    }
+    strcpy(self->assign_words[self->assign_words_count], word);
+    self->assign_words_count++;
 }
 
 void E_Statement_AddBracketExpression(E_Statement *self, E_Expression expression) {

@@ -1,7 +1,16 @@
 #include "E_Guess.h"
 
 void E_Guess_Init(E_Guess *self) {
-    memset(self, 0, sizeof(E_Guess));
+    self->words_count = 0;
+}
+
+void E_Guess_Free(E_Guess *self) {
+    if (self->words_capacity > 0) {
+        for (int i = 0; i < self->words_capacity; i++) {
+            free(self->words[i]);
+        }
+        free(self->words);
+    }
 }
 
 void E_Guess_SetAccess(E_Guess *self, const string file, int line, const string access) {
@@ -29,48 +38,19 @@ void E_Guess_SetStatic(E_Guess *self, const string file, int line, bool is_stati
 }
 
 void E_Guess_PushWord(E_Guess *self, const string file, int line, const string word) {
-    if (self->words_count < RULE_EXPRESSION_WORDS_COUNT) {
-        strcpy(self->words[self->words_count], word);
-        self->words_count++;
-    } else {
-        PFailed(file, line, ERR_VAR_TOO_MANY_WORDS);
+    if (self->words_count == 0) {
+        self->words_capacity = 2;
+        self->words = malloc(sizeof(char *));
+    } else if (self->words_count == self->words_capacity) {
+        self->words_capacity *= 2;
+        self->words = realloc(self->words, sizeof(char *) * self->words_capacity);
     }
+    self->words[self->words_count] = malloc(sizeof(char) * (strlen(word) + 1));
+    strcpy(self->words[self->words_count], word);
+    self->words_count++;
 }
 
 // ==== Guess ====
-bool E_Guess_GuessStructName(E_Guess *self, const string file, int line, const string name, E_Struct *st) {
-    bool is_ok = true;
-    if (self->words_count == 0) {
-        PFailed(file, line, ERR_STRUCT_NAME_NOT_FOUND);
-        is_ok = false;
-    } else if (self->words_count == 1) {
-        if (self->is_const) {
-            PFailed(file, line, ERR_STRUCT_CANNOT_BE_CONST);
-            is_ok = false;
-        } else {
-            // name
-            if (strlen(st->name) <= 0) {
-                strcpy(st->name, self->words[0]);
-            } else {
-                PFailed(file, line, ERR_STRUCT_NAME_REDIFINED);
-                is_ok = false;
-            }
-        }
-    } else {
-        for (int i = 0; i < self->words_count; i++) {
-            printf("%s\r\n", self->words[i]);
-        }
-        PFailed(file, line, ERR_STRUCT_NAME_TOO_MANY_WORDS);
-        is_ok = false;
-    }
-
-    if (is_ok) {
-        String_CopyAccess(st->access, self->access);
-        E_Guess_Init(self);
-    }
-    return is_ok;
-}
-
 bool E_Guess_GuessField(E_Guess *self, const string file, int line, E_Field *field) {
     bool is_ok = true;
     if (self->words_count == 2) {
@@ -82,39 +62,6 @@ bool E_Guess_GuessField(E_Guess *self, const string file, int line, E_Field *fie
     }
 
     if (is_ok) {
-        E_Guess_Init(self);
-    }
-    return is_ok;
-}
-
-bool E_Guess_GuessFuctionName(E_Guess *self, const string file, int line, E_Function *func) {
-    bool is_ok = true;
-    if (self->is_const) {
-        PFailed(file, line, ERR_FUNCTION_CANT_BE_CONST);
-        is_ok = false;
-    }
-    if (self->words_count >= 2) {
-        if (self->words_count <= RULE_FUNCTION_RETURN_COUNT) {
-            // ok
-            // last word is name
-            strcpy(func->name, self->words[self->words_count - 1]);
-            // other words are return type
-            for (int i = 0; i < self->words_count - 1; i++) {
-                E_Function_AddReturnType(func, self->words[i]);
-            }
-        } else {
-            PFailed(file, line, ERR_FUNCTION_TOO_MANY_RETURN_TYPES);
-        }
-    } else if (self->words_count == 1) {
-        PFailed(file, line, ERR_FUNCTION_TOO_FEW_RETURN_TYPES);
-        is_ok = false;
-    } else if (self->words_count == 0) {
-        PFailed(file, line, ERR_FUNCTION_NAME_NOT_FOUND);
-        is_ok = false;
-    }
-
-    if (is_ok) {
-        String_CopyAccess(func->access, self->access);
         E_Guess_Init(self);
     }
     return is_ok;

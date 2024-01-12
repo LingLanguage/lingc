@@ -17,9 +17,6 @@ typedef struct FAM_Func {
 
     byte nested_level;
 
-    // name and return type
-    E_Guess guess;
-
     // params
     char tmp_param_type[RULE_STRUCT_TYPE_NAME_LEN];
     char tmp_param_name[RULE_VAR_NAME_LEN];
@@ -29,6 +26,6 @@ typedef struct FAM_Func {
 
 } FAM_Func;
 
-void FAM_Func_Init(FAM_Func *fsm, E_Guess *guess);
+void FAM_Func_Init(FAM_Func *fsm, char *access, bool is_static);
 void FAM_Func_Free(FAM_Func *fsm);
 #endif

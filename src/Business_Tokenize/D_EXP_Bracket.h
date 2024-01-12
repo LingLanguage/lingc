@@ -3,7 +3,7 @@
 
 #include "import.h"
 
-void D_EXP_Bracket_EnterBracket(M_EXP *nfa_exp);
-void D_EXP_Bracket_Process(M_EXP *nfa_exp, const string code, const string word, M_Cursor *cursor);
+void D_EXP_Bracket_EnterBracket(M_EXP *fam_exp);
+void D_EXP_Bracket_Process(M_EXP *fam_exp, const string code, const string word, M_Cursor *cursor);
 
 #endif

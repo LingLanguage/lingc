@@ -8,9 +8,10 @@
 typedef struct FAM_Block {
     Block_FA status;
     Block_FA last_status;
-    FAM_STMT nfa_stmt;
+    FAM_STMT fam_stmt;
     void *dfa_child_block;
     E_Block block;
+    E_Guess guess;
     bool is_done;
 } FAM_Block;
 

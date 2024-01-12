@@ -7,8 +7,8 @@
 
 typedef struct FAM_STMT {
     STMT_FA status;
-    M_EXP nfa_exp;
-    E_Statement statement;
+    M_EXP fam_exp;
+    E_Statement stmt;
     bool is_done;
 
     bool is_return_bracket_done;

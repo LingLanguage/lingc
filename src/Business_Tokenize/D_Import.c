@@ -1,17 +1,17 @@
-#include "D_DFA_Import.h"
-#include "D_NFA_Top.h"
+#include "D_Import.h"
+#include "D_TopLevel.h"
 #include "Util_Cursor.h"
 #include "import.h"
 
-void D_DFA_Import_Free(FAM_Import *fsm) {
+void D_Import_Free(FAM_Import *fsm) {
 }
 
-void D_DFA_Import_Enter(FAM_Import *fsm) {
+void D_Import_Enter(FAM_Import *fsm) {
     memset(fsm, 0, sizeof(FAM_Import));
-    PLogNA("Enter DFA Import\r\n");
+    // PLogNA("Enter Import\r\n");
 }
 
-void D_DFA_Import_Process(FAM_Import *fsm, const string code, const string word, M_Cursor *cursor) {
+void D_Import_Process(FAM_Import *fsm, const string code, const string word, M_Cursor *cursor) {
 
     if (cursor->is_split) {
         char split = word[0];
