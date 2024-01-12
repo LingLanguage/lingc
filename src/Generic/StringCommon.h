@@ -13,6 +13,7 @@ const string String_SubString(const string word, int start_index, int end_index)
 int String_CutBetweenSameChars(int start_index, const string word, long size, char same_area);
 int String_CutBetweenDifferentChars(int start_index, const string word, long size, char left, char right);
 bool String_IsAccess(const string word);
+bool Char_IsIgnoreAssignPrev(char c);
 char Char_IsBracket(char c);
 char Char_IsQuote(char c);
 char Char_IsEmptySymbolButNewLine(char c);

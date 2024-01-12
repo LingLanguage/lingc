@@ -12,6 +12,7 @@ typedef struct E_Statement {
     StatementType type;
 
     // assignment
+    char assign_op[RULE_OPERATOR_NAME_LEN];
     bool assign_is_const;
     char **assign_words;
     int assign_words_capacity;

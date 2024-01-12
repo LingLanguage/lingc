@@ -12,6 +12,6 @@
 #define RULE_ACCESS_NAME_LEN         12
 #define RULE_EXPRESSION_WORDS_COUNT  128
 #define RULE_VAR_NAME_LEN            128
-#define RULE_OPERATOR_NAME_LEN       6
+#define RULE_OPERATOR_NAME_LEN       7
 
 #endif

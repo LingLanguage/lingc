@@ -20,6 +20,7 @@ void D_STMT_Return_Process(FAM_STMT *fam, const string code, const string word, 
         if (fam_exp->is_done) {
             // add exp to stmt
             E_Statement_AddBracketExpression(&fam->stmt, fam_exp->expression);
+            D_EXP_Bracket_Enter(&fam->fam_exp);
             fam->is_return_bracket_done = true;
         }
     } else {

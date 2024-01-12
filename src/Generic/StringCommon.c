@@ -374,6 +374,24 @@ const string String_ValidAccess(const string access) {
     }
 }
 
+bool Char_IsIgnoreAssignPrev(char c) {
+    switch (c) {
+    case OP_CMP_LESS:     // <<
+    case OP_CMP_MORE:     // >>
+    case OP_SET_PLUS:     // +=
+    case OP_SET_MINUS:    // -=
+    case OP_SET_MULTIPLY: // *=
+    case OP_SET_DIVIDE:   // /=
+    case OP_SET_MOD:      // %=
+    case OP_SET_BIN_OR:   // |=
+    case OP_SET_BIN_AND:  // &=
+    case OP_SET_BIN_XOR:  // ^=
+    case OP_SET_BIN_NOT:  // ~=
+        return true;
+    default: return false;
+    }
+}
+
 char Char_IsBracket(char c) {
     if (c == KW_LEFT_BRACKET || c == KW_RIGHT_BRACKET) {
         return c;

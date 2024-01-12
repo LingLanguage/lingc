@@ -113,6 +113,7 @@
 
 #define OP_CMP_LESS '<'
 #define OP_CMP_MORE '>'
+#define OP_CMP_GREATER '>'
 #define OP_CMP_NOT  '!'
 #define OP2_CMP_EQUAL_EQUAL "=="
 #define OP2_CMP_EQUAL_NOT   "!="

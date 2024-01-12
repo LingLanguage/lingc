@@ -24,5 +24,6 @@ typedef struct M_Cursor {
 void M_Cursor_InitAccess(M_Cursor *self);
 void M_Cursor_SetAcceess(M_Cursor *self, const string access);
 void M_Cursor_PushWord(M_Cursor *self, const string word);
+bool M_Cursor_TryGetAssignOP(M_Cursor *self, const string code, const string word, char *op);
 
 #endif

@@ -12,6 +12,7 @@ typedef struct FAM_STMT {
     bool is_done;
 
     bool is_return_bracket_done;
+    bool is_assign_right_done;
 } FAM_STMT;
 
 #endif
