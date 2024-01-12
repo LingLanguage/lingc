@@ -9,6 +9,7 @@ typedef struct E_Expression E_Expression;
 typedef struct E_Expression {
 
     ExpressionType type;
+    OperatorType op_type;
 
     char **words;
     int words_capacity;

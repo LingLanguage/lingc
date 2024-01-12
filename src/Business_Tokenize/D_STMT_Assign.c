@@ -1,7 +1,7 @@
 #include "D_STMT_Assign.h"
 #include "D_EXP_Bracket.h"
 
-void D_STMT_Assign_Enter(FAM_STMT *fam, char* op, char **left_words, int left_words_count) {
+void D_STMT_Assign_Enter(FAM_STMT *fam, char *op, char **left_words, int left_words_count) {
 
     fam->status = STMT_FA_Assign;
 
@@ -22,7 +22,7 @@ void D_STMT_Assign_Process(FAM_STMT *fam, const string code, const string word, 
         if (fam->fam_exp.is_done) {
             // add exp to stmt
             E_Statement_AddBracketExpression(&fam->stmt, fam->fam_exp.expression);
-            D_EXP_Bracket_Enter(&fam->fam_exp);
+            D_EXP_Bracket_Process(&fam->fam_exp, code, word, cursor);
             fam->is_assign_right_done = true;
         }
     } else {

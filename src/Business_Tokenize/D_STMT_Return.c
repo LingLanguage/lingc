@@ -14,7 +14,7 @@ void D_STMT_Return_Enter(FAM_STMT *fam) {
 void D_STMT_Return_Process(FAM_STMT *fam, const string code, const string word, M_Cursor *cursor) {
     // real: return xx;
     // fake: reutrn (xx);
-    M_EXP *fam_exp = &fam->fam_exp;
+    FAM_EXP *fam_exp = &fam->fam_exp;
     if (!fam->is_return_bracket_done) {
         D_EXP_Bracket_Process(fam_exp, code, word, cursor);
         if (fam_exp->is_done) {

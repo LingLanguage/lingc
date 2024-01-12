@@ -1,0 +1,6 @@
+1. No `=`
+    1.1 has type declaration -> variable declaration
+    1.2 no type declaration -> right expression: any expression(but not variable expression)
+2. Has `=`, means assignment
+    left expression: variable expression
+    right expression: any expression

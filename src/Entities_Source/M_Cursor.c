@@ -38,6 +38,14 @@ void M_Cursor_PushWord(M_Cursor *self, const string input_word) {
     self->words_count++;
 }
 
+void M_Cursor_SetLastWord(M_Cursor *self, const string word) {
+    strcpy(self->last_word, word);
+}
+
+void M_Cursor_CleanLastWord(M_Cursor *self) {
+    memset(self->last_word, 0, sizeof(self->last_word));
+}
+
 bool M_Cursor_TryGetAssignOP(M_Cursor *self, const string code, const string word, char *op) {
     // word is '='
     char next = code[self->index + 1];
@@ -60,15 +68,15 @@ bool M_Cursor_TryGetAssignOP(M_Cursor *self, const string code, const string wor
 
     // true: += -= *= /= %= ~= &= |= ^=
     switch (prev1) {
-    case OP_SET_PLUS:     // +=
-    case OP_SET_MINUS:    // -=
-    case OP_SET_MULTIPLY: // *=
-    case OP_SET_DIVIDE:   // /=
-    case OP_SET_MOD:      // %=
-    case OP_SET_BIN_NOT:  // ~=
-    case OP_SET_BIN_AND:  // &=
-    case OP_SET_BIN_OR:   // |=
-    case OP_SET_BIN_XOR:  // ^=
+    case OP_CALC_PLUS:     // +=
+    case OP_CALC_MINUS:    // -=
+    case OP_CALC_MULTIPLY: // *=
+    case OP_CALC_DIVIDE:   // /=
+    case OP_CALC_MOD:      // %=
+    case OP_CALC_BIN_NOT:  // ~=
+    case OP_CALC_BIN_AND:  // &=
+    case OP_CALC_BIN_OR:   // |=
+    case OP_CALC_BIN_XOR:  // ^=
         op[0] = prev1;
         op[1] = '=';
         op[2] = '\0';
@@ -80,4 +88,21 @@ bool M_Cursor_TryGetAssignOP(M_Cursor *self, const string code, const string wor
     op[1] = '\0';
     return true;
 
+}
+
+bool M_Cursor_TryGetCalcOP(M_Cursor *self, const string code, const string word, const string last_word, OperatorType *op_type) {
+    int word_len = strlen(last_word);
+    const char cur = word[0];
+    char next = code[self->index + 1];
+
+    // op2: -> --
+    // op2: ** means math `*` and pointer `*`
+    // op2 true: ++ -- << >> && || == != <= >=
+    if (cur == next && cur == OP_CALC_PLUS) {
+        *op_type = OperatorType_Assign;
+        return true;
+    }
+    // op1 true: + - * / % ~ & | ^ < > !
+
+    PLogNA("TODO GET CALC OP\r\n");
 }

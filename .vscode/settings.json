@@ -69,6 +69,8 @@
         "m_dfa_func.h": "c",
         "m_dfa_block.h": "c",
         "d_dfa_block.h": "c",
-        "m_exp.h": "c"
+        "m_exp.h": "c",
+        "d_exp_bracket.h": "c",
+        "fam_exp.h": "c"
     }
 }

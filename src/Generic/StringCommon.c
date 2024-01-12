@@ -34,8 +34,6 @@ static string KW_OPERATORS[] = {
     "=", "+=", "-=", "*=", "/=", "%=", "<<=", ">>=", "&=", "|=", "^=", "(",  ")",  "[",  "]",  "{", "}", ".", ",", ";", ":",
 };
 
-static string OP3_EQUAL[] = {OP3_SET_EQUAL_BIN_LEFT, OP3_SET_EQUAL_BIN_RIGHT};
-
 void StringCommon_Init() {
 
     memset(kw_split_symbols, 0, 256);
@@ -125,28 +123,28 @@ void StringCommon_Init() {
     kw_numbers[(int)LT_9] = LT_9; // 57 '9'
 
     memset(op_assigns, 0, 256);
-    op_assigns[(int)OP_SET_PLUS] = OP_SET_PLUS;         // +
-    op_assigns[(int)OP_SET_MINUS] = OP_SET_MINUS;       // -
-    op_assigns[(int)OP_SET_MULTIPLY] = OP_SET_MULTIPLY; // *
-    op_assigns[(int)OP_SET_DIVIDE] = OP_SET_DIVIDE;     // /
-    op_assigns[(int)OP_SET_MOD] = OP_SET_MOD;           // %
+    op_assigns[(int)OP_CALC_PLUS] = OP_CALC_PLUS;         // +
+    op_assigns[(int)OP_CALC_MINUS] = OP_CALC_MINUS;       // -
+    op_assigns[(int)OP_CALC_MULTIPLY] = OP_CALC_MULTIPLY; // *
+    op_assigns[(int)OP_CALC_DIVIDE] = OP_CALC_DIVIDE;     // /
+    op_assigns[(int)OP_CALC_MOD] = OP_CALC_MOD;           // %
 
-    op_assigns[(int)OP_SET_BIN_OR] = OP_SET_BIN_OR;   // |
-    op_assigns[(int)OP_SET_BIN_AND] = OP_SET_BIN_AND; // &
-    op_assigns[(int)OP_SET_BIN_XOR] = OP_SET_BIN_XOR; // ^
-    op_assigns[(int)OP_SET_BIN_NOT] = OP_SET_BIN_NOT; // ~
+    op_assigns[(int)OP_CALC_BIN_OR] = OP_CALC_BIN_OR;   // |
+    op_assigns[(int)OP_CALC_BIN_AND] = OP_CALC_BIN_AND; // &
+    op_assigns[(int)OP_CALC_BIN_XOR] = OP_CALC_BIN_XOR; // ^
+    op_assigns[(int)OP_CALC_BIN_NOT] = OP_CALC_BIN_NOT; // ~
 
     memset(op_calcs, 0, 256);
-    op_calcs[(int)OP_SET_PLUS] = OP_SET_PLUS;         // +
-    op_calcs[(int)OP_SET_MINUS] = OP_SET_MINUS;       // -
-    op_calcs[(int)OP_SET_MULTIPLY] = OP_SET_MULTIPLY; // *
-    op_calcs[(int)OP_SET_DIVIDE] = OP_SET_DIVIDE;     // /
-    op_calcs[(int)OP_SET_MOD] = OP_SET_MOD;           // %
+    op_calcs[(int)OP_CALC_PLUS] = OP_CALC_PLUS;         // +
+    op_calcs[(int)OP_CALC_MINUS] = OP_CALC_MINUS;       // -
+    op_calcs[(int)OP_CALC_MULTIPLY] = OP_CALC_MULTIPLY; // *
+    op_calcs[(int)OP_CALC_DIVIDE] = OP_CALC_DIVIDE;     // /
+    op_calcs[(int)OP_CALC_MOD] = OP_CALC_MOD;           // %
 
-    op_calcs[(int)OP_SET_BIN_OR] = OP_SET_BIN_OR;   // |
-    op_calcs[(int)OP_SET_BIN_AND] = OP_SET_BIN_AND; // &
-    op_calcs[(int)OP_SET_BIN_XOR] = OP_SET_BIN_XOR; // ^
-    op_calcs[(int)OP_SET_BIN_NOT] = OP_SET_BIN_NOT; // ~
+    op_calcs[(int)OP_CALC_BIN_OR] = OP_CALC_BIN_OR;   // |
+    op_calcs[(int)OP_CALC_BIN_AND] = OP_CALC_BIN_AND; // &
+    op_calcs[(int)OP_CALC_BIN_XOR] = OP_CALC_BIN_XOR; // ^
+    op_calcs[(int)OP_CALC_BIN_NOT] = OP_CALC_BIN_NOT; // ~
 }
 
 int String_OP_Assign(const string file, int line, int eqIndex, const string code, char *out) {
@@ -234,12 +232,12 @@ int String_OP_Calc(const char cur, const string file, int line, int eqIndex, con
         out[0] = cur;
         out[1] = next;
         return 2;
-    } else if (next == cur && cur == OP_SET_BIN_AND) {
+    } else if (next == cur && cur == OP_CALC_BIN_AND) {
         // &&
         out[0] = cur;
         out[1] = next;
         return 2;
-    } else if (next == cur && cur == OP_SET_BIN_OR) {
+    } else if (next == cur && cur == OP_CALC_BIN_OR) {
         // ||
         out[0] = cur;
         out[1] = next;
@@ -258,42 +256,42 @@ int String_OP_Calc(const char cur, const string file, int line, int eqIndex, con
     }
 
     // ==== OP1 Bin ====
-    if (cur == OP_SET_BIN_OR) {
+    if (cur == OP_CALC_BIN_OR) {
         // |
         out[0] = cur;
         return 1;
-    } else if (cur == OP_SET_BIN_AND) {
+    } else if (cur == OP_CALC_BIN_AND) {
         // &
         out[0] = cur;
         return 1;
-    } else if (cur == OP_SET_BIN_XOR) {
+    } else if (cur == OP_CALC_BIN_XOR) {
         // ^
         out[0] = cur;
         return 1;
-    } else if (cur == OP_SET_BIN_NOT) {
+    } else if (cur == OP_CALC_BIN_NOT) {
         // ~
         out[0] = cur;
         return 1;
     }
 
     // ==== OP1 Calc ====
-    if (cur == OP_SET_PLUS) {
+    if (cur == OP_CALC_PLUS) {
         // +
         out[0] = cur;
         return 1;
-    } else if (cur == OP_SET_MINUS) {
+    } else if (cur == OP_CALC_MINUS) {
         // -
         out[0] = cur;
         return 1;
-    } else if (cur == OP_SET_MULTIPLY) {
+    } else if (cur == OP_CALC_MULTIPLY) {
         // *
         out[0] = cur;
         return 1;
-    } else if (cur == OP_SET_DIVIDE) {
+    } else if (cur == OP_CALC_DIVIDE) {
         // /
         out[0] = cur;
         return 1;
-    } else if (cur == OP_SET_MOD) {
+    } else if (cur == OP_CALC_MOD) {
         // %
         out[0] = cur;
         return 1;
@@ -378,15 +376,15 @@ bool Char_IsIgnoreAssignPrev(char c) {
     switch (c) {
     case OP_CMP_LESS:     // <<
     case OP_CMP_MORE:     // >>
-    case OP_SET_PLUS:     // +=
-    case OP_SET_MINUS:    // -=
-    case OP_SET_MULTIPLY: // *=
-    case OP_SET_DIVIDE:   // /=
-    case OP_SET_MOD:      // %=
-    case OP_SET_BIN_OR:   // |=
-    case OP_SET_BIN_AND:  // &=
-    case OP_SET_BIN_XOR:  // ^=
-    case OP_SET_BIN_NOT:  // ~=
+    case OP_CALC_PLUS:     // +=
+    case OP_CALC_MINUS:    // -=
+    case OP_CALC_MULTIPLY: // *=
+    case OP_CALC_DIVIDE:   // /=
+    case OP_CALC_MOD:      // %=
+    case OP_CALC_BIN_OR:   // |=
+    case OP_CALC_BIN_AND:  // &=
+    case OP_CALC_BIN_XOR:  // ^=
+    case OP_CALC_BIN_NOT:  // ~=
         return true;
     default: return false;
     }

@@ -11,7 +11,7 @@
 #include "FAM_Func.h"
 #include "FAM_Import.h"
 #include "FAM_Struct.h"
-#include "M_EXP.h"
+#include "FAM_EXP.h"
 #include "FAM_STMT.h"
 
 #endif

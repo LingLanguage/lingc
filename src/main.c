@@ -4,7 +4,6 @@ int main(int argc, char **argv) {
 
     StringCommon_Init();
 
-
     // lingc.exe -i ../tests/src
     const string dir = GetWorkingDirectory();
     if (argc < 3) {

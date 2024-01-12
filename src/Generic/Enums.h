@@ -30,8 +30,8 @@ typedef enum STMT_FA {
 
 typedef enum EXP_FA {
     EXP_FA_Guess = 0,
-    NFA_EXPression_Status_Bracket,
-    EXP_FA_Recursion,
+    EXP_FA_Bracket,
+    EXP_FA_ChildBracket,
 } EXP_FA;
 
 typedef enum Struct_FA {
