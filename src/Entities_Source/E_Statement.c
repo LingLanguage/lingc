@@ -47,6 +47,7 @@ void E_Statement_AddAssignLeftWord(E_Statement *self, char *word) {
         self->assign_words_capacity *= 2;
         self->assign_words = realloc(self->assign_words, sizeof(char *) * self->assign_words_capacity);
     }
+    self->assign_words[self->assign_words_count] = malloc(sizeof(char) * (strlen(word) + 1));
     strcpy(self->assign_words[self->assign_words_count], word);
     self->assign_words_count++;
 }
