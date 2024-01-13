@@ -29,6 +29,6 @@ void M_Cursor_PushWord(M_Cursor *self, const string word);
 void M_Cursor_SetLastWord(M_Cursor *self, const string word);
 void M_Cursor_CleanLastWord(M_Cursor *self);
 bool M_Cursor_TryGetAssignOP(M_Cursor *self, const string code, const string word, char *op);
-bool M_Cursor_TryGetCalcOP(M_Cursor *self, const string code, const string word, const string last_word, OperatorType *op_type);
+bool M_Cursor_TryGetCalcOP(M_Cursor *self, const string code, const string word, const string last_word, OP_Type *op_type);
 
 #endif

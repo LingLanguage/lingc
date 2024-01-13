@@ -25,5 +25,6 @@
 #define ERR_FUNCTION_NAME_NOT_FOUND "Err705 Function name not found."
 #define ERR_FUNCTION_RETURN_NOT_FOUND "Err706 Function return not found."
 #define ERR_FUNCTION_CANT_BE_CONST "Err707 Function cannot be const."
+#define ERR_OP_NOT_VALID "Err800 Operator not valid."
 
 #endif

@@ -31,6 +31,9 @@ void E_Expression_Free(E_Expression *self) {
 }
 
 void E_Expression_AddWord(E_Expression *self, const string word) {
+    if (strlen(word) == 0) {
+        return;
+    }
     if (self->words == NULL) {
         self->words = (char **)malloc(sizeof(char *) * self->words_capacity);
     }

@@ -68,21 +68,57 @@ typedef enum ExpressionType {
     ExpressionType_Empty = 1900,           // ; eg: for(;;)
 } ExpressionType;
 
-typedef enum OperatorType {
-    OperatorType_None = 0,
-    OperatorType_Assign,        // = += -= *= /= %= &= |= ^= <<= >>=
-    OperatorType_Calculation,   // + - * / %
-    OperatorType_Compare,       // == != > < >= <=
-    OperatorType_Binary,        // & | ^ << >> ~
-    OperatorType_Logic,         // && ||
-    OperatorType_Increment,     // ++ --
-    OperatorType_Pointer,       // * &
-    OperatorType_Condition,     // ? :
-    OperatorType_Sizeof,        // sizeof
-    OperatorType_Member,        // .
-    OperatorType_MemberPointer, // ->
-    OperatorType_End,           // ;
-} OperatorType;
+typedef enum OP_Type {
+
+    OP_Type_None = 0,
+    OP_Type_Comment,        // //
+    OP_Type_Bracket,        // ()
+    OP_Type_Square_Bracket, // []
+
+    OP_Type_Increment, // ++
+    OP_Type_Decrement, // --
+
+    OP_Type_Add,                // +
+    OP_Type_Sub,                // -
+    OP_Type_MulOrPointerAccess, // *
+    OP_Type_Div,                // /
+    OP_Type_Mod,                // %
+
+    OP_Type_Bin_Not,                // ~
+    OP_Type_Bin_AndOrAddressAccess, // &
+    OP_Type_Bin_Or,                 // |
+    OP_Type_Bin_Xor,                // ^
+    OP_Type_Bin_Move_Left,          // <<
+    OP_Type_Bin_Move_Right,         // >>
+
+    OP_Type_Logic_Not,     // !
+    OP_Type_Logic_And,     // &&
+    OP_Type_Logic_Or,      // ||
+    OP_Type_Equal,         // ==
+    OP_Type_Not_Equal,     // !=
+    OP_Type_Greater,       // >
+    OP_Type_Less,          // <
+    OP_Type_Greater_Equal, // >=
+    OP_Type_Less_Equal,    // <=
+
+    OP_Type_Assign = 1000,                // =
+    OP_Type_Add_Assign = 1001,            // +=
+    OP_Type_Sub_Assign = 1002,            // -=
+    OP_Type_Mul_Assign = 1003,            // *=
+    OP_Type_Div_Assign = 1004,            // /=
+    OP_Type_Mod_Assign = 1005,            // %=
+    OP_Type_Bin_And_Assign = 1006,        // &=
+    OP_Type_Bin_Or_Assign = 1007,         // |=
+    OP_Type_Bin_Xor_Assign = 1008,        // ^=
+    OP_Type_Bin_Not_Assign = 1009,        // ~=
+    OP_Type_Bin_Move_Left_Assign = 1010,  // <<=
+    OP_Type_Bin_Move_Right_Assign = 1011, // >>=
+
+    OP_Type_Member,        // .
+    OP_Type_MemberPointer, // ->
+
+    OP_Type_End, // ;
+} OP_Type;
 
 typedef enum StatementType {
     StatementType_None = 0,

@@ -87,22 +87,257 @@ bool M_Cursor_TryGetAssignOP(M_Cursor *self, const string code, const string wor
     op[0] = OP_EQUAL;
     op[1] = '\0';
     return true;
-
 }
 
-bool M_Cursor_TryGetCalcOP(M_Cursor *self, const string code, const string word, const string last_word, OperatorType *op_type) {
-    int word_len = strlen(last_word);
+bool M_Cursor_TryGetCalcOP(M_Cursor *self, const string code, const string word, const string last_word, OP_Type *op_type) {
     const char cur = word[0];
     char next = code[self->index + 1];
+    char next2 = code[self->index + 2];
 
-    // op2: -> --
-    // op2: ** means math `*` and pointer `*`
-    // op2 true: ++ -- << >> && || == != <= >=
-    if (cur == next && cur == OP_CALC_PLUS) {
-        *op_type = OperatorType_Assign;
+    // .
+    if (cur == KW_DOT) {
+        *op_type = OP_Type_Member;
         return true;
     }
-    // op1 true: + - * / % ~ & | ^ < > !
 
-    PLogNA("TODO GET CALC OP\r\n");
+    // =
+    if (cur == OP_EQUAL) {
+        // ==
+        if (next ==cur) {
+            *op_type = OP_Type_Equal;
+            ++self->index;
+            return true;
+        }
+        // =
+        *op_type = OP_Type_Assign;
+        return true;
+    }
+
+    // op2: - -> -- -=
+    if (cur == OP_CALC_MINUS) {
+        // ->
+        if (next == OP_CMP_MORE) {
+            *op_type = OP_Type_MemberPointer;
+            ++self->index;
+            return true;
+        }
+        // --
+        if (cur == next) {
+            // var-- or --var
+            *op_type = OP_Type_Decrement;
+            ++self->index;
+            return true;
+        }
+        // -=
+        if (next == OP_EQUAL) {
+            *op_type = OP_Type_Sub_Assign;
+            ++self->index;
+            return true;
+        }
+        // -
+        *op_type = OP_Type_Sub;
+        return true;
+    }
+
+    // op2: + ++ +=
+    if (cur == OP_CALC_PLUS) {
+        // ++
+        if (cur == next) {
+            // var++ or ++var
+            *op_type = OP_Type_Increment;
+            ++self->index;
+            return true;
+        }
+        // +=
+        if (next == OP_EQUAL) {
+            *op_type = OP_Type_Add_Assign;
+            ++self->index;
+            return true;
+        }
+        // +
+        *op_type = OP_Type_Add;
+        return true;
+    }
+
+    // * *=
+    // op2: ** means math `*` and pointer `*`
+    if (cur == OP_CALC_MULTIPLY) {
+        // *=
+        if (next == OP_EQUAL) {
+            *op_type = OP_Type_Mul_Assign;
+            ++self->index;
+            return true;
+        }
+        // var * 3 or *var
+        *op_type = OP_Type_MulOrPointerAccess;
+        return true;
+    }
+
+    // /
+    if (cur == OP_CALC_DIVIDE) {
+        // //
+        if (next == cur) {
+            *op_type = OP_Type_Comment;
+            ++self->index;
+            return true;
+        }
+        // /=
+        if (next == OP_EQUAL) {
+            *op_type = OP_Type_Div_Assign;
+            ++self->index;
+            return true;
+        }
+        // /
+        *op_type = OP_Type_Div;
+        return true;
+    }
+
+    // %
+    if (cur == OP_CALC_MOD) {
+        // %=
+        if (next == OP_EQUAL) {
+            *op_type = OP_Type_Mod_Assign;
+            ++self->index;
+            return true;
+        }
+        // %
+        *op_type = OP_Type_Mod;
+        return true;
+    }
+
+    // &
+    if (cur == OP_CALC_BIN_AND) {
+        // &&
+        if (next == cur) {
+            *op_type = OP_Type_Logic_And;
+            ++self->index;
+            return true;
+        }
+        // &=
+        if (next == OP_EQUAL) {
+            *op_type = OP_Type_Bin_And_Assign;
+            ++self->index;
+            return true;
+        }
+        // &
+        *op_type = OP_Type_Bin_AndOrAddressAccess;
+        return true;
+    }
+
+    // |
+    if (cur == OP_Type_Bin_Or) {
+        // ||
+        if (next == cur) {
+            *op_type = OP_Type_Logic_Or;
+            ++self->index;
+            return true;
+        }
+        // |=
+        if (next == OP_EQUAL) {
+            *op_type = OP_Type_Bin_Or_Assign;
+            ++self->index;
+            return true;
+        }
+        // |
+        *op_type = OP_Type_Bin_Or;
+        return true;
+    }
+
+    // ^
+    if (cur == OP_CALC_BIN_XOR) {
+        // ^=
+        if (next == OP_EQUAL) {
+            *op_type = OP_Type_Bin_Xor_Assign;
+            ++self->index;
+            return true;
+        }
+        // ^
+        *op_type = OP_Type_Bin_Xor;
+        return true;
+    }
+
+    // ~
+    if (cur == OP_CALC_BIN_NOT) {
+        // ~=
+        if (next == OP_EQUAL) {
+            *op_type = OP_Type_Bin_Not_Assign;
+            ++self->index;
+            return true;
+        }
+        // ~
+        *op_type = OP_Type_Bin_Not;
+        return true;
+    }
+
+    // <
+    if (cur == OP_CMP_LESS) {
+        if (next == cur) {
+            // <<=
+            if (next2 == OP_EQUAL) {
+                *op_type = OP_Type_Bin_Move_Left_Assign;
+                self->index += 2;
+                return true;
+            }
+            // <<
+            *op_type = OP_Type_Bin_Move_Left;
+            ++self->index;
+            return true;
+        }
+        // <=
+        if (next == OP_EQUAL) {
+            *op_type = OP_Type_Less_Equal;
+            ++self->index;
+            return true;
+        }
+        // <
+        *op_type = OP_Type_Less;
+        return true;
+    }
+
+    // >
+    if (cur == OP_CMP_GREATER) {
+        if (next == cur) {
+            // >>=
+            if (next2 == OP_EQUAL) {
+                *op_type = OP_Type_Bin_Move_Right_Assign;
+                self->index += 2;
+                return true;
+            }
+            // >>
+            *op_type = OP_Type_Bin_Move_Right;
+            ++self->index;
+            return true;
+        }
+        // >=
+        if (next == OP_EQUAL) {
+            *op_type = OP_Type_Greater_Equal;
+            ++self->index;
+            return true;
+        }
+        // >
+        *op_type = OP_Type_Greater;
+        return true;
+    }
+
+    // !
+    if (cur == OP_Type_Logic_Not) {
+        // !=
+        if (next == OP_EQUAL) {
+            *op_type = OP_Type_Not_Equal;
+            ++self->index;
+            return true;
+        }
+        // !
+        *op_type = OP_Type_Logic_Not;
+        return true;
+    }
+
+    // [
+    if (cur == KW_LEFT_SQUARE_BRACKET) {
+        *op_type = OP_Type_Bracket;
+        return true;
+    }
+
+    return false;
+
 }

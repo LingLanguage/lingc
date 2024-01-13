@@ -6,7 +6,7 @@ void D_EXP_Bracket_AddWord(FAM_EXP *fam_exp, const string word, M_Cursor *cursor
     M_Cursor_CleanLastWord(cursor);
 }
 
-void D_EXP_Bracket_AddChildExp(FAM_EXP *fam_exp, OperatorType op_type, char *word) {
+void D_EXP_Bracket_AddChildExp(FAM_EXP *fam_exp, OP_Type op_type, char *word) {
     E_Expression child = {0};
     child.op_type = op_type;
     E_Expression_AddWord(&child, word);
@@ -44,6 +44,7 @@ void D_EXP_Bracket_EnterSelf(FAM_EXP *fam_exp) {
     }
     memset(fam_exp, 0, sizeof(FAM_EXP));
     fam_exp->expression.type = ExpressionType_Bracket; // ()
+    fam_exp->expression.op_type = OP_Type_Bracket;
     fam_exp->status = EXP_FA_Bracket;
 }
 
@@ -51,7 +52,7 @@ void D_EXP_Bracket_ProcessSelf(FAM_EXP *fam_exp, const string code, const string
     bool is_split = cursor->is_split;
     if (is_split) {
         char split = word[0];
-        OperatorType opType;
+        OP_Type opType;
         if (split == KW_RIGHT_BRACKET) {
             // ) exp
             // end bracket
@@ -79,6 +80,7 @@ void D_EXP_Bracket_ProcessSelf(FAM_EXP *fam_exp, const string code, const string
             ++cursor->index;
         } else if (M_Cursor_TryGetCalcOP(cursor, code, word, cursor->last_word, &opType)) {
             // + - * / % ~ & | ^ << >> && || == != <= >= < >
+            D_EXP_Bracket_AddWord(fam_exp, word, cursor);
             D_EXP_Bracket_AddChildExp(fam_exp, opType, cursor->last_word);
         } else {
             Util_Cursor_DealEmptySplit(cursor, code, word);
