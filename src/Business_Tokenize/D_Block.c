@@ -39,22 +39,10 @@ void D_Block_Guess_Enter(FAM_Block *fam) {
 
 void D_Block_Guess_Process(FAM_Block *fam, const string code, const string word, M_Cursor *cursor) {
     bool is_split = cursor->is_split;
+    E_Guess *guess = &fam->guess;
     if (is_split) {
         char split = word[0];
-        if (split == KW_EQUAL) {
-            // =
-            char op[RULE_OPERATOR_NAME_LEN];
-            bool is_assign = M_Cursor_TryGetAssignOP(cursor, code, word, op);
-            if (is_assign) {
-                D_Block_Statement_Enter(fam);
-                D_STMT_Assign_Enter(&fam->fam_stmt, op, cursor->words, cursor->words_count);
-            }
-            ++cursor->index;
-        } else if (split == KW_DOT) {
-            // .
-            E_Guess_PushWord(&fam->guess, cursor->file, cursor->line, word);
-            ++cursor->index;
-        } else if (split == KW_SEMICOLON) {
+        if (split == KW_SEMICOLON) {
             // ;
             PLogNA("TODO: DFA Block Process: ;\r\n");
             ++cursor->index;
@@ -93,7 +81,7 @@ void D_Block_Guess_Process(FAM_Block *fam, const string code, const string word,
         } else if (strcmp(word, KW_FOR) == 0) {
             // for
         } else {
-            E_Guess_PushWord(&fam->guess, cursor->file, cursor->line, word);
+            E_Guess_PushWord(&fam->guess, word);
         }
     }
 }

@@ -10,7 +10,7 @@
 typedef struct FAM_Func {
 
     Func_FA phase;
-
+    E_Guess guess;
     FAM_Block dfa_block;
 
     E_Function function;

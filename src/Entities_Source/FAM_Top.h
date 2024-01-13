@@ -9,6 +9,7 @@
 
 typedef struct FAM_Top {
     Top_FA status;
+    E_Guess guess;
     FAM_Struct *dfa_struct;
     FAM_Import *dfa_import;
     FAM_Func *dfa_func;

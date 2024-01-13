@@ -12,6 +12,8 @@ typedef struct E_Guess {
     bool is_static;
     bool is_const;
 
+    char last_word[RULE_VAR_NAME_LEN];
+
     char **words;
     byte words_capacity;
     byte words_count;
@@ -20,12 +22,11 @@ typedef struct E_Guess {
 
 void E_Guess_Init(E_Guess *self);
 void E_Guess_Free(E_Guess *self);
-void E_Guess_SetAccess(E_Guess *self, const string file, int line, const string access);
-void E_Guess_SetConst(E_Guess *self, const string file, int line, bool is_const);
-void E_Guess_SetStatic(E_Guess *self, const string file, int line, bool is_static);
-void E_Guess_PushWord(E_Guess *self, const string file, int line, const string word);
-
-bool E_Guess_GuessField(E_Guess *self, const string file, int line, E_Field *field);
-void E_Guess_ExpressionLog(const E_Guess *self);
+void E_Guess_InitAccess(E_Guess *self);
+void E_Guess_SetAcceess(E_Guess *self, const string file, int line, const string access);
+void E_Guess_PushWord(E_Guess *self, const string word);
+void E_Guess_SetLastWord(E_Guess *self, const string word);
+void E_Guess_CleanLastWord(E_Guess *self);
+bool E_Guess_TryGetCalcOP(E_Guess *self, int *ref_index, const string code, const string word, const string last_word, OP_Type *op_type);
 
 #endif

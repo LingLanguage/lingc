@@ -2,35 +2,35 @@
 #include "D_TopLevel.h"
 #include "Util_Cursor.h"
 
-bool D_Struct_GuessStructName(M_Cursor *cursor, const string name, E_Struct *st) {
+bool D_Struct_GuessStructName(E_Guess *guess, const string file, int line, const string name, E_Struct *st) {
     bool is_ok = true;
-    if (cursor->words_count == 0) {
-        PFailed(cursor->file, cursor->line, ERR_STRUCT_NAME_NOT_FOUND);
+    if (guess->words_count == 0) {
+        PFailed(file, line, ERR_STRUCT_NAME_NOT_FOUND);
         is_ok = false;
-    } else if (cursor->words_count == 1) {
-        if (cursor->is_const) {
-            PFailed(cursor->file, cursor->line, ERR_STRUCT_CANNOT_BE_CONST);
+    } else if (guess->words_count == 1) {
+        if (guess->is_const) {
+            PFailed(file, line, ERR_STRUCT_CANNOT_BE_CONST);
             is_ok = false;
         } else {
             // name
             if (strlen(st->name) <= 0) {
-                strcpy(st->name, cursor->words[0]);
+                strcpy(st->name, guess->words[0]);
             } else {
-                PFailed(cursor->file, cursor->line, ERR_STRUCT_NAME_REDIFINED);
+                PFailed(file, line, ERR_STRUCT_NAME_REDIFINED);
                 is_ok = false;
             }
         }
     } else {
-        for (int i = 0; i < cursor->words_count; i++) {
-            printf("%s\r\n", cursor->words[i]);
+        for (int i = 0; i < guess->words_count; i++) {
+            printf("%s\r\n", guess->words[i]);
         }
-        PFailed(cursor->file, cursor->line, ERR_STRUCT_NAME_TOO_MANY_WORDS);
+        PFailed(file, line, ERR_STRUCT_NAME_TOO_MANY_WORDS);
         is_ok = false;
     }
 
     if (is_ok) {
-        String_CopyAccess(st->access, cursor->access);
-        M_Cursor_InitAccess(cursor);
+        String_CopyAccess(st->access, guess->access);
+        E_Guess_InitAccess(guess);
     }
     return is_ok;
 }
@@ -45,6 +45,7 @@ void D_Struct_Guess_Enter(FAM_Struct *fam) {
 }
 
 void Phase_Name_Process(FAM_Struct *fam, const string code, const string word, M_Cursor *cursor) {
+    E_Guess *guess = &fam->guess;
     if (cursor->is_split) {
         char split = word[0];
         if (split == KW_LEFT_BRACE) {
@@ -57,15 +58,15 @@ void Phase_Name_Process(FAM_Struct *fam, const string code, const string word, M
             Util_Cursor_DealEmptySplit(cursor, code, word);
         }
     } else {
-        M_Cursor_PushWord(cursor, word);
-        bool is_ok = D_Struct_GuessStructName(cursor, word, &fam->st);
+        E_Guess_PushWord(guess, word);
+        bool is_ok = D_Struct_GuessStructName(guess, cursor->file, cursor->line, word, &fam->st);
         if (is_ok) {
             D_Struct_Guess_Enter(fam);
         }
     }
 }
 
-void D_Struct_Enter(FAM_Struct *fam,  M_Cursor *cursor) {
+void D_Struct_Enter(FAM_Struct *fam, M_Cursor *cursor) {
     memset(fam, 0, sizeof(FAM_Struct));
     fam->phase = Struct_FA_Name;
 }

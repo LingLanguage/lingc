@@ -9,45 +9,46 @@ void D_Func_ParamPhase_Process(FAM_Func *fam, const string code, const string wo
 void D_Func_BlockPhase_Enter(FAM_Func *fam);
 void D_Func_BlockPhase_Process(FAM_Func *fam, const string code, const string word, M_Cursor *cursor);
 
-bool D_Func_GuessFuctionName(M_Cursor *self, E_Function *func) {
+bool D_Func_GuessFuctionName(E_Guess *guess, const string file, int line, E_Function *func) {
     bool is_ok = true;
-    if (self->is_const) {
-        PFailed(self->file, self->line, ERR_FUNCTION_CANT_BE_CONST);
+    if (guess->is_const) {
+        PFailed(file, line, ERR_FUNCTION_CANT_BE_CONST);
         is_ok = false;
     }
-    if (self->words_count >= 2) {
-        if (self->words_count <= RULE_FUNCTION_RETURN_COUNT) {
+    if (guess->words_count >= 2) {
+        if (guess->words_count <= RULE_FUNCTION_RETURN_COUNT) {
             // ok
             // last word is name
-            strcpy(func->name, self->words[self->words_count - 1]);
+            strcpy(func->name, guess->words[guess->words_count - 1]);
             // other words are return type
-            for (int i = 0; i < self->words_count - 1; i++) {
-                E_Function_AddReturnType(func, self->words[i]);
+            for (int i = 0; i < guess->words_count - 1; i++) {
+                E_Function_AddReturnType(func, guess->words[i]);
             }
         } else {
-            PFailed(self->file, self->line, ERR_FUNCTION_TOO_MANY_RETURN_TYPES);
+            PFailed(file, line, ERR_FUNCTION_TOO_MANY_RETURN_TYPES);
         }
-    } else if (self->words_count == 1) {
-        PFailed(self->file, self->line, ERR_FUNCTION_TOO_FEW_RETURN_TYPES);
+    } else if (guess->words_count == 1) {
+        PFailed(file, line, ERR_FUNCTION_TOO_FEW_RETURN_TYPES);
         is_ok = false;
-    } else if (self->words_count == 0) {
-        PFailed(self->file, self->line, ERR_FUNCTION_NAME_NOT_FOUND);
+    } else if (guess->words_count == 0) {
+        PFailed(file, line, ERR_FUNCTION_NAME_NOT_FOUND);
         is_ok = false;
     }
 
     if (is_ok) {
-        M_Cursor_InitAccess(self);
+        E_Guess_InitAccess(guess);
     }
     return is_ok;
 }
 
 void D_Func_NamePhase_Process(FAM_Func *fam, const string code, const string word, M_Cursor *cursor) {
+    E_Guess *guess = &fam->guess;
     if (cursor->is_split) {
         char split = word[0];
         if (split == KW_LEFT_BRACKET) {
             // (
             E_Function *func = &fam->function;
-            D_Func_GuessFuctionName(cursor, func);
+            D_Func_GuessFuctionName(guess, cursor->file, cursor->line, func);
             D_Func_ParamPhase_Enter(fam);
             ++cursor->index;
         } else if (split == KW_COMMA) {
@@ -58,7 +59,7 @@ void D_Func_NamePhase_Process(FAM_Func *fam, const string code, const string wor
             Util_Cursor_DealEmptySplit(cursor, code, word);
         }
     } else {
-        M_Cursor_PushWord(cursor, word);
+        E_Guess_PushWord(guess, word);
     }
 }
 

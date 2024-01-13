@@ -10,6 +10,7 @@ typedef struct FAM_EXP {
     EXP_FA status;
     E_Expression expression;
     FAM_EXP *child_fam;
+    E_Guess guess;
     bool is_done;
 } FAM_EXP;
 

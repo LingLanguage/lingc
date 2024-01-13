@@ -10,7 +10,7 @@ void D_TopLevel_Free(FAM_Top *fam) {
 
 void D_TopLevel_Enter(FAM_Top *fam, M_Cursor *cursor) {
     fam->status = Top_FA_Guess;
-    M_Cursor_InitAccess(cursor);
+    E_Guess_InitAccess(&fam->guess);
     // PLogNA("Enter Top\r\n");
 }
 
@@ -18,6 +18,7 @@ void D_TopLevel_Process(FAM_Top *fam, const string code, const string word, M_Cu
 
     // import <stdio.h>;
     // import "raylib.h";
+    E_Guess *guess = &fam->guess;
 
     if (!cursor->is_split) {
         if (strcmp(word, KW_IMPORT) == 0) {
@@ -29,7 +30,7 @@ void D_TopLevel_Process(FAM_Top *fam, const string code, const string word, M_Cu
             // fn
             fam->status = Top_FA_Func;
             FAM_Func *dfa_func = fam->dfa_func;
-            D_Func_Enter(dfa_func, cursor->access, cursor->is_static);
+            D_Func_Enter(dfa_func, guess->access, guess->is_static);
         } else if (strcmp(word, KW_STRUCT) == 0) {
             // struct
             // fam->status = Top_FA_Struct;
@@ -37,16 +38,16 @@ void D_TopLevel_Process(FAM_Top *fam, const string code, const string word, M_Cu
             // D_Struct_Enter(dfa_struct, file, line, guess);
         } else if (strcmp(word, KW_STATIC) == 0) {
             // static
-            cursor->is_static = true;
+            guess->is_static = true;
         } else if (strcmp(word, KW_CONST) == 0) {
             // const
-            cursor->is_const = true;
+            guess->is_const = true;
         } else if (String_IsAccess(word)) {
             // access: public, private...
-            M_Cursor_SetAcceess(cursor, word);
+            E_Guess_SetAcceess(guess, cursor->file, cursor->line, word);
         } else {
             // push word
-            M_Cursor_PushWord(cursor, word);
+            E_Guess_PushWord(guess, word);
         }
     } else {
         char split = word[0];
