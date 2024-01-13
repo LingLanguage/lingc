@@ -7,7 +7,7 @@ void D_STMT_Guess_Enter(FAM_STMT *fam);
 void D_STMT_Guess_Process(FAM_STMT *fam, const string code, const string word, M_Cursor *cursor);
 void D_STMT_Return_Enter(FAM_STMT *fam);
 void D_STMT_Return_Process(FAM_STMT *fam, const string code, const string word, M_Cursor *cursor);
-void D_STMT_Assign_Enter(FAM_STMT *fam, char *op, char **left_words, int left_words_count);
+void D_STMT_Assign_Enter(FAM_STMT *fam, OP_Type op_type);
 void D_STMT_Assign_Process(FAM_STMT *fam, const string code, const string word, M_Cursor *cursor);
 
 void D_STMT_Enter(FAM_STMT *fam) {
@@ -43,8 +43,14 @@ void D_STMT_Guess_Enter(FAM_STMT *fam) {
 void D_STMT_Guess_Process(FAM_STMT *fam, const string code, const string word, M_Cursor *cursor) {
     D_EXP_Bracket_Process(&fam->fam_exp, code, word, cursor);
     if (fam->fam_exp.is_done) {
-        // add exp to stmt
-        E_Statement_AddBracketExpression(&fam->stmt, fam->fam_exp.expression);
+        if (OP_Type_IsAssign(fam->fam_exp.done_op_type)) {
+            E_Statement_SetLeftExpression(&fam->stmt, fam->fam_exp.expression);
+            D_STMT_Assign_Enter(fam, fam->fam_exp.done_op_type);
+        } else {
+            E_Statement_AddBracketExpression(&fam->stmt, fam->fam_exp.expression);
+            fam->is_done = true;
+            return;
+        }
     }
     bool is_split = cursor->is_split;
     E_Guess *guess = &fam->guess;
@@ -57,7 +63,7 @@ void D_STMT_Guess_Process(FAM_STMT *fam, const string code, const string word, M
             fam->is_done = true;
             ++cursor->index;
         } else if (E_Guess_TryGetCalcOP(guess, &cursor->index, code, word, &op_type)) {
-            if (op_type >= (int)OP_Type_Assign && op_type <= (int)OP_Type_Bin_Move_Right_Assign) {
+            if (OP_Type_IsAssign(op_type)) {
                 // if assign, then enter assign statement
                 // += -= *= /= %= ~= &= |= ^= <<= >>=
             } else {
@@ -123,25 +129,18 @@ void D_STMT_Return_Process(FAM_STMT *fam, const string code, const string word, 
 }
 
 // Assign
-void D_STMT_Assign_Enter(FAM_STMT *fam, char *op, char **left_words, int left_words_count) {
-
+void D_STMT_Assign_Enter(FAM_STMT *fam, OP_Type op_type) {
     fam->status = STMT_FA_Assign;
-
-    E_Statement *stmt = &fam->stmt;
-    stmt->type = StatementType_Assign;
-    for (int i = 0; i < left_words_count; i++) {
-        E_Statement_AddAssignLeftWord(stmt, left_words[i]);
-    }
-
-    strcpy(stmt->assign_op, op);
-    D_EXP_Bracket_Enter(&fam->fam_exp);
-    PLogNA("STMT Enter Assign\r\n");
+    fam->stmt = E_Statement_CreateAssign(op_type);
 }
 
 void D_STMT_Assign_Process(FAM_STMT *fam, const string code, const string word, M_Cursor *cursor) {
     if (!fam->is_assign_right_done) {
         D_EXP_Bracket_Process(&fam->fam_exp, code, word, cursor);
         if (fam->fam_exp.is_done) {
+            if (fam->fam_exp.done_op_type == OP_Type_End) {
+
+            }
             // add exp to stmt
             E_Statement_AddBracketExpression(&fam->stmt, fam->fam_exp.expression);
             D_EXP_Bracket_Process(&fam->fam_exp, code, word, cursor);

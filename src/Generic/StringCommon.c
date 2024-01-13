@@ -147,6 +147,10 @@ void StringCommon_Init() {
     op_calcs[(int)OP_CALC_BIN_NOT] = OP_CALC_BIN_NOT; // ~
 }
 
+bool OP_Type_IsAssign(OP_Type type) {
+    return type >= (int)OP_Type_Assign && type <= (int)OP_Type_Bin_Move_Right_Assign;
+}
+
 int String_OP_Assign(const string file, int line, int eqIndex, const string code, char *out) {
 
     // prev2 prev cur

@@ -53,7 +53,7 @@ void D_EXP_Bracket_ProcessSelf(FAM_EXP *fam_exp, const string code, const string
     E_Guess *guess = &fam_exp->guess;
     if (is_split) {
         char split = word[0];
-        OP_Type opType;
+        OP_Type opType = OP_Type_None;
         if (split == KW_RIGHT_BRACKET) {
             // ) exp
             // end bracket
@@ -64,26 +64,23 @@ void D_EXP_Bracket_ProcessSelf(FAM_EXP *fam_exp, const string code, const string
             // , exp
             D_EXP_Bracket_AddWord(fam_exp, word, cursor);
             ++cursor->index;
-        } else if (split == KW_SEMICOLON) {
-            /* ;
-               also end bracket
-               because: like `return (xx);`, the `)` is not truely exists, so `;` is also bracket end
-               DONT ++cursor->index; see: D_STMT end by `;`
-               DONT ++cursor->index; see: D_STMT end by `;`
-               DONT ++cursor->index; see: D_STMT end by `;`
-            */
-            D_EXP_Bracket_AddWord(fam_exp, word, cursor);
-            fam_exp->is_done = true;
         } else if (split == KW_LEFT_BRACKET) {
             // ( exp
             // child bracket
             D_EXP_Bracket_EnterChildBracket(fam_exp, code, word, cursor);
             ++cursor->index;
-        } else if (E_Guess_TryGetCalcOP(guess, &cursor->index, code, word,  &opType)) {
-            // if assign, then end bracket
-            // + - * / % ~ & | ^ << >> && || == != <= >= < >
+        } else if (E_Guess_TryGetCalcOP(guess, &cursor->index, code, word, &opType)) {
             D_EXP_Bracket_AddWord(fam_exp, word, cursor);
-            D_EXP_Bracket_AddChildExp(fam_exp, opType, guess->last_word);
+            if (opType == OP_Type_End) {
+                // ;
+                fam_exp->is_done = true;
+            } else if (OP_Type_IsAssign(opType)) {
+                // = += ...
+                // if assign, then end bracket
+                fam_exp->is_done = true;
+            } else {
+                D_EXP_Bracket_AddChildExp(fam_exp, opType, guess->last_word);
+            }
         } else {
             Util_Cursor_DealEmptySplit(cursor, code, word);
         }
@@ -105,8 +102,19 @@ void D_EXP_Bracket_ProcessChilcBracket(FAM_EXP *fam_exp, const string code, cons
     FAM_EXP *child_fam = fam_exp->child_fam;
     D_EXP_Bracket_Process(child_fam, code, word, cursor);
     if (child_fam->is_done) {
-        // add child exp to self exp
         E_Expression_AddChildExp(&fam_exp->expression, &child_fam->expression);
-        D_EXP_Bracket_EnterSelf(fam_exp);
+        OP_Type done_op_type = child_fam->done_op_type;
+        if (child_fam->done_op_type == OP_Type_End) {
+            // ;
+            fam_exp->done_op_type = done_op_type;
+            fam_exp->is_done = true;
+        } else if (OP_Type_IsAssign(child_fam->done_op_type)) {
+            // = += ...
+            // if assign, then end bracket
+            fam_exp->done_op_type = done_op_type;
+            fam_exp->is_done = true;
+        } else {
+            D_EXP_Bracket_EnterSelf(fam_exp);
+        }
     }
 }

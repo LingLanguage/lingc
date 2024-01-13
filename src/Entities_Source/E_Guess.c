@@ -68,6 +68,8 @@ bool E_Guess_TryGetCalcOP(E_Guess *self, int *ref_index, const string code, cons
     char next = code[index + 1];
     char next2 = code[index + 2];
 
+    ++index;
+
     if (cur == KW_DOT) {
         // .
         *op_type = OP_Type_Member;
@@ -280,6 +282,10 @@ bool E_Guess_TryGetCalcOP(E_Guess *self, int *ref_index, const string code, cons
     } else if (cur == KW_LEFT_SQUARE_BRACKET) {
         // [
         *op_type = OP_Type_Bracket;
+        is_ok = true;
+    } else if (cur == KW_SEMICOLON) {
+        // ;
+        *op_type = OP_Type_End;
         is_ok = true;
     }
 

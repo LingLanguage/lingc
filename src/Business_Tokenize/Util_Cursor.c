@@ -21,7 +21,7 @@ void Util_Cursor_DealEmptySplit(M_Cursor *cursor, const string code, const strin
         ++cursor->index;
         ++cursor->line;
     } else {
-        printf("err word:%s\r\n", word);
-        PFailed(cursor->file, cursor->line, ERR_UNDIFINDED_ERR);
+        // printf("err word:%s\r\n", word);
+        // PFailed(cursor->file, cursor->line, ERR_UNDIFINDED_ERR);
     }
 }

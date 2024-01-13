@@ -13,6 +13,30 @@ void E_Expression_Init(E_Expression *self, ExpressionType type) {
     self->child_exps_count = 0;
 }
 
+void E_Expression_DeepClone(E_Expression *self, E_Expression *other) {
+    self->type = other->type;
+    self->op_type = other->op_type;
+
+    if (other->words_capacity > 0) {
+        self->words = (char **)malloc(sizeof(char *) * other->words_capacity);
+        for (int i = 0; i < other->words_count; i++) {
+            self->words[i] = (char *)malloc(sizeof(char) * (strlen(other->words[i]) + 1));
+            strcpy(self->words[i], other->words[i]);
+        }
+        self->words_capacity = other->words_capacity;
+        self->words_count = other->words_count;
+    }
+
+    if (other->child_exps_capacity > 0) {
+        self->child_exps = (E_Expression *)malloc(sizeof(E_Expression) * other->child_exps_capacity);
+        for (int i = 0; i < other->child_exps_count; i++) {
+            E_Expression_DeepClone(&self->child_exps[i], &other->child_exps[i]);
+        }
+        self->child_exps_capacity = other->child_exps_capacity;
+        self->child_exps_count = other->child_exps_count;
+    }
+}
+
 void E_Expression_Free(E_Expression *self) {
     if (self->words != NULL) {
         for (int i = 0; i < self->words_count; i++) {
@@ -54,6 +78,6 @@ void E_Expression_AddChildExp(E_Expression *self, E_Expression *child_exp) {
         self->child_exps = (E_Expression *)realloc(self->child_exps, sizeof(E_Expression) * (self->child_exps_capacity + 1));
         self->child_exps_capacity += 1;
     }
-    memcpy(&self->child_exps[self->child_exps_count], child_exp, sizeof(E_Expression));
+    E_Expression_DeepClone(&self->child_exps[self->child_exps_count], child_exp);
     self->child_exps_count++;
 }

@@ -23,6 +23,7 @@ void B_Tokenize_SeqMove(E_Doc *doc, const string filename, const string code, lo
         Top_FA top_status = fam->status;
         int line = doc->line;
 
+        int last_index = cursor.index;
         int start_index = cursor.index;
         int end_index = cursor.index;
         char c = code[cursor.index];
@@ -78,6 +79,8 @@ void B_Tokenize_SeqMove(E_Doc *doc, const string filename, const string code, lo
         if (c == KW_NEWLINE) {
             doc->line++;
         }
+
+        printf("%s", String_SubString(code, last_index, cursor.index - last_index));
     }
 
     D_TopLevel_Free(fam);

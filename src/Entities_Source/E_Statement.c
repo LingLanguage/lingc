@@ -7,19 +7,18 @@ E_Statement E_Statement_CreateReturn() {
     return self;
 }
 
-E_Statement E_Statement_CreateAssign() {
+E_Statement E_Statement_CreateAssign(OP_Type assign_op_type) {
     E_Statement self = {0};
     self.type = StatementType_Assign;
+    self.assign_op_type = assign_op_type;
     return self;
 }
 
 void E_Statement_Free(E_Statement *self) {
 
-    if (self->assign_words_count > 0) {
-        for (int i = 0; i < self->assign_words_count; i++) {
-            free(self->assign_words[i]);
-        }
-        free(self->assign_words);
+    if (self->left_exp != NULL) {
+        E_Expression_Free(self->left_exp);
+        free(self->left_exp);
     }
 
     if (self->bracket_expressions_count > 0) {
@@ -39,17 +38,11 @@ void E_Statement_Free(E_Statement *self) {
 
 }
 
-void E_Statement_AddAssignLeftWord(E_Statement *self, char *word) {
-    if (self->assign_words_count == 0) {
-        self->assign_words_capacity = 2;
-        self->assign_words = malloc(sizeof(char *));
-    } else if (self->assign_words_count == self->assign_words_capacity) {
-        self->assign_words_capacity *= 2;
-        self->assign_words = realloc(self->assign_words, sizeof(char *) * self->assign_words_capacity);
+void E_Statement_SetLeftExpression(E_Statement *self, E_Expression expression) {
+    if (self->left_exp == NULL) {
+        self->left_exp = malloc(sizeof(E_Expression));
     }
-    self->assign_words[self->assign_words_count] = malloc(sizeof(char) * (strlen(word) + 1));
-    strcpy(self->assign_words[self->assign_words_count], word);
-    self->assign_words_count++;
+    E_Expression_DeepClone(self->left_exp, &expression);
 }
 
 void E_Statement_AddBracketExpression(E_Statement *self, E_Expression expression) {
@@ -60,7 +53,7 @@ void E_Statement_AddBracketExpression(E_Statement *self, E_Expression expression
         self->bracket_expressions_capacity *= 2;
         self->bracket_expressions = realloc(self->bracket_expressions, sizeof(E_Expression) * self->bracket_expressions_capacity);
     }
-    self->bracket_expressions[self->bracket_expressions_count] = expression;
+    E_Expression_DeepClone(&self->bracket_expressions[self->bracket_expressions_count], &expression);
     self->bracket_expressions_count++;
 }
 

@@ -4,6 +4,7 @@
 #include "Generic.h"
 
 void StringCommon_Init();
+bool OP_Type_IsAssign(OP_Type type);
 const string String_ValidAccess(const string access);
 void String_CopyAccess(char *dest, const string access);
 int String_OP_Assign(const string file, int line, int eqIndex, const string code, char *out);

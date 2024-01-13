@@ -11,12 +11,9 @@ typedef struct E_Statement {
 
     StatementType type;
 
-    // assignment
-    char assign_op[RULE_OPERATOR_NAME_LEN];
-    bool assign_is_const;
-    char **assign_words;
-    int assign_words_capacity;
-    int assign_words_count;
+    // left
+    E_Expression *left_exp;
+    OP_Type assign_op_type;
 
     // = / if / while / for / return
     E_Expression *bracket_expressions;
@@ -32,9 +29,9 @@ typedef struct E_Statement {
 } E_Statement;
 
 E_Statement E_Statement_CreateReturn();
-E_Statement E_Statement_CreateAssign();
+E_Statement E_Statement_CreateAssign(OP_Type assign_op_type);
 void E_Statement_Free(E_Statement *self);
-void E_Statement_AddAssignLeftWord(E_Statement *self, char *word);
+void E_Statement_SetLeftExpression(E_Statement *self, E_Expression expression);
 void E_Statement_AddBracketExpression(E_Statement *self, E_Expression expression);
 void E_Statement_AddBlock(E_Statement *self, E_Block block);
 void E_Statement_Log(const E_Statement *self);

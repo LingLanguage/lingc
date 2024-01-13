@@ -22,6 +22,7 @@ typedef struct E_Expression {
 } E_Expression;
 
 void E_Expression_Init(E_Expression *self, ExpressionType type);
+void E_Expression_DeepClone(E_Expression *self, E_Expression *other);
 void E_Expression_Free(E_Expression *self);
 void E_Expression_AddWord(E_Expression *self, const string word);
 void E_Expression_AddChildExp(E_Expression *self, E_Expression *child_exp);

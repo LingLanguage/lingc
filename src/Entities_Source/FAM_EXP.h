@@ -11,6 +11,7 @@ typedef struct FAM_EXP {
     E_Expression expression;
     FAM_EXP *child_fam;
     E_Guess guess;
+    OP_Type done_op_type;
     bool is_done;
 } FAM_EXP;
 
