@@ -1,4 +1,10 @@
-Tokenize
+==== Grammar ====
+enum.value
+obj.f()
+namespace.f()
+namespace.value
+
+==== Tokenize ====
 √ import
     √ <>
     √ ""

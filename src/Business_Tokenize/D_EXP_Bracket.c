@@ -79,7 +79,8 @@ void D_EXP_Bracket_ProcessSelf(FAM_EXP *fam_exp, const string code, const string
             // child bracket
             D_EXP_Bracket_EnterChildBracket(fam_exp, code, word, cursor);
             ++cursor->index;
-        } else if (E_Guess_TryGetCalcOP(guess, &cursor->index, code, word, guess->last_word, &opType)) {
+        } else if (E_Guess_TryGetCalcOP(guess, &cursor->index, code, word,  &opType)) {
+            // if assign, then end bracket
             // + - * / % ~ & | ^ << >> && || == != <= >= < >
             D_EXP_Bracket_AddWord(fam_exp, word, cursor);
             D_EXP_Bracket_AddChildExp(fam_exp, opType, guess->last_word);

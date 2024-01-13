@@ -17,7 +17,6 @@ typedef enum Top_FA {
 } Top_FA;
 
 typedef enum Block_FA {
-    Block_FA_Guess = 0,
     Block_FA_Statement,
     Block_FA_ChildBlock,
 } Block_FA;

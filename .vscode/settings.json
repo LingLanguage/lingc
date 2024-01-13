@@ -71,6 +71,7 @@
         "d_dfa_block.h": "c",
         "m_exp.h": "c",
         "d_exp_bracket.h": "c",
-        "fam_exp.h": "c"
+        "fam_exp.h": "c",
+        "d_stmt_return.h": "c"
     }
 }

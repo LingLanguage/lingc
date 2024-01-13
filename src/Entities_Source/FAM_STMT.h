@@ -9,6 +9,7 @@ typedef struct FAM_STMT {
     STMT_FA status;
     FAM_EXP fam_exp;
     E_Statement stmt;
+    E_Guess guess;
     bool is_done;
 
     bool is_return_bracket_done;

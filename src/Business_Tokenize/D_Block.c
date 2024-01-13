@@ -1,14 +1,11 @@
 #include "D_Block.h"
-#include "D_STMT_Assign.h"
-#include "D_STMT_Return.h"
+#include "D_STMT.h"
 #include "Util_Cursor.h"
 
 // block -> stmt -> exp
 
 void D_Block_Enter(FAM_Block *fam);
 void D_Block_Process(FAM_Block *fam, const string code, const string word, M_Cursor *cursor);
-void D_Block_Guess_Enter(FAM_Block *fam);
-void D_Block_Guess_Process(FAM_Block *fam, const string code, const string word, M_Cursor *cursor);
 void D_Block_Statement_Enter(FAM_Block *fam);
 void D_Block_Statement_Process(FAM_Block *fam, const string code, const string word, M_Cursor *cursor);
 void D_Block_ChildBlock_Enter(FAM_Block *fam, const string code, const string word, M_Cursor *cursor);
@@ -17,72 +14,29 @@ void D_Block_ChildBlock_Process(FAM_Block *fam, const string code, const string 
 // ==== Entry ====
 void D_Block_Enter(FAM_Block *fam) {
     FAM_Block_Init(fam);
-    D_Block_Guess_Enter(fam);
+    D_Block_Statement_Enter(fam);
 }
 
 void D_Block_Process(FAM_Block *fam, const string code, const string word, M_Cursor *cursor) {
+
+    if (cursor->is_split) {
+        char split = word[0];
+        if (split == KW_LEFT_BRACE) {
+            ++cursor->nested;
+        } else if (split == KW_RIGHT_BRACE) {
+            --cursor->nested;
+            if (cursor->nested == 0) {
+                fam->is_done = true;
+                return;
+            }
+        }
+    }
+
     Block_FA status = fam->status;
-    if (status == Block_FA_Guess) {
-        D_Block_Guess_Process(fam, code, word, cursor);
-    } else if (status == Block_FA_Statement) {
+    if (status == Block_FA_Statement) {
         D_Block_Statement_Process(fam, code, word, cursor);
     } else if (status == Block_FA_ChildBlock) {
         D_Block_ChildBlock_Process(fam, code, word, cursor);
-    }
-}
-
-// Phase: Guess
-void D_Block_Guess_Enter(FAM_Block *fam) {
-    fam->status = Block_FA_Guess;
-    E_Guess_Init(&fam->guess);
-}
-
-void D_Block_Guess_Process(FAM_Block *fam, const string code, const string word, M_Cursor *cursor) {
-    bool is_split = cursor->is_split;
-    E_Guess *guess = &fam->guess;
-    if (is_split) {
-        char split = word[0];
-        if (split == KW_SEMICOLON) {
-            // ;
-            PLogNA("TODO: DFA Block Process: ;\r\n");
-            ++cursor->index;
-        } else if (split == KW_RIGHT_BRACE) {
-            // }
-            fam->is_done = true;
-            ++cursor->index;
-        } else if (split == KW_LEFT_BRACE) {
-            // {
-            D_Block_Enter(fam);
-            ++cursor->index;
-        } else if (split == KW_LEFT_BRACKET) {
-            // (
-            PLogNA("TODO: DFA Block Process: (\r\n");
-            ++cursor->index;
-        } else if (split == KW_RIGHT_BRACKET) {
-            // )
-            PLogNA("TODO: DFA Block Process: )\r\n");
-            ++cursor->index;
-        } else if (split == KW_COMMA || Char_IsIgnoreAssignPrev(split)) {
-            // ,
-            // += -= *= /= %= ~= &= |= ^= <<= >>=
-            ++cursor->index;
-        } else {
-            Util_Cursor_DealEmptySplit(cursor, code, word);
-        }
-    } else {
-        if (strcmp(word, KW_RETURN) == 0) {
-            // return
-            D_Block_Statement_Enter(fam);
-            D_STMT_Return_Enter(&fam->fam_stmt);
-        } else if (strcmp(word, KW_IF) == 0) {
-            // if
-        } else if (strcmp(word, KW_WHILE) == 0) {
-            // while
-        } else if (strcmp(word, KW_FOR) == 0) {
-            // for
-        } else {
-            E_Guess_PushWord(&fam->guess, word);
-        }
     }
 }
 
@@ -93,21 +47,10 @@ void D_Block_Statement_Enter(FAM_Block *fam) {
 
 void D_Block_Statement_Process(FAM_Block *fam, const string code, const string word, M_Cursor *cursor) {
     FAM_STMT *fam_stmt = &fam->fam_stmt;
-    STMT_FA stmt_fa = fam->fam_stmt.status;
-    if (stmt_fa == STMT_FA_Return) {
-        D_STMT_Return_Process(&fam->fam_stmt, code, word, cursor);
-        if (fam->fam_stmt.is_done) {
-            E_Block_AddStatement(&fam->block, fam->fam_stmt.stmt);
-            D_Block_Guess_Enter(fam);
-            PLogNA("STMT Return DONE\r\n");
-        }
-    } else if (stmt_fa == STMT_FA_Assign) {
-        D_STMT_Assign_Process(&fam->fam_stmt, code, word, cursor);
-        if (fam->fam_stmt.is_done) {
-            E_Block_AddStatement(&fam->block, fam->fam_stmt.stmt);
-            D_Block_Guess_Enter(fam);
-            PLogNA("STMT Assign DONE\r\n");
-        }
+    D_STMT_Process(fam_stmt, code, word, cursor);
+    if (fam_stmt->is_done) {
+        E_Block_AddStatement(&fam->block, fam_stmt->stmt);
+        D_Block_Statement_Enter(fam);
     }
 }
 
@@ -126,10 +69,10 @@ void D_Block_ChildBlock_Process(FAM_Block *fam, const string code, const string 
     if (dfa_child_block->is_done) {
         E_Block_AddBlock(&fam->block, dfa_child_block->block);
         FAM_Block_Free(dfa_child_block);
-        if (fam->last_status == Block_FA_Guess) {
-            D_Block_Guess_Enter(fam);
-        } else if (fam->last_status == Block_FA_Statement) {
+        if (fam->last_status == Block_FA_Statement) {
             D_Block_Statement_Enter(fam);
+        } else if (fam->last_status == Block_FA_ChildBlock) {
+            D_Block_ChildBlock_Enter(fam, code, word, cursor);
         }
     }
 }

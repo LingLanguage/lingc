@@ -27,6 +27,6 @@ void E_Guess_SetAcceess(E_Guess *self, const string file, int line, const string
 void E_Guess_PushWord(E_Guess *self, const string word);
 void E_Guess_SetLastWord(E_Guess *self, const string word);
 void E_Guess_CleanLastWord(E_Guess *self);
-bool E_Guess_TryGetCalcOP(E_Guess *self, int *ref_index, const string code, const string word, const string last_word, OP_Type *op_type);
+bool E_Guess_TryGetCalcOP(E_Guess *self, int *ref_index, const string code, const string word, OP_Type *op_type);
 
 #endif

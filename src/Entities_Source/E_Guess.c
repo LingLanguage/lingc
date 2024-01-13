@@ -59,7 +59,7 @@ void E_Guess_CleanLastWord(E_Guess *self) {
     memset(self->last_word, 0, sizeof(self->last_word));
 }
 
-bool E_Guess_TryGetCalcOP(E_Guess *self, int *ref_index, const string code, const string word, const string last_word, OP_Type *op_type) {
+bool E_Guess_TryGetCalcOP(E_Guess *self, int *ref_index, const string code, const string word, OP_Type *op_type) {
 
     int index = *ref_index;
     bool is_ok = false;

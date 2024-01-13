@@ -15,6 +15,7 @@ void B_Tokenize_SeqMove(E_Doc *doc, const string filename, const string code, lo
     strcpy(cursor.file, filename);
     cursor.index = 0;
     cursor.line = 1;
+    cursor.nested = 0;
     cursor.code_size = size;
 
     while (cursor.index < size) {
