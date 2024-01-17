@@ -67,7 +67,7 @@ void D_Block_ChildBlock_Process(FAM_Block *fam, const string code, const string 
     FAM_Block *dfa_child_block = fam->dfa_child_block;
     D_Block_Process(dfa_child_block, code, word, cursor);
     if (dfa_child_block->is_done) {
-        E_Block_AddBlock(&fam->block, dfa_child_block->block);
+        E_Block_AddChildBlock(&fam->block, &dfa_child_block->block);
         FAM_Block_Free(dfa_child_block);
         if (fam->last_status == Block_FA_Statement) {
             D_Block_Statement_Enter(fam);

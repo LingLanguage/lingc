@@ -15,7 +15,7 @@ typedef struct E_Doc {
     char file[FILENAME_MAX * 2];
     int line;
 
-    E_Import *imports;
+    int *imports;
     byte imports_count;
 
     E_Struct *structs;
@@ -31,10 +31,9 @@ typedef struct E_Doc {
 
 void E_Doc_Init(E_Doc *doc, const string file);
 void E_Doc_Free(E_Doc *doc);
-void E_Doc_Import_Add(E_Doc *doc, E_Import import);
+void E_Doc_Import_Add(E_Doc *doc, int import_id);
 void E_Doc_Struct_Add(E_Doc *doc, E_Struct st);
 void E_Doc_StaticVar_Add(E_Doc *doc, E_Field var);
 void E_Doc_StaticFunc_Add(E_Doc *doc, E_Function func);
-void E_Doc_Log(E_Doc *doc);
 
 #endif

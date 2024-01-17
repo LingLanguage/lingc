@@ -17,7 +17,6 @@ void E_Function_Free(E_Function *self) {
         free(self->params);
     }
 
-    E_Block_Free(&self->block);
 }
 
 void E_Function_SetName(E_Function *self, const string access, const string name) {
@@ -52,6 +51,10 @@ void E_Function_AddParam(E_Function *self, const string type, const string name)
     strcpy(param->type, type);
     strcpy(param->name, name);
     self->params_count++;
+}
+
+void E_Function_SetMainBlock(E_Function *self, int block_id) {
+    self->block_id = block_id;
 }
 
 void E_Function_Log(const E_Function *self, bool is_static) {

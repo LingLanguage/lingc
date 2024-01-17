@@ -17,7 +17,27 @@ void E_Block_Free(E_Block *self) {
     }
 }
 
-void E_Block_AddBlock(E_Block *self, E_Block block) {
+void E_Block_DeepClone(E_Block *self, const E_Block *other) {
+    if (other->statements_count > 0) {
+        self->statements_capacity = other->statements_capacity;
+        self->statements_count = other->statements_count;
+        self->statements = malloc(sizeof(E_Statement) * self->statements_capacity);
+        for (int i = 0; i < self->statements_count; i++) {
+            E_Statement_DeepClone(&self->statements[i], &other->statements[i]);
+        }
+    }
+
+    if (other->child_blocks_count > 0) {
+        self->child_blocks_capacity = other->child_blocks_capacity;
+        self->child_blocks_count = other->child_blocks_count;
+        self->child_blocks = malloc(sizeof(E_Block) * self->child_blocks_capacity);
+        for (int i = 0; i < self->child_blocks_count; i++) {
+            E_Block_DeepClone(&self->child_blocks[i], &other->child_blocks[i]);
+        }
+    }
+}
+
+void E_Block_AddChildBlock(E_Block *self, const E_Block* child) {
     if (self->child_blocks_count == 0) {
         self->child_blocks_capacity = 1;
         self->child_blocks = malloc(sizeof(E_Block));
@@ -25,7 +45,7 @@ void E_Block_AddBlock(E_Block *self, E_Block block) {
         self->child_blocks_capacity *= 2;
         self->child_blocks = realloc(self->child_blocks, sizeof(E_Block) * self->child_blocks_capacity);
     }
-    self->child_blocks[self->child_blocks_count] = block;
+    E_Block_DeepClone(&self->child_blocks[self->child_blocks_count], child);
     self->child_blocks_count++;
 }
 

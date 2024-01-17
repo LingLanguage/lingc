@@ -42,13 +42,13 @@ void E_Doc_Free(E_Doc *doc) {
     free(doc);
 }
 
-void E_Doc_Import_Add(E_Doc *doc, E_Import import) {
+void E_Doc_Import_Add(E_Doc *doc, int import_id) {
     if (doc->imports_count == 0) {
-        doc->imports = (E_Import *)malloc(sizeof(E_Import) * 4);
+        doc->imports = (int *)malloc(sizeof(int) * 4);
     } else {
-        doc->imports = (E_Import *)realloc(doc->imports, sizeof(E_Import) * (doc->imports_count * 2));
+        doc->imports = (int *)realloc(doc->imports, sizeof(int) * (doc->imports_count * 2));
     }
-    doc->imports[doc->imports_count++] = import;
+    doc->imports[doc->imports_count++] = import_id;
 }
 
 void E_Doc_Struct_Add(E_Doc *doc, E_Struct st) {
@@ -76,32 +76,4 @@ void E_Doc_StaticFunc_Add(E_Doc *doc, E_Function func) {
         doc->static_funcs = (E_Function *)realloc(doc->static_funcs, sizeof(E_Function) * (doc->static_funcs_count * 2));
     }
     doc->static_funcs[doc->static_funcs_count++] = func;
-}
-
-// ==== Log ====
-void E_Doc_Log(E_Doc *doc) {
-    printf("==== Doc ====\r\n");
-    printf("file: %s, total line: %d\r\n", doc->file, doc->line);
-    // printf("imports_count: %d\r\n", doc->imports_count);
-    // printf("structs_count: %d\r\n", doc->structs_count);
-    // printf("static_funcs_count: %d\r\n", doc->static_funcs_count);
-    // printf("static_vars_count: %d\r\n", doc->static_vars_count);
-    for (int i = 0; i < doc->imports_count; i++) {
-        E_Import *import = &doc->imports[i];
-        E_Import_Log(import);
-    }
-    for (int i = 0; i < doc->structs_count; i++) {
-        E_Struct *st = &doc->structs[i];
-        E_Struct_Log(st);
-    }
-    for (int i = 0; i < doc->static_funcs_count; i++) {
-        E_Function *func = &doc->static_funcs[i];
-        E_Function_Log(func, true);
-    }
-    for (int i = 0; i < doc->static_vars_count; i++) {
-        E_Field *var = &doc->static_vars[i];
-        printf("static ");
-        E_Field_Log(var);
-    }
-    printf("==== End ====\r\n\r\n");
 }

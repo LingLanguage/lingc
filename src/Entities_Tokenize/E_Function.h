@@ -20,7 +20,7 @@ typedef struct E_Function {
     byte params_capacity;
     byte params_count;
 
-    E_Block block;
+    int block_id;
 
 } E_Function;
 
@@ -28,6 +28,7 @@ void E_Function_Free(E_Function *self);
 void E_Function_SetName(E_Function *self, const string access, const string name);
 void E_Function_AddReturnType(E_Function *self, const string type);
 void E_Function_AddParam(E_Function *self, const string type, const string name);
+void E_Function_SetMainBlock(E_Function *self, int block_id);
 void E_Function_Log(const E_Function *self, bool is_static);
 
 #endif

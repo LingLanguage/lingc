@@ -72,6 +72,10 @@
         "m_exp.h": "c",
         "d_exp_bracket.h": "c",
         "fam_exp.h": "c",
-        "d_stmt_return.h": "c"
+        "d_stmt_return.h": "c",
+        "rp_exp.h": "c",
+        "cdict.h": "c",
+        "dictionary.h": "c",
+        "ctx_tokenize.h": "c"
     }
 }

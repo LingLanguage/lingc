@@ -3,8 +3,7 @@
 
 #include "import.h"
 
-void D_Import_Free(FAM_Import *fsm);
-void D_Import_Enter(FAM_Import *fsm);
-void D_Import_Process(FAM_Import *fsm, const string code, const string word, M_Cursor *cursor);
+void D_Import_Enter(CTX_Tokenize *ctx, FAM_Import *fsm);
+void D_Import_Process(CTX_Tokenize *ctx, FAM_Import *fsm, const string code, const string word, M_Cursor *cursor);
 
 #endif

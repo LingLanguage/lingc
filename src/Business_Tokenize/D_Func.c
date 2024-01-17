@@ -105,6 +105,7 @@ void D_Func_BlockPhase_Enter(FAM_Func *fam) {
 void D_Func_BlockPhase_Process(FAM_Func *fam, const string code, const string word, M_Cursor *cursor) {
     D_Block_Process(&fam->dfa_block, code, word, cursor);
     if (fam->dfa_block.is_done) {
+        E_Function_SetMainBlock(&fam->function, fam->dfa_block.block_id);
         fam->is_done = true;
     }
 }

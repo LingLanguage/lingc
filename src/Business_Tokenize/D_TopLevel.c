@@ -14,7 +14,7 @@ void D_TopLevel_Enter(FAM_Top *fam, M_Cursor *cursor) {
     // PLogNA("Enter Top\r\n");
 }
 
-void D_TopLevel_Process(FAM_Top *fam, const string code, const string word, M_Cursor *cursor) {
+void D_TopLevel_Process(CTX_Tokenize *ctx, FAM_Top *fam, const string code, const string word, M_Cursor *cursor) {
 
     // import <stdio.h>;
     // import "raylib.h";
@@ -24,8 +24,8 @@ void D_TopLevel_Process(FAM_Top *fam, const string code, const string word, M_Cu
         if (strcmp(word, KW_IMPORT) == 0) {
             // import
             fam->status = Top_FA_Import;
-            FAM_Import *dfa_import = fam->dfa_import;
-            D_Import_Enter(dfa_import);
+            FAM_Import *fam_import = fam->fam_import;
+            D_Import_Enter(ctx, fam_import);
         } else if (strcmp(word, KW_FUNC) == 0) {
             // fn
             fam->status = Top_FA_Func;

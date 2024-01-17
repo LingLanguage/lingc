@@ -2,7 +2,7 @@
 #define FAM_IMPORT_H__
 
 typedef struct FAM_Import {
-    E_Import import;
+    int import_id;
     bool is_recorded;
     bool is_done;
 } FAM_Import;

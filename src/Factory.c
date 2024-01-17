@@ -7,10 +7,3 @@ E_Field Factory_CreateField(const string access, const string type, const string
     strcpy(field.access, String_ValidAccess(access));
     return field;
 }
-
-E_Import Factory_CreateImport(const string name, ImportType type) {
-    E_Import import = {0};
-    import.importType = type;
-    strcpy(import.name, name);
-    return import;
-}

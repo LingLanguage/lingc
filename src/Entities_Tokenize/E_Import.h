@@ -4,8 +4,9 @@
 #include "import.h"
 
 typedef struct E_Import {
+    int id;
     char name[RULE_IMPORT_FILE_NAME_LEN];
-    ImportType importType;
+    ImportType import_type;
 } E_Import;
 
 void E_Import_Log(const E_Import *self);

@@ -13,7 +13,7 @@ typedef struct FAM_Func {
     E_Guess guess;
     FAM_Block dfa_block;
 
-    E_Function function;
+    int function_id;
 
     byte nested_level;
 

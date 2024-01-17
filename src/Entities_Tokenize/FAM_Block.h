@@ -5,13 +5,15 @@
 #include "FAM_STMT.h"
 #include "import.h"
 
+typedef struct FAM_Block FAM_Block;
+
 typedef struct FAM_Block {
     Block_FA status;
     Block_FA last_status;
     FAM_STMT fam_stmt;
     E_Expression tmp_exp;
-    void *dfa_child_block;
-    E_Block block;
+    FAM_Block *dfa_child_block;
+    int block_id;
     E_Guess guess;
     bool is_done;
 } FAM_Block;

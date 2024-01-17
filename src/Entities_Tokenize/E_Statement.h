@@ -12,18 +12,16 @@ typedef struct E_Statement {
     StatementType type;
 
     // left
-    E_Expression *left_exp;
+    int left_exp_id;
     OP_Type assign_op_type;
 
     // = / if / while / for / return
-    E_Expression *bracket_expressions;
-    int bracket_expressions_capacity;
+    int bracket_expressions_ids[64];
     int bracket_expressions_count;
 
     // if / do / while / for
     // {}
-    E_Block *blocks;
-    int blocks_capacity;
+    int blocks[64];
     int blocks_count;
 
 } E_Statement;
@@ -31,9 +29,9 @@ typedef struct E_Statement {
 E_Statement E_Statement_CreateReturn();
 E_Statement E_Statement_CreateAssign(OP_Type assign_op_type);
 void E_Statement_Free(E_Statement *self);
-void E_Statement_SetLeftExpression(E_Statement *self, E_Expression expression);
-void E_Statement_AddBracketExpression(E_Statement *self, E_Expression expression);
-void E_Statement_AddBlock(E_Statement *self, E_Block block);
+void E_Statement_SetLeftExpression(E_Statement *self, int exp_id);
+void E_Statement_AddBracketExpression(E_Statement *self, int exp_id);
+void E_Statement_AddBlock(E_Statement *self, int block_id);
 void E_Statement_Log(const E_Statement *self);
 
 #endif

@@ -1,10 +1,10 @@
 #include "B_Tokenize.h"
+#include "D_Func.h"
 #include "D_Import.h"
 #include "D_Struct.h"
-#include "D_Func.h"
 #include "D_TopLevel.h"
 
-void B_Tokenize_SeqMove(E_Doc *doc, const string filename, const string code, long size) {
+void B_Tokenize_SeqMove(CTX_Tokenize *ctx, E_Doc *doc, const string filename, const string code, long size) {
 
     E_Doc_Init(doc, filename);
 
@@ -52,12 +52,12 @@ void B_Tokenize_SeqMove(E_Doc *doc, const string filename, const string code, lo
         cursor.index = end_index;
 
         if (top_status == Top_FA_Guess) {
-            D_TopLevel_Process(fam, code, word, &cursor);
+            D_TopLevel_Process(ctx, fam, code, word, &cursor);
         } else if (top_status == Top_FA_Import) {
-            FAM_Import *dfa_import = fam->dfa_import;
-            D_Import_Process(dfa_import, code, word, &cursor);
-            if (dfa_import->is_done) {
-                E_Doc_Import_Add(doc, dfa_import->import);
+            FAM_Import *fam_import = fam->fam_import;
+            D_Import_Process(ctx, fam_import, code, word, &cursor);
+            if (fam_import->is_done) {
+                E_Doc_Import_Add(doc, fam_import->import_id);
                 D_TopLevel_Enter(fam, &cursor);
             }
         } else if (top_status == Top_FA_Struct) {
@@ -73,6 +73,7 @@ void B_Tokenize_SeqMove(E_Doc *doc, const string filename, const string code, lo
             if (dfa_func->is_done) {
                 E_Doc_StaticFunc_Add(doc, dfa_func->function);
                 D_TopLevel_Enter(fam, &cursor);
+                PLogNA("FUNC DONE\r\n");
             }
         }
 
